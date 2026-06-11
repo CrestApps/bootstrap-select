@@ -61,6 +61,7 @@
   "devDependencies": {
     "@docusaurus/core": "^3.10.1",
     "@docusaurus/preset-classic": "^3.10.1",
+    "@easyops-cn/docusaurus-search-local": "^0.55.2",
     "@mdx-js/react": "^3.1.1",
     "@playwright/test": "^1.60.0",
     "@popperjs/core": "^2.11.8",

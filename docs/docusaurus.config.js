@@ -46,6 +46,18 @@ const config = {
     locales: ['en']
   },
 
+  themes: [
+    [
+      require.resolve('@easyops-cn/docusaurus-search-local'),
+      {
+        hashed: true,
+        language: ['en'],
+        highlightSearchTermsOnTargetPage: true,
+        explicitSearchResultPath: true
+      }
+    ]
+  ],
+
   presets: [
     [
       'classic',
@@ -53,7 +65,14 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/CrestApps/crestapps-bootstrap-select/tree/main/docs/'
+          editUrl: 'https://github.com/CrestApps/crestapps-bootstrap-select/tree/main/docs/',
+          lastVersion: 'current',
+          versions: {
+            current: {
+              label: 'Latest',
+              path: ''
+            }
+          }
         },
         blog: false,
         theme: {
@@ -66,16 +85,21 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      image: 'img/logo.svg',
+      image: 'img/logo.png',
+      colorMode: {
+        defaultMode: 'light',
+        respectPrefersColorScheme: true
+      },
       navbar: {
         title: 'bootstrap-select',
         logo: {
-          alt: 'CrestApps bootstrap-select logo',
+          alt: 'CrestApps Logo',
           src: 'img/logo.svg'
         },
         items: [
           {
-            to: '/docs/',
+            type: 'docSidebar',
+            sidebarId: 'docs',
             label: 'Docs',
             position: 'left'
           },
@@ -83,6 +107,11 @@ const config = {
             to: '/docs/examples',
             label: 'Examples',
             position: 'left'
+          },
+          {
+            type: 'docsVersionDropdown',
+            position: 'right',
+            dropdownActiveClassDisabled: true
           },
           {
             href: 'https://github.com/CrestApps/crestapps-bootstrap-select',

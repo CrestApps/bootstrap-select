@@ -1,125 +1,96 @@
-# Contributing to this project
+# Contributing to crestapps-bootstrap-select
 
-Please take a moment to review this document in order to make the contribution
-process easy and effective for everyone involved.
+Thanks for contributing. This repository contains the vanilla JavaScript
+CrestApps fork of `bootstrap-select`, the built distribution artifacts, the
+Docusaurus docs site, and the Playwright/manual test assets used to verify
+changes.
 
-Following these guidelines helps to communicate that you respect the time of
-the developers managing and developing this open source project. In return,
-they should reciprocate that respect in addressing your issue or assessing
-patches and features.
+## Project layout
 
+- `js/` - source for the plugin runtime
+- `less/` and `sass/` - source stylesheets
+- `dist/` - generated distributable assets
+- `docs/` - Docusaurus docs app and hosted standalone examples
+- `tests/` - manual HTML fixtures, helpers, and Playwright e2e coverage
 
-## Using the issue tracker
+Edit the source files in `js/`, `less/`, `sass/`, or `docs/`. Do not hand-edit
+generated files in `dist/`.
 
-The issue tracker is the preferred channel for [bug reports](#bug-reports),
-[features requests](#feature-requests) and submitting pull requests, but please
-respect the following restrictions:
+## Before you start
 
-* Please **do not** use the issue tracker for personal support requests (use
-  [Stack Overflow](https://stackoverflow.com) or IRC).
+1. Search existing issues and pull requests before opening a new one.
+2. For non-trivial changes, open or reference an issue first so the scope is
+   clear before implementation starts.
+3. For bugs, include the browser, OS, Bootstrap version, and
+   `crestapps-bootstrap-select` version you tested against.
 
-* Please **do not** derail or troll issues. Keep the discussion on topic and
-  respect the opinions of others.
+## Local setup
 
+1. Install Node.js 20.19 or newer.
+2. Install dependencies from the repository root:
 
-## Bug reports
+   ```sh
+   npm install
+   ```
 
-A bug is a _demonstrable problem_ that is caused by the code in the repository.
-Good bug reports are extremely helpful - thank you!
+3. Use the root `package.json` scripts for day-to-day work:
 
-Guidelines for bug reports:
+   ```sh
+   npm run build
+   npm run lint
+   npm test
+   npm run docs:start
+   ```
 
-1. **Use the GitHub issue search.** Check if the issue has already been
-   reported.
+## Build and validation workflow
 
-2. **Check if the issue has been fixed.** Try to reproduce it using the
-   latest `main` or development branch in the repository.
+The project uses Grunt for asset generation and Docusaurus for the docs site.
 
-3. **Provide environment details.** Provide your operating system, browser(s),
-   Bootstrap version (5+), and bootstrap-select version.
+- `npm run build` - rebuilds `dist/` from the source files
+- `npm run lint` - runs the configured ESLint checks
+- `npm test` - runs the Playwright suite
+- `npm run docs:prepare` - builds the plugin and copies docs assets into
+  `docs/static/dist/`
+- `npm run docs:start` - prepares the docs assets and starts the local docs site
+- `npm run docs:build` - creates a production docs build under `docs/build/`
 
-4. **Create an isolated and reproducible test case.** Create a [reduced test
-   case](https://css-tricks.com/reduced-test-cases/).
+If you prefer Grunt directly, these tasks remain available:
 
-5. **Include a live example.** Share a reduced test case using the
-   [hosted examples](https://bootstrap-select.crestapps.com/docs/examples) as a
-   starting point, or a tool such as [CodeSandbox](https://codesandbox.io/),
-   [jsFiddle](https://jsfiddle.net/), or [JS Bin](https://jsbin.com/).
+- `grunt build-css`
+- `grunt build-js`
+- `grunt copy-docs`
+- `grunt dev-watch`
 
-A good bug report shouldn't leave others needing to chase you up for more
-information. Please try to be as detailed as possible in your report. What is
-your environment? What steps will reproduce the issue? What browser(s) and OS
-experience the problem? What would you expect to be the outcome? All these
-details will help people to fix any potential bugs.
+## Working on docs
 
-Example:
+The docs app lives under `docs/` and serves both the documentation pages and
+the standalone hosted examples under `/examples/`.
 
-> Short and descriptive example bug report title
->
-> A summary of the issue and the browser/OS environment in which it occurs. If
-> suitable, include the steps required to reproduce the bug.
->
-> 1. This is the first step
-> 2. This is the second step
-> 3. Further steps, etc.
->
-> `<url>` - a link to the reduced test case
->
-> Any other information you want to share that is relevant to the issue being
-> reported. This might include the lines of code that you have identified as
-> causing the bug, and potential solutions (and your opinions on their
-> merits).
+1. Run `npm run docs:start` from the repository root.
+2. Open `http://localhost:3000/`.
+3. Check both the homepage and docs pages when changing branding or theme CSS.
+4. If you change plugin output used by the docs examples, rerun
+   `npm run docs:prepare` or restart `docs:start`.
 
+## Tests and repros
 
-## Feature requests
+- Use the Playwright specs in `tests/e2e/` for browser-level coverage.
+- Manual verification pages live in `tests/bootstrap5.html` and `tests/index.html`.
+- The standalone docs examples in `docs/static/examples/` are useful for reduced
+  repros and smoke tests.
 
-Feature requests are welcome. But take a moment to find out whether your idea
-fits with the scope and aims of the project. It's up to *you* to make a strong
-case to convince the project's developers of the merits of this feature. Please
-provide as much detail and context as possible.
+When possible, add or update automated coverage for bug fixes and behavior
+changes.
 
-## Pull Request Guidelines
+## Pull request guidelines
 
-You must understand that by contributing code to this project, you are granting
-the authors (and/or leaders) of the project a non-exclusive license to
-re-distribute your code under the current license and possibly re-license the
-code as deemed necessary.
+1. Branch from `main` and target `main` unless maintainers ask for something
+   else.
+2. Keep changes focused and avoid mixing unrelated work in one PR.
+3. Update docs when the public API, setup, or behavior changes.
+4. Include validation notes in the PR description, especially for docs, build,
+   and browser changes.
+5. Write a clear summary of the problem, the fix, and any follow-up work.
 
-* IMPORTANT: base your PR on the `dev` branch and target the `dev` branch
-* To instantiate a context or use it, use the variable **that** instead of
-  **_this**.
-* Please check to make sure that there aren't existing pull requests attempting
-  to address the issue mentioned. We also recommend checking for issues related
-  to the issue on the tracker, as a team member may be working on the issue in
-  a branch or fork.
-* Non-trivial changes should be discussed in an issue first
-* When modifying files, please do not edit the generated or minified files in the dist/ directory. Please edit the original files.
-* If possible, add relevant tests to cover the change
-* Write a convincing description of your PR and why we should land it
-
-## Using Grunt
-
-We are using node and grunt to build and (in the future) test this project.
-This means that you must setup a local development environment:
-
-1. Install Node.js 20.19 or newer and `npm` using your preferred method
-2. Install the grunt CLI: `npm install -g grunt-cli`
-3. Install the project's development dependencies: `npm install`
-4. Run the various grunt tasks as needed:
-   - `grunt`: clean the distribution files and re-build them
-   - `grunt dist`: build the distribution files
-   - `grunt clean`: clean the distribution files
-   - `grunt build-css`: build the css distribution files
-   - `grunt build-js`: build the javascript distribution files
-   - `grunt dev-watch`: watch for changes in the source files and build the
-     distribution files as needed
-
-## Running documentation locally
-
-1. Install Node.js 20.19 or newer and the project dependencies with `npm install`.
-2. Run `npm run docs:start` from the repository root.
-3. Open `http://localhost:3000/` in your browser.
-
-`docs:start` builds the plugin, copies the local assets into `docs/static/dist/`,
-and starts the Docusaurus 3.10 site. Use the docs Examples page or the hosted
-standalone examples under `/examples/` to manually test the plugin.
+By contributing code to this repository, you agree that your contribution may be
+distributed under the project's current license.

@@ -35,10 +35,10 @@ export default function Home () {
               and events while keeping jQuery out of your application.
             </p>
             <div className="buttons">
-              <Link className="button button--secondary button--lg" to="/docs/">
+              <Link className="button button--lg heroPrimaryButton" to="/docs/">
                 Get Started
               </Link>
-              <Link className="button button--outline button--secondary button--lg" to="/docs/examples">
+              <Link className="button button--lg heroSecondaryButton" to="/docs/examples">
                 View Examples
               </Link>
             </div>
