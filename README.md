@@ -1,72 +1,101 @@
-<h1 align="center">bootstrap-select</h1>
+<h1 align="center">bootstrap-select <sup>(CrestApps fork)</sup></h1>
 
 <p align="center">
-	<strong>The jQuery plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Now with Bootstrap 5 support.</strong>
+	<strong>A dependency-free, vanilla JavaScript plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more — for Bootstrap 5+.</strong>
 </p>
 
 <p align="center">
-	<a href="https://github.com/snapappointments/bootstrap-select/releases/latest" target="_blank">
-		<img src="https://img.shields.io/github/release/snapappointments/bootstrap-select.svg" alt="Latest release">
-	</a>
-	<a href="https://www.npmjs.com/package/bootstrap-select" target="_blank">
-		<img src="https://img.shields.io/npm/v/bootstrap-select.svg" alt="npm">
-	</a>
-	<a href="https://www.nuget.org/packages/bootstrap-select" target="_blank">
-		<img src="https://img.shields.io/nuget/v/bootstrap-select.svg" alt="NuGet">
-	</a>
-	<a href="https://cdnjs.com/libraries/bootstrap-select" target="_blank">
-		<img src="https://img.shields.io/cdnjs/v/bootstrap-select.svg" alt="CDNJS">
-	</a>
-	<a href="https://www.jsdelivr.com/package/npm/bootstrap-select" target="_blank">
-		<img src="https://data.jsdelivr.com/v1/package/npm/bootstrap-select/badge?style=rounded" alt="jsDelivr">
-	</a>
-	<br>
-	<a href="https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE" target="_blank">
+	<a href="https://github.com/CrestApps/crestapps-bootstrap-select/blob/main/LICENSE" target="_blank">
 		<img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="License">
 	</a>
+	<a href="https://www.npmjs.com/package/crestapps-bootstrap-select" target="_blank">
+		<img src="https://img.shields.io/npm/v/crestapps-bootstrap-select.svg" alt="npm version">
+	</a>
+	<a href="https://bootstrap-select.crestapps.com" target="_blank">
+		<img src="https://img.shields.io/badge/docs-bootstrap--select.crestapps.com-0a7bbb.svg" alt="Documentation">
+	</a>
 </p>
 
-<p align="center">
-	<a href="https://developer.snapappointments.com/bootstrap-select"><img src="https://user-images.githubusercontent.com/2874325/38997831-97e12bbe-43ab-11e8-85f5-b8c05d91c7b1.gif" width="289" height="396" alt="bootstrap-select demo"></a>
-</p>
+## About this fork
 
-## Demo
+This project is a fork of the original [snapappointments/bootstrap-select](https://github.com/snapappointments/bootstrap-select).
 
-You can view a live demo and some examples of how to use the various options [here](https://developer.snapappointments.com/bootstrap-select/examples/).
+The original `bootstrap-select` is an excellent, battle-tested plugin, but it
+depends on **jQuery** and has not seen active maintenance for some time. Because
+modern Bootstrap (v5+) dropped its jQuery dependency, and many projects are
+moving away from jQuery entirely, we decided to create this fork with the
+following goals:
+
+- **Remove the jQuery dependency completely** — the library is now written in
+  plain, vanilla JavaScript and ships with **no runtime dependencies** (other
+  than Bootstrap itself).
+- **Support Bootstrap 5 and later only** — older Bootstrap and jQuery
+  compatibility paths are intentionally out of scope.
+- Keep the select-enhancement feature set while prioritizing a modern, small,
+  forward-only API.
+
+## Requirements
+
+- **Bootstrap 5+** (CSS and JS, including its bundled Popper). jQuery is **not**
+  required.
 
 ## Quick start
 
-Bootstrap-select requires jQuery v1.9.1+, Bootstrap’s dropdown.js component, and Bootstrap's CSS. If you're not already using Bootstrap in your project, a precompiled version of the Bootstrap v3.4.1 minimum requirements can be downloaded [here](https://getbootstrap.com/docs/3.4/customize/?id=7830063837006f6fc84f). If using bootstrap-select with Bootstrap v4+, you'll also need Popper.js. For all of Bootstrap v4's requirements, see [Getting started](https://getbootstrap.com/docs/4.1/getting-started/introduction/). A precompiled version of the requirements will be made available in an upcoming release of bootstrap-select.
+Install with [npm](https://www.npmjs.com/package/crestapps-bootstrap-select):
 
-Several quick start options are available:
+```sh
+npm install crestapps-bootstrap-select bootstrap
+```
 
-- [Download the latest release.](https://github.com/snapappointments/bootstrap-select/archive/v1.14.0-beta3.zip)
-- Clone the repo: `git clone https://github.com/snapappointments/bootstrap-select.git`
-- Install with [npm](https://www.npmjs.com/package/bootstrap-select): `npm install bootstrap-select`
-- Install with [yarn](https://yarnpkg.com/package/bootstrap-select): `yarn add bootstrap-select`
-- Install with [Composer](https://packagist.org/packages/snapappointments/bootstrap-select): `composer require snapappointments/bootstrap-select`
-- Install with [NuGet](https://www.nuget.org/packages/bootstrap-select): `Install-Package bootstrap-select`
-- Install with [Bower](https://bower.io): `bower install bootstrap-select`
-- Install via CDN ([cdnjs](https://cdnjs.com/libraries/bootstrap-select), [jsDelivr](https://www.jsdelivr.com/package/npm/bootstrap-select) or [PageCDN](https://pagecdn.com/lib/bootstrap-select)):
+Load Bootstrap 5, then bootstrap-select's CSS and JS. **Load bootstrap-select
+after Bootstrap's JavaScript.**
 
 ```html
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
+<!-- Bootstrap 5 (includes Popper) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+<!-- bootstrap-select -->
+<link rel="stylesheet" href="dist/css/bootstrap-select.min.css">
+<script src="dist/js/bootstrap-select.min.js"></script>
 
-<!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/i18n/defaults-*.min.js"></script>
+<!-- (Optional) translation files -->
+<script src="dist/js/i18n/defaults-*.min.js"></script>
 ```
-> The CDN is updated after the release is made public, which means that there is a delay between the publishing of a release and its availability on the CDN.
+
+## Using the CDN build
+
+After the package is published to npm, it will also be available through
+jsDelivr. Prefer pinning an explicit package version in production:
+
+```html
+<!-- Bootstrap 5 (includes Popper) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- crestapps-bootstrap-select from jsDelivr -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/crestapps-bootstrap-select@1.0.0/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/crestapps-bootstrap-select@1.0.0/dist/js/bootstrap-select.min.js"></script>
+```
+
+You can replace `@1.0.0` with the version you want to consume. During
+development, `@latest` also works, but a fixed version is safer for production
+deployments.
+
+When loaded via a `<script>` tag, the plugin exposes a global `Selectpicker`
+class. Modern JavaScript can import the ES module entry:
+
+```js
+import Selectpicker from 'crestapps-bootstrap-select';
+```
 
 ## Usage
 
-> Bootstrap 4 only works with bootstrap-select v1.13.0+. By default, bootstrap-select automatically detects the version of Bootstrap being used. However, there are some instances where the version detection won't work. See the [documentation](https://developer.snapappointments.com/bootstrap-select/options/#bootstrap-version) for more information.
+### Via the `selectpicker` class (automatic)
 
-### Via `selectpicker` class
-Add the `selectpicker` class to your select elements to auto-initialize bootstrap-select.
+Add the `selectpicker` class to your `<select>` elements. They are
+automatically initialized once the DOM is ready — no JavaScript required.
+
 ```html
 <select class="selectpicker">
   <option>Mustard</option>
@@ -76,41 +105,124 @@ Add the `selectpicker` class to your select elements to auto-initialize bootstra
 ```
 
 ### Via JavaScript
-```js
-// To style only selects with the my-select class
-$('.my-select').selectpicker();
-```
-or
-```js
-// To style all selects
-$('select').selectpicker();
-```
 
-If calling bootstrap-select via JavaScript, you will need to wrap your code in a [`.ready()`](https://api.jquery.com/ready/) block or place it at the bottom of the page (after the last instance of bootstrap-select).
+Initialize an instance with the `Selectpicker` class. You can pass an element or
+a CSS selector string:
 
 ```js
-$(function () {
-	$('select').selectpicker();
+// Initialize a single select
+const picker = new Selectpicker('#my-select', {
+  liveSearch: true,
+  size: 8
+});
+
+// Or reuse an existing instance / create one if needed
+const picker2 = Selectpicker.getOrCreateInstance(document.querySelector('#my-select'));
+```
+
+To initialize several elements at once, loop over them:
+
+```js
+document.querySelectorAll('.my-select').forEach(function (el) {
+  new Selectpicker(el);
 });
 ```
 
+### Calling methods
 
-Check out the [documentation](https://developer.snapappointments.com/bootstrap-select) for further information.
+Methods are called directly on the instance:
 
-## Bugs and feature requests
+```js
+const picker = Selectpicker.getInstance('#my-select');
 
-Anyone and everyone is welcome to contribute. **Please take a moment to
-review the [guidelines for contributing](CONTRIBUTING.md)**. Make sure you're using the latest version of bootstrap-select before submitting an issue.
+picker.val('Cheese');     // set the value
+picker.refresh();         // re-render after changing the underlying <select>
+picker.selectAll();       // (multiple selects)
+picker.destroy();         // remove the plugin and restore the original <select>
+```
 
-* [Bug reports](CONTRIBUTING.md#bug-reports)
-* [Feature requests](CONTRIBUTING.md#feature-requests)
+See [Methods](docs/docs/methods.md) for the full list.
+
+### Events
+
+Events are dispatched as native `CustomEvent`s on the original `<select>`
+element (named exactly like the original `*.bs.select` events) and can be
+listened for with `addEventListener`:
+
+```js
+const select = document.querySelector('#my-select');
+
+select.addEventListener('changed.bs.select', function (e) {
+  // e.detail = { clickedIndex, isSelected, previousValue }
+  console.log('value changed', e.detail);
+});
+
+select.addEventListener('loaded.bs.select', function () { /* ... */ });
+```
+
+Available events: `loaded`, `rendered`, `refreshed`, `changed`, `show`,
+`shown`, `hide`, `hidden`, `maxReached`, `maxReachedGrp`, `fetched` — each
+suffixed with `.bs.select`.
 
 ## Documentation
 
-Bootstrap-select's documentation, included in this repo in the root directory, is built with MkDocs and hosted at https://developer.snapappointments.com/bootstrap-select. The documentation may also be [run locally](CONTRIBUTING.md#running-documentation-locally).
+Full documentation is hosted at
+**[bootstrap-select.crestapps.com](https://bootstrap-select.crestapps.com)**,
+including [Getting Started](https://bootstrap-select.crestapps.com/docs/),
+[Examples](https://bootstrap-select.crestapps.com/docs/examples),
+[Options](https://bootstrap-select.crestapps.com/docs/options), and
+[Methods](https://bootstrap-select.crestapps.com/docs/methods).
+
+## Building and testing
+
+```sh
+# Requires Node.js 20.19 or newer for the development toolchain.
+npm install
+npm run build   # grunt build (lint + compile JS and CSS into dist/)
+npm run lint    # grunt lint
+npm test        # Playwright end-to-end tests
+```
+
+## Documentation site
+
+The documentation site is built with **Docusaurus 3.10** and uses the CrestApps
+theme colors. It is published to
+[bootstrap-select.crestapps.com](https://bootstrap-select.crestapps.com) via
+GitHub Pages whenever changes land on `main`.
+
+Run the site locally:
+
+```sh
+npm install
+npm run docs:start
+```
+
+`docs:start` builds the plugin, copies the local `dist/` files into
+`docs/static/dist/`, and starts Docusaurus. Open `http://localhost:3000/`, then
+use the **Examples** page to exercise the plugin in the docs site.
+
+Standalone hosted examples are also available from the same site:
+
+- `http://localhost:3000/examples/basic.html`
+- `http://localhost:3000/examples/live-search.html`
+- `http://localhost:3000/examples/multiple.html`
+
+Other docs commands:
+
+```sh
+npm run docs:prepare # build plugin assets and copy them into docs/static/dist/
+npm run docs:build   # build the static Docusaurus site into docs/build/
+npm run docs:serve   # serve the built Docusaurus site locally
+```
+
+## Bugs and feature requests
+
+Anyone and everyone is welcome to contribute. Please review the
+[guidelines for contributing](CONTRIBUTING.md).
 
 ## Copyright and license
 
 Copyright (C) 2012-2018 [SnapAppointments, LLC](https://snapappointments.com)
+(original work). Fork modifications Copyright (C) CrestApps.
 
 Licensed under [the MIT license](LICENSE).

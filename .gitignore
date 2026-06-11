@@ -11,4 +11,13 @@ bower_components
 bootstrap-select-*.zip
 dist/
 
-docs/site
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+.playwright/
+
+docs/build
+docs/.docusaurus
+docs/docs/dist/
+docs/static/dist/

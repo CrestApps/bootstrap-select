@@ -14,31 +14,35 @@ const createOptions = (elemId, num) => {
     option.text = `Option ${i}`;
     element.appendChild(option);
   }
-}
+};
 
 // how many options to generate
 const OPTIONS_NUM = 30;
 
-// we need to  include the options before the document is ready and bootstrap select starts working
+// we need to include the options before bootstrap-select activates (on DOMContentLoaded)
 document.addEventListener('readystatechange', () => {
   // "interactive" is when all is loaded but bootstrap-select is not yet activated
   if (document.readyState === 'interactive') {
     ['number', 'number-multiple', 'number2', 'number2-multiple']
       .forEach(elemId => createOptions(elemId, OPTIONS_NUM));
 
-    const mySelect = $('#first-disabled2');
+    const mySelect = document.getElementById('first-disabled2');
 
-    $('#special').on('click', function () {
-      mySelect.find('option:selected').prop('disabled', true);
-      mySelect.selectpicker('refresh');
+    document.getElementById('special').addEventListener('click', () => {
+      Array.prototype.forEach.call(mySelect.querySelectorAll('option:checked'), option => {
+        option.disabled = true;
+      });
+      Selectpicker.getInstance(mySelect).refresh();
     });
 
-    $('#special2').on('click', function () {
-      mySelect.find('option:disabled').prop('disabled', false);
-      mySelect.selectpicker('refresh');
+    document.getElementById('special2').addEventListener('click', () => {
+      Array.prototype.forEach.call(mySelect.querySelectorAll('option:disabled'), option => {
+        option.disabled = false;
+      });
+      Selectpicker.getInstance(mySelect).refresh();
     });
 
-    $('#basic2').selectpicker({
+    Selectpicker.getOrCreateInstance(document.getElementById('basic2'), {
       liveSearch: true,
       maxOptions: 1
     });

@@ -1,0 +1,63 @@
+name: Deploy docs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - 'js/**'
+      - 'less/**'
+      - 'sass/**'
+      - 'Gruntfile.js'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/deploy-docs.yml'
+  workflow_dispatch:
+
+# Allow the GITHUB_TOKEN to deploy to GitHub Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment, cancelling in-progress runs.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build Docusaurus site
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.19'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build docs site
+        run: npm run docs:build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/build
+
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy to GitHub Pages
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
