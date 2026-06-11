@@ -1,4 +1,14 @@
 module.exports = function (grunt) {
+  function asArray (value) {
+    return Array.isArray(value) ? value.reduce(function (result, item) {
+      return result.concat(asArray(item));
+    }, []) : [value];
+  }
+
+  function normalizeArchivePath (filepath) {
+    return filepath.replace(/\\/g, '/').replace(/^\/+/, '');
+  }
+
   // From TWBS
   RegExp.quote = function (string) {
     return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -12,8 +22,10 @@ module.exports = function (grunt) {
     banner: '/*!\n' +
     ' * Bootstrap-select v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
     ' *\n' +
-    ' * Copyright 2012-<%= grunt.template.today(\'yyyy\') %> SnapAppointments, LLC\n' +
-    ' * Licensed under <%= pkg.license %> (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)\n' +
+    ' * CrestApps fork (vanilla JavaScript, Bootstrap 5+) of snapappointments/bootstrap-select\n' +
+    ' * Copyright 2012-2018 SnapAppointments, LLC (original work)\n' +
+    ' * Fork modifications Copyright 2024-<%= grunt.template.today(\'yyyy\') %> CrestApps\n' +
+    ' * Licensed under <%= pkg.license %> (https://github.com/CrestApps/crestapps-bootstrap-select/blob/main/LICENSE)\n' +
     ' */\n',
 
     // Task configuration.
@@ -21,23 +33,24 @@ module.exports = function (grunt) {
     clean: {
       css: 'dist/css',
       js: 'dist/js',
-      docs: 'docs/docs/dist'
+      docs: 'docs/static/dist'
     },
 
     eslint: {
       options: {
-        configFile: 'js/.eslintrc.json'
+        overrideConfigFile: 'eslint.config.cjs'
       },
       gruntfile: {
-        options: {
-          'envs': [
-            'node'
-          ]
-        },
         src: 'Gruntfile.js'
       },
       main: {
-        src: 'js/*.js'
+        src: [
+          'js/*.js',
+          '!js/umd-intro.js',
+          '!js/umd-outro.js',
+          '!js/esm-intro.js',
+          '!js/esm-outro.js'
+        ]
       },
       i18n: {
         src: 'js/i18n/*.js'
@@ -50,11 +63,19 @@ module.exports = function (grunt) {
         sourceMap: true
       },
       main: {
-        src: 'js/<%= pkg.name %>.js',
-        dest: 'dist/js/<%= pkg.name %>.js',
+        src: 'js/bootstrap-select.js',
+        dest: 'dist/js/bootstrap-select.js',
         options: {
           banner: '<%= banner %>\n' + grunt.file.read('js/umd-intro.js'),
           footer: grunt.file.read('js/umd-outro.js')
+        }
+      },
+      esm: {
+        src: 'js/bootstrap-select.js',
+        dest: 'dist/js/bootstrap-select.esm.mjs',
+        options: {
+          banner: '<%= banner %>\n' + grunt.file.read('js/esm-intro.js'),
+          footer: grunt.file.read('js/esm-outro.js')
         }
       },
       i18n: {
@@ -80,11 +101,11 @@ module.exports = function (grunt) {
       },
       main: {
         src: '<%= concat.main.dest %>',
-        dest: 'dist/js/<%= pkg.name %>.min.js',
+        dest: 'dist/js/bootstrap-select.min.js',
         options: {
           sourceMap: true,
           sourceMapIncludeSources: true,
-          sourceMapIn: 'dist/js/<%= pkg.name %>.js.map'
+          sourceMapIn: 'dist/js/bootstrap-select.js.map'
         }
       },
       i18n: {
@@ -99,12 +120,12 @@ module.exports = function (grunt) {
         strictMath: true,
         sourceMap: true,
         outputSourceFiles: true,
-        sourceMapURL: '<%= pkg.name %>.css.map',
+        sourceMapURL: 'bootstrap-select.css.map',
         sourceMapFilename: '<%= less.css.dest %>.map'
       },
       css: {
         src: 'less/bootstrap-select.less',
-        dest: 'dist/css/<%= pkg.name %>.css'
+        dest: 'dist/css/bootstrap-select.css'
       }
     },
 
@@ -124,7 +145,7 @@ module.exports = function (grunt) {
         src: [
           '**/*'
         ],
-        dest: 'docs/docs/dist/'
+        dest: 'docs/static/dist/'
       }
     },
 
@@ -136,7 +157,7 @@ module.exports = function (grunt) {
       },
       css: {
         src: '<%= less.css.dest %>',
-        dest: 'dist/css/<%= pkg.name %>.min.css'
+        dest: 'dist/css/bootstrap-select.min.css'
       }
     },
 
@@ -172,7 +193,7 @@ module.exports = function (grunt) {
           prefix: 'Selectpicker.VERSION = \''
         },
         src: [
-          'js/<%= pkg.name %>.js'
+          'js/bootstrap-select.js'
         ]
       },
       docs: {
@@ -207,7 +228,7 @@ module.exports = function (grunt) {
           prefix: '[\'"]?version[\'"]?:[ "\']*'
         },
         src: [
-          'docs/mkdocs.yml',
+          'docs/docusaurus.config.js',
           'package.json'
         ]
       }
@@ -264,6 +285,180 @@ module.exports = function (grunt) {
   // These plugins provide necessary tasks.
   require('load-grunt-tasks')(grunt, {
     scope: 'devDependencies'
+  });
+
+  grunt.registerMultiTask('postcss', 'Process CSS with PostCSS.', function () {
+    var done = this.async();
+    var postcss = require('postcss');
+    var options = this.options({
+      map: true,
+      processors: [
+        require('autoprefixer')()
+      ]
+    });
+
+    Promise.all(this.files.map(function (file) {
+      var src = file.src.filter(function (filepath) {
+        if (!grunt.file.exists(filepath)) {
+          grunt.fail.warn('Source file "' + filepath + '" not found.');
+        }
+
+        return !grunt.file.isDir(filepath);
+      })[0];
+
+      if (!src) return Promise.resolve();
+
+      var dest = file.dest || src;
+      var map = false;
+
+      if (options.map) {
+        map = {
+          inline: false,
+          annotation: true
+        };
+
+        if (grunt.file.exists(src + '.map')) {
+          map.prev = grunt.file.readJSON(src + '.map');
+        }
+      }
+
+      return postcss(options.processors).process(grunt.file.read(src), {
+        from: src,
+        to: dest,
+        map: map
+      }).then(function (result) {
+        grunt.file.write(dest, result.css);
+
+        if (result.map) {
+          grunt.file.write(dest + '.map', result.map.toString());
+        }
+
+        grunt.log.writeln('File ' + dest + ' processed.');
+      });
+    })).then(function () {
+      done();
+    }, done);
+  });
+
+  grunt.registerMultiTask('compress', 'Create distribution archives.', function () {
+    var done = this.async();
+    var fs = require('fs');
+    var path = require('path');
+    var ZipArchive = require('archiver').ZipArchive;
+    var options = this.options({
+      archive: 'archive.zip'
+    });
+    var archivePath = grunt.template.process(options.archive);
+    var output = fs.createWriteStream(archivePath);
+    var archive = new ZipArchive({
+      zlib: {
+        level: 9
+      }
+    });
+    var completed = false;
+
+    function finish (error) {
+      if (completed) return;
+
+      completed = true;
+      done(error);
+    }
+
+    function archiveName (file, src) {
+      var dest = file.dest || src;
+
+      if (!(file.orig && file.orig.expand) && /\/$/.test(dest)) {
+        dest = path.join(dest, src);
+      }
+
+      return normalizeArchivePath(dest);
+    }
+
+    output.on('close', function () {
+      grunt.log.writeln('Created ' + archivePath + ' (' + archive.pointer() + ' bytes).');
+      finish();
+    });
+
+    archive.on('warning', finish);
+    archive.on('error', finish);
+    archive.pipe(output);
+
+    this.files.forEach(function (file) {
+      file.src.forEach(function (src) {
+        if (!grunt.file.exists(src)) {
+          grunt.fail.warn('Source file "' + src + '" not found.');
+        }
+
+        if (grunt.file.isDir(src)) return;
+
+        archive.file(src, {
+          name: archiveName(file, src)
+        });
+      });
+    });
+
+    var finalize = archive.finalize();
+
+    if (finalize && typeof finalize.catch === 'function') {
+      finalize.catch(finish);
+    }
+  });
+
+  grunt.registerTask('watch', 'Watch source files and run configured tasks.', function () {
+    var done = this.async();
+    var chokidar = require('chokidar');
+    var watchConfig = grunt.config.get('watch') || {};
+    var running = {};
+    var targets = Object.keys(watchConfig);
+
+    function runTasks (targetName, tasks) {
+      if (running[targetName]) {
+        running[targetName].pending = true;
+        return;
+      }
+
+      running[targetName] = {
+        pending: false
+      };
+
+      grunt.util.spawn({
+        grunt: true,
+        args: tasks
+      }, function (error, result) {
+        var rerun = running[targetName].pending;
+
+        if (result.stdout) grunt.log.write(result.stdout);
+        if (result.stderr) grunt.log.error(result.stderr);
+        if (error) grunt.log.error(error.message);
+
+        delete running[targetName];
+
+        if (rerun) {
+          runTasks(targetName, tasks);
+        }
+      });
+    }
+
+    if (!targets.length) {
+      grunt.log.warn('No watch targets configured.');
+      done();
+      return;
+    }
+
+    targets.forEach(function (targetName) {
+      var target = watchConfig[targetName];
+      var files = asArray(target.files);
+      var tasks = asArray(target.tasks);
+
+      chokidar.watch(files, {
+        ignoreInitial: true
+      }).on('all', function (eventName, filepath) {
+        grunt.log.writeln(filepath + ' ' + eventName + '; running ' + tasks.join(', ') + '.');
+        runTasks(targetName, tasks);
+      });
+
+      grunt.log.writeln('Watching ' + files.join(', ') + ' for ' + targetName + '.');
+    });
   });
 
   // Version numbering task.

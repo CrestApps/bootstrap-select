@@ -1,17 +1,22 @@
 {
-  "name": "snapappointments/bootstrap-select",
-  "description": "The jQuery plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Now with Bootstrap 4 support.",
+  "name": "crestapps/bootstrap-select",
+  "description": "A dependency-free, vanilla JavaScript plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Supports Bootstrap 5+.",
   "keywords": [
     "javascript",
-    "jquery",
+    "vanilla-js",
     "form",
     "bootstrap",
+    "bootstrap-5",
     "dropdown",
     "select",
     "replacement"
   ],
-  "homepage": "https://developer.snapappointments.com/bootstrap-select",
+  "homepage": "https://github.com/CrestApps/crestapps-bootstrap-select",
   "authors": [
+    {
+      "name": "CrestApps",
+      "homepage": "https://github.com/CrestApps"
+    },
     {
       "name": "Casey Holzer",
       "homepage": "https://github.com/caseyjhol"
@@ -27,7 +32,6 @@
   ],
   "license": "MIT",
   "suggest": {
-    "components/jquery": "1.9.1 - 3",
-    "twbs/bootstrap": ">=3.0.0"
+    "twbs/bootstrap": ">=5.0.0"
   }
 }

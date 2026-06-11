@@ -1,231 +1,219 @@
+---
+sidebar_position: 4
+title: Methods
+description: bootstrap-select instance and static methods.
+---
+
 # Methods
 
 Interface with bootstrap-select.
 
----
-
-#### `.selectpicker('val')`
-
-You can set the selected value by calling the `val` method on the element.
+In this fork, methods are called directly on the `Selectpicker` instance (there
+is no jQuery `$.fn.selectpicker`). Obtain an instance with
+`Selectpicker.getInstance(elementOrSelector)` (returns the existing instance) or
+`Selectpicker.getOrCreateInstance(elementOrSelector, options)`.
 
 ```js
-$('.selectpicker').selectpicker('val', 'Mustard');
-$('.selectpicker').selectpicker('val', ['Mustard','Relish']);
+const picker = Selectpicker.getInstance('#my-select');
 ```
 
-This is different to calling `val()` directly on the `select` element. If you call `val()` on the element directly, the bootstrap-select ui will not refresh (as the change event only fires from user interaction). You will have to call the ui refresh method yourself.
+---
+
+#### `.val()`
+
+You can set the selected value by calling the `val` method on the instance.
 
 ```js
-$('.selectpicker').val('Mustard');
-$('.selectpicker').selectpicker('render');
+Selectpicker.getInstance('#my-select').val('Mustard');
+Selectpicker.getInstance('#my-select').val(['Mustard', 'Relish']);
+```
+
+This is different to setting `value` directly on the `select` element. If you set
+`value` on the element directly, the bootstrap-select UI will not refresh (as the
+change event only fires from user interaction). You will have to call the UI
+render method yourself.
+
+```js
+const select = document.querySelector('#my-select');
+select.value = 'Mustard';
+Selectpicker.getInstance(select).render();
 
 // this is the equivalent of the above
-$('.selectpicker').selectpicker('val', 'Mustard');
+Selectpicker.getInstance(select).val('Mustard');
 ```
+
+Called with no argument, `val()` returns the current value (a string for single
+selects, or an array of strings for multiple selects).
 
 ---
 
-#### `.selectpicker('selectAll')`
+#### `.selectAll()`
 
 This will select all items in a multi-select.
 
 ```js
-$('.selectpicker').selectpicker('selectAll');
+Selectpicker.getInstance('#my-select').selectAll();
 ```
 
 ---
 
-#### `.selectpicker('deselectAll')`
+#### `.deselectAll()`
 
 This will deselect all items in a multi-select.
 
 ```js
-$('.selectpicker').selectpicker('deselectAll');
+Selectpicker.getInstance('#my-select').deselectAll();
 ```
 
 ---
 
-#### `.selectpicker('render')`
+#### `.render()`
 
-You can force a re-render of the bootstrap-select ui with the `render` method. This is useful if you programatically change any underlying values that affect the layout of the element.
+You can force a re-render of the bootstrap-select UI with the `render` method.
+This is useful if you programmatically change any underlying values that affect
+the layout of the element.
 
 ```js
-$('.selectpicker').selectpicker('render');
+Selectpicker.getInstance('#my-select').render();
 ```
 
 ---
 
-#### `.selectpicker('mobile')`
+#### `.mobile()`
 
-Enable mobile scrolling by calling `$('.selectpicker').selectpicker('mobile')`. This enables the device's native menu for select menus.
+Enable mobile scrolling by calling `mobile()`. This enables the device's native
+menu for select menus.
 
 The method for detecting the browser is left up to the user.
 
 ```js
-if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-  $('.selectpicker').selectpicker('mobile');
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  Selectpicker.getInstance('#my-select').mobile();
 }
 ```
 
 ---
 
-#### `.selectpicker('setStyle')`
+#### `.setStyle()`
 
 Modify the class(es) associated with either the button itself or its container.
 
 If changing the class on the container:
 
 ```js
-$('.selectpicker').addClass('col-lg-12').selectpicker('setStyle');
+const select = document.querySelector('#my-select');
+select.closest('.bootstrap-select').classList.add('col-lg-12');
+Selectpicker.getInstance(select).setStyle();
 ```
 
-If changing the class(es) on the button (altering data-style):
+If changing the class(es) on the button (altering `data-style`):
 
 ```js
-// Replace Class
-$('.selectpicker').selectpicker('setStyle', 'btn-danger');
+const picker = Selectpicker.getInstance('#my-select');
 
-// Add Class
-$('.selectpicker').selectpicker('setStyle', 'btn-large', 'add');
+// Replace class
+picker.setStyle('btn-danger');
 
-// Remove Class
-$('.selectpicker').selectpicker('setStyle', 'btn-large', 'remove');
+// Add class
+picker.setStyle('btn-lg', 'add');
+
+// Remove class
+picker.setStyle('btn-lg', 'remove');
 ```
-
 
 ---
 
-#### `.selectpicker('refresh')`
+#### `.refresh()`
 
-To programmatically update a select with JavaScript, first manipulate the select, then use the `refresh` method to 
-update the UI to match the new state. This is necessary when removing or adding options, or when disabling/enabling a 
-select via JavaScript.
+To programmatically update a select with JavaScript, first manipulate the select,
+then use the `refresh` method to update the UI to match the new state. This is
+necessary when removing or adding options, or when disabling/enabling a select
+via JavaScript.
 
 ```js
-$('.selectpicker').selectpicker('refresh');
+Selectpicker.getInstance('#my-select').refresh();
 ```
 
-<div class="bs-docs-example">
-  <div class="form-group">
-    <select class="selectpicker remove-example">
-      <option value="Mustard">Mustard</option>
-      <option value="Ketchup">Ketchup</option>
-      <option value="Relish">Relish</option>
-    </select>
-  </div>
+For example, to remove an option then refresh:
 
-  <button class="btn btn-warning rm-mustard">Remove Mustard</button>
-  <button class="btn btn-danger rm-ketchup">Remove Ketchup</button>
-  <button class="btn btn-success rm-relish">Remove Relish</button>
-</div>
-
-```html
-<select class="selectpicker remove-example">
-  <option value="Mustard">Mustard</option>
-  <option value="Ketchup">Ketchup</option>
-  <option value="Relish">Relish</option>
-</select>
-
-<button class="btn btn-warning rm-mustard">Remove Mustard</button>
-<button class="btn btn-danger rm-ketchup">Remove Ketchup</button>
-<button class="btn btn-success rm-relish">Remove Relish</button>
-```
 ```js
-$('.rm-mustard').click(function () {
-  $('.remove-example').find('[value=Mustard]').remove();
-  $('.remove-example').selectpicker('refresh');
+document.querySelector('.rm-mustard').addEventListener('click', function () {
+  const select = document.querySelector('.remove-example');
+  const option = select.querySelector('[value="Mustard"]');
+  if (option) option.remove();
+  Selectpicker.getInstance(select).refresh();
 });
 ```
 
-<div class="bs-docs-example">
-  <div class="form-group">
-    <select class="selectpicker disable-example">
-      <option value="Mustard">Mustard</option>
-      <option value="Ketchup">Ketchup</option>
-      <option value="Relish">Relish</option>
-    </select>
-  </div>
-
-  <button class="btn btn-default ex-disable"><i class="icon-remove"></i> Disable</button>
-  <button class="btn btn-default ex-enable"><i class="icon-ok"></i> Enable</button>
-</div>
+Or to disable/enable a select:
 
 ```js
-$('.ex-disable').click(function () {
-  $('.disable-example').prop('disabled', true);
-  $('.disable-example').selectpicker('refresh');
+const select = document.querySelector('.disable-example');
+
+document.querySelector('.ex-disable').addEventListener('click', function () {
+  select.disabled = true;
+  Selectpicker.getInstance(select).refresh();
 });
 
-$('.ex-enable').click(function () {
-  $('.disable-example').prop('disabled', false);
-  $('.disable-example').selectpicker('refresh');
+document.querySelector('.ex-enable').addEventListener('click', function () {
+  select.disabled = false;
+  Selectpicker.getInstance(select).refresh();
 });
 ```
-
-<script type="text/javascript">
-  window.onload = function () {
-    var $re = $('.remove-example'),
-        $de = $('.disable-example');
-
-    $('.rm-mustard').click(function () {
-      $re.find('[value=Mustard]').remove();
-      $re.selectpicker('refresh');
-    });
-    $('.rm-ketchup').click(function () {
-      $re.find('[value=Ketchup]').remove();
-      $re.selectpicker('refresh');
-    });
-    $('.rm-relish').click(function () {
-      $re.find('[value=Relish]').remove();
-      $re.selectpicker('refresh');
-    });
-    $('.ex-disable').click(function () {
-      $de.prop('disabled', true);
-      $de.selectpicker('refresh');
-    });
-    $('.ex-enable').click(function () {
-      $de.prop('disabled', false);
-      $de.selectpicker('refresh');
-    });
-  };
-</script>
 
 ---
 
-#### `.selectpicker('toggle')`
+#### `.toggle()`
 
 Programmatically toggles the bootstrap-select menu open/closed.
 
 ```js
-$('.selectpicker').selectpicker('toggle');
+Selectpicker.getInstance('#my-select').toggle();
+```
+
+`.open()` and `.close()` are also available.
+
+---
+
+#### `.hide()`
+
+To programmatically hide the bootstrap-select use the `hide` method (this only
+affects the visibility of the bootstrap-select itself).
+
+```js
+Selectpicker.getInstance('#my-select').hide();
 ```
 
 ---
 
-#### `.selectpicker('hide')`
+#### `.show()`
 
-To programmatically hide the bootstrap-select use the `hide` method (this only affects the visibility of the bootstrap-select itself).
+To programmatically show the bootstrap-select use the `show` method (this only
+affects the visibility of the bootstrap-select itself).
 
 ```js
-$('.selectpicker').selectpicker('hide');
+Selectpicker.getInstance('#my-select').show();
 ```
 
 ---
 
-#### `.selectpicker('show')`
+#### `.destroy()`
 
-To programmatically show the bootstrap-select use the `show` method (this only affects the visibility of the bootstrap-select itself).
+To programmatically destroy the bootstrap-select, use the `destroy` method. This
+removes the generated UI and restores the original `<select>` element.
 
 ```js
-$('.selectpicker').selectpicker('show');
+Selectpicker.getInstance('#my-select').destroy();
 ```
 
 ---
 
-#### `.selectpicker('destroy')`
+## Static methods
 
-To programmatically destroy the bootstrap-select, use the `destroy` method.
-
-```js
-$('.selectpicker').selectpicker('destroy');
-```
+| Method | Description |
+| --- | --- |
+| `new Selectpicker(elementOrSelector, options)` | Create a new instance. |
+| `Selectpicker.getInstance(elementOrSelector)` | Return the existing instance for an element, or `null`. |
+| `Selectpicker.getOrCreateInstance(elementOrSelector, options)` | Return the existing instance, creating one if needed. |
+| `Selectpicker.setDefaults(options)` | Set global default options (used by the i18n translation files). |
+| `Selectpicker.VERSION` | The plugin version. |

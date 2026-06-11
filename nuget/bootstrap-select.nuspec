@@ -2,18 +2,17 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>bootstrap-select</id>
-        <version>1.14.0-beta3</version>
+        <version>1.0.0</version>
         <title>bootstrap-select</title>
-        <authors>Casey Holzer, Silvio Moreto, SnapAppointments LLC</authors>
-        <owners>SnapAppointments, LLC</owners>
-        <projectUrl>https://developer.snapappointments.com/bootstrap-select</projectUrl>
-        <description>The jQuery plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Now with Bootstrap 4 support.</description>
-        <tags>javascript jquery form bootstrap dropdown select replacement</tags>
+        <authors>CrestApps, Casey Holzer, Silvio Moreto, SnapAppointments LLC</authors>
+        <owners>CrestApps</owners>
+        <projectUrl>https://github.com/CrestApps/crestapps-bootstrap-select</projectUrl>
+        <description>A dependency-free, vanilla JavaScript plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Supports Bootstrap 5+.</description>
+        <tags>javascript vanilla-js form bootstrap bootstrap-5 dropdown select replacement</tags>
         <readme>README.md</readme>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
-            <dependency id="jQuery" version="[1.9.1, 4)" />
-            <dependency id="bootstrap" version="3.0.0" />
+            <dependency id="bootstrap" version="5.0.0" />
         </dependencies>
     </metadata>
     <files>

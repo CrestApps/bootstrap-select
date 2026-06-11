@@ -25,10 +25,10 @@ select.selectpicker {
   > .dropdown-toggle {
     position: relative;
     width: 100%;
-    // necessary for proper positioning of caret in Bootstrap 4 (pushes caret to the right)
+    // necessary for proper positioning of caret in Bootstrap 5 (pushes caret to the right)
     text-align: right;
     white-space: nowrap;
-    // force caret to be vertically centered for Bootstrap 4 multi-line buttons
+    // force caret to be vertically centered for Bootstrap 5 multi-line buttons
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
@@ -145,7 +145,7 @@ select.selectpicker {
   &,
   &[class*="col-"],
   .row &[class*="col-"] {
-    &.dropdown-menu-right {
+    &.dropdown-menu-end {
       float: right;
     }
   }
@@ -222,22 +222,6 @@ select.selectpicker {
       text-align: left;
       overflow: hidden;
       flex: 0 1 auto; // for IE10
-
-      .bs3& {
-        padding-right: inherit;
-      }
-
-      .input-group .bs3-has-addon& {
-        position: absolute;
-        padding-top: inherit;
-        padding-bottom: inherit;
-        padding-left: inherit;
-        float: none;
-
-        .filter-option-inner {
-          padding-right: inherit;
-        }
-      }
     }
 
     .filter-option-inner-inner {
@@ -266,18 +250,10 @@ select.selectpicker {
       margin-right: 5px;
       text-align: center;
 
-      .bs3& {
-        padding-right: inherit;
-      }
-
       span {
         position: relative;
         top: calc(((-1em / 1.5) + 1ex) / 2);
         pointer-events: none;
-
-        .bs3& {
-          top: auto;
-        }
       }
     }
 

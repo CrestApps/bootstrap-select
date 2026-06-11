@@ -1,0 +1,27 @@
+/** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
+const sidebars = {
+  docs: [
+    {
+      type: 'doc',
+      id: 'index',
+      label: 'Getting Started'
+    },
+    {
+      type: 'doc',
+      id: 'examples',
+      label: 'Examples'
+    },
+    {
+      type: 'doc',
+      id: 'options',
+      label: 'Options'
+    },
+    {
+      type: 'doc',
+      id: 'methods',
+      label: 'Methods'
+    }
+  ]
+};
+
+module.exports = sidebars;

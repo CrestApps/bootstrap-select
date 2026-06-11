@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">CrestApps bootstrap-select</title>
+  <rect width="64" height="64" rx="14" fill="#181618"/>
+  <path fill="#eaa429" d="M18 18h28v6H25v8h18v6H25v8h21v6H18z"/>
+  <path fill="#fff" d="M46 24l6 8-6 8h-7l6-8-6-8z"/>
+</svg>

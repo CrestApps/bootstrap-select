@@ -1,27 +1,22 @@
-name: publish
+name: Publish NuGet - Release
 on:
  release:
    types: [published]
 jobs:
   publish:
     runs-on: ubuntu-latest
-    name: Publish latest release
+    name: Publish NuGet package
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '16.x'
+          node-version: '20.19'
           cache: 'npm'
-          registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies
         run: npm ci
       - name: Build package
-        run: grunt build
-      - name: Publish npm package
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx grunt build
       - name: Publish NuGet package
         id: publish_nuget
         uses: laget-se/publish-nuget@v2

@@ -15,10 +15,10 @@ Guidelines for bug reports:
    reported.
 
 2. **Check if the issue has been fixed.** Try to reproduce it using the
-   latest `master` or development branch in the repository.
+   latest `main` or development branch in the repository.
 
 3. **Provide environment details.** Provide your operating system, browser(s),
-   jQuery version, Bootstrap version, and bootstrap-select version.
+   Bootstrap version (5+), and bootstrap-select version.
 
 4. **Create an isolated and reproducible test case.** Create a reduced test
-   case and include a link to a live example. Use [this Plunker debugging template](https://developer.snapappointments.com/bootstrap-select/playground/) to share your isolated test cases.
+   case and include a link to a live example. Use the repository's Bootstrap 5 playground/template to share your isolated test cases.

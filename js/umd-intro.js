@@ -1,17 +1,18 @@
-(function (root, factory) {
-  if (root === undefined && window !== undefined) root = window;
+(function (factory) {
   if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module unless amdModuleId is set
-    define(["jquery"], function (a0) {
-      return (factory(a0));
-    });
+    // AMD. Register as an anonymous module.
+    define(['bootstrap'], factory);
   } else if (typeof module === 'object' && module.exports) {
-    // Node. Does not work with strict CommonJS, but
-    // only CommonJS-like environments that support module.exports,
-    // like Node.
-    module.exports = factory(require("jquery"));
+    // CommonJS-like environments (Node, bundlers).
+    var bootstrap;
+    try {
+      bootstrap = require('bootstrap');
+    } catch (e) {
+      bootstrap = undefined;
+    }
+    module.exports = factory(bootstrap);
   } else {
-    factory(root["jQuery"]);
+    // Browser globals.
+    factory(typeof window !== 'undefined' ? window.bootstrap : undefined);
   }
-}(this, function (jQuery) {
-
+}(function (bootstrap) {

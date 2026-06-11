@@ -33,15 +33,18 @@ Guidelines for bug reports:
    reported.
 
 2. **Check if the issue has been fixed.** Try to reproduce it using the
-   latest `master` or development branch in the repository.
+   latest `main` or development branch in the repository.
 
 3. **Provide environment details.** Provide your operating system, browser(s),
-   jQuery version, Bootstrap version, and bootstrap-select version.
+   Bootstrap version (5+), and bootstrap-select version.
 
 4. **Create an isolated and reproducible test case.** Create a [reduced test
    case](https://css-tricks.com/reduced-test-cases/).
 
-5. **Include a live example.** Use [this Plunker debugging template](https://developer.snapappointments.com/bootstrap-select/playground/) to share your isolated test cases. You can also make use of [jsFiddle](https://jsfiddle.net/) or [JS Bin](https://jsbin.com/).
+5. **Include a live example.** Share a reduced test case using the
+   [hosted examples](https://bootstrap-select.crestapps.com/docs/examples) as a
+   starting point, or a tool such as [CodeSandbox](https://codesandbox.io/),
+   [jsFiddle](https://jsfiddle.net/), or [JS Bin](https://jsbin.com/).
 
 A good bug report shouldn't leave others needing to chase you up for more
 information. Please try to be as detailed as possible in your report. What is
@@ -99,7 +102,7 @@ code as deemed necessary.
 We are using node and grunt to build and (in the future) test this project.
 This means that you must setup a local development environment:
 
-1. Install `node` and `npm` using your preferred method
+1. Install Node.js 20.19 or newer and `npm` using your preferred method
 2. Install the grunt CLI: `npm install -g grunt-cli`
 3. Install the project's development dependencies: `npm install`
 4. Run the various grunt tasks as needed:
@@ -113,9 +116,10 @@ This means that you must setup a local development environment:
 
 ## Running documentation locally
 
-1. If necessary, [install MkDocs](https://www.mkdocs.org/#installation).
-2. Install [mkdocs-bootstrap](https://mkdocs.github.io/mkdocs-bootstrap/) using `pip install mkdocs-bootstrap`.
-3. From the `/bootstrap-select/docs` directory, run `mkdocs serve` in the command line.
-4. Open `http://127.0.0.1:8000/` in your browser, and voilà.
+1. Install Node.js 20.19 or newer and the project dependencies with `npm install`.
+2. Run `npm run docs:start` from the repository root.
+3. Open `http://localhost:3000/` in your browser.
 
-Learn more about using MkDocs by reading its [documentation](https://www.mkdocs.org/).
+`docs:start` builds the plugin, copies the local assets into `docs/static/dist/`,
+and starts the Docusaurus 3.10 site. Use the docs Examples page or the hosted
+standalone examples under `/examples/` to manually test the plugin.
