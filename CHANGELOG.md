@@ -1,4 +1,4 @@
-# v1.0.0 (CrestApps fork)
+# v1.0.1 (CrestApps fork)
 
 This is the first release of the CrestApps fork of
 [snapappointments/bootstrap-select](https://github.com/snapappointments/bootstrap-select).

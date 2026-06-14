@@ -8,8 +8,8 @@
 	<a href="https://github.com/CrestApps/crestapps-bootstrap-select/blob/main/LICENSE" target="_blank">
 		<img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="License">
 	</a>
-	<a href="https://www.npmjs.com/package/crestapps-bootstrap-select" target="_blank">
-		<img src="https://img.shields.io/npm/v/crestapps-bootstrap-select.svg" alt="npm version">
+	<a href="https://www.npmjs.com/package/@crestapps/bootstrap-select" target="_blank">
+		<img src="https://img.shields.io/npm/v/%40crestapps%2Fbootstrap-select.svg" alt="npm version">
 	</a>
 	<a href="https://bootstrap-select.crestapps.com" target="_blank">
 		<img src="https://img.shields.io/badge/docs-bootstrap--select.crestapps.com-0a7bbb.svg" alt="Documentation">
@@ -41,10 +41,10 @@ following goals:
 
 ## Quick start
 
-Install with [npm](https://www.npmjs.com/package/crestapps-bootstrap-select):
+Install with [npm](https://www.npmjs.com/package/@crestapps/bootstrap-select):
 
 ```sh
-npm install crestapps-bootstrap-select bootstrap
+npm install @crestapps/bootstrap-select bootstrap
 ```
 
 Load Bootstrap 5, then bootstrap-select's CSS and JS. **Load bootstrap-select
@@ -73,9 +73,9 @@ jsDelivr. Prefer pinning an explicit package version in production:
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- crestapps-bootstrap-select from jsDelivr -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/crestapps-bootstrap-select@1.0.0/dist/css/bootstrap-select.min.css">
-<script src="https://cdn.jsdelivr.net/npm/crestapps-bootstrap-select@1.0.0/dist/js/bootstrap-select.min.js"></script>
+<!-- @crestapps/bootstrap-select from jsDelivr -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.0.1/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.0.1/dist/js/bootstrap-select.min.js"></script>
 ```
 
 You can replace `@1.0.0` with the version you want to consume. During
@@ -86,7 +86,7 @@ When loaded via a `<script>` tag, the plugin exposes a global `Selectpicker`
 class. Modern JavaScript can import the ES module entry:
 
 ```js
-import Selectpicker from 'crestapps-bootstrap-select';
+import Selectpicker from '@crestapps/bootstrap-select';
 ```
 
 ## Usage
