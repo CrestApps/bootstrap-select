@@ -27,7 +27,19 @@ jobs:
           node-version: '20.19'
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
+          scope: '@crestapps'
           always-auth: true
+
+      - name: Validate npm publish prerequisites
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm whoami
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          if [[ "$PACKAGE_NAME" != @* ]] && ! npm view "$PACKAGE_NAME" version >/dev/null 2>&1; then
+            echo "::error title=Initial unscoped npm publish requires a different token::Package '$PACKAGE_NAME' does not exist on npm yet. First-time publish of a new unscoped package usually cannot be done with an npm automation token from GitHub Actions. Publish it once manually with an npm publish-capable user token/session, or rename it to a scoped package and retry."
+            exit 1
+          fi
 
       - name: Build assets
         run: |

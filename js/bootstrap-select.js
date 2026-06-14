@@ -3230,7 +3230,7 @@ class Selectpicker {
 var instanceMap = new WeakMap();
 
 Selectpicker.NAME = 'selectpicker';
-Selectpicker.VERSION = '1.0.0';
+Selectpicker.VERSION = '1.0.1';
 
 // user-provided global defaults (set via Selectpicker.setDefaults, used by i18n files)
 Selectpicker.defaults = null;

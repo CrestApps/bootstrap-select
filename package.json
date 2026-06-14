@@ -1,5 +1,5 @@
 {
-  "name": "crestapps-bootstrap-select",
+  "name": "@crestapps/bootstrap-select",
   "title": "bootstrap-select",
   "main": "dist/js/bootstrap-select.js",
   "module": "dist/js/bootstrap-select.esm.mjs",
@@ -27,7 +27,7 @@
     "README.md"
   ],
   "description": "A dependency-free, vanilla JavaScript plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Supports Bootstrap 5+. Forked from snapappointments/bootstrap-select with jQuery and Bootstrap 3/4 support removed.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/CrestApps/crestapps-bootstrap-select",
   "author": {
     "name": "CrestApps",
@@ -55,6 +55,9 @@
     "url": "https://github.com/CrestApps/crestapps-bootstrap-select/issues"
   },
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
     "bootstrap": ">=5.0.0"
   },
