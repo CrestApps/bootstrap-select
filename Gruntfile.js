@@ -140,12 +140,25 @@ module.exports = function (grunt) {
 
     copy: {
       docs: {
-        expand: true,
-        cwd: 'dist/',
-        src: [
-          '**/*'
-        ],
-        dest: 'docs/static/dist/'
+        files: [
+          {
+            expand: true,
+            cwd: 'dist/',
+            src: [
+              '**/*'
+            ],
+            dest: 'docs/static/dist/'
+          },
+          {
+            expand: true,
+            cwd: 'node_modules/@fortawesome/fontawesome-free/',
+            src: [
+              'css/all.min.css',
+              'webfonts/*'
+            ],
+            dest: 'docs/static/vendor/fontawesome/'
+          }
+        ]
       }
     },
 

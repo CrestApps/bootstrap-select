@@ -12,42 +12,30 @@ import LiveExample from '@site/src/components/LiveExample';
 The examples use the vanilla JavaScript / Bootstrap 5+ API: `new Selectpicker(el)` or the `selectpicker` class, which auto-initializes. jQuery is not required.
 :::
 
-<div className="standaloneExamples">
-  <div className="standaloneExampleCard">
-    <h3>Standalone basic</h3>
-    <p>Open the local plugin build on a plain HTML page.</p>
-    <a className="button button--primary" href="../examples/basic.html">Open basic example</a>
-  </div>
-  <div className="standaloneExampleCard">
-    <h3>Live search</h3>
-    <p>Test search filtering against hosted example markup.</p>
-    <a className="button button--primary" href="../examples/live-search.html">Open live search</a>
-  </div>
-  <div className="standaloneExampleCard">
-    <h3>Multiple select</h3>
-    <p>Verify multiselect and action-box behavior.</p>
-    <a className="button button--primary" href="../examples/multiple.html">Open multiselect</a>
-  </div>
-</div>
+The main examples now live directly on this docs page so they inherit the docs theme, including light and dark mode. The standalone HTML files are still kept under `docs/static/examples/` for quick smoke-testing outside Docusaurus.
 
 ## Standard select boxes
 
 <LiveExample
-  html={String.raw`  <p>Make this:</p>
+  html={String.raw`  <div class="mb-3">
+    <p class="mb-0">Native select:</p>
 
-  <select>
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-  </select>
+    <select>
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </div>
 
-  <p>Become this:</p>
+  <div class="mb-3">
+    <p class="mb-0">Enhanced with bootstrap-select:</p>
 
-  <select class="selectpicker">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-  </select>`}
+    <select class="selectpicker">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </div>`}
 />
 
 ```html
@@ -110,16 +98,12 @@ The examples use the vanilla JavaScript / Bootstrap 5+ API: `new Selectpicker(el
 </select>
 ```
 
-# Live search
-
----
-
 ## Live search
 
 You can add a search input by passing `data-live-search="true"` attribute:
 
 <LiveExample
-  html={String.raw`  <select class="selectpicker" data-live-search="true" data-width="fit">
+  html={String.raw`  <select class="selectpicker" data-live-search="true">
     <option>Hot Dog, Fries and a Soda</option>
     <option>Burger, Shake and a Smile</option>
     <option>Sugar, Spice and all things nice</option>
@@ -132,7 +116,7 @@ You can add a search input by passing `data-live-search="true"` attribute:
 Add key words to options to improve their searchability using `data-tokens`.
 
 <LiveExample
-  html={String.raw`  <select class="selectpicker" data-live-search="true" data-width="fit">
+  html={String.raw`  <select class="selectpicker" data-live-search="true">
     <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
     <option data-tokens="mustard">Burger, Shake and a Smile</option>
     <option data-tokens="frosting">Sugar, Spice and all things nice</option>
@@ -145,6 +129,189 @@ Add key words to options to improve their searchability using `data-tokens`.
   <option data-tokens="mustard">Burger, Shake and a Smile</option>
   <option data-tokens="frosting">Sugar, Spice and all things nice</option>
 </select>
+```
+
+## Tags-style live search with open options
+
+Use `showSelectedTags` to keep selections visible as removable tags above the search box, while the button switches to a compact summary instead of repeating the same values.
+
+<LiveExample
+  html={String.raw`  <select
+    class="selectpicker"
+    multiple
+    data-icon-base="fa-solid"
+    data-tick-icon="fa-check"
+    data-live-search="true"
+    data-show-selected-tags="true"
+    data-open-options="true"
+    data-selected-text-format="count > 2"
+    data-live-search-placeholder="Search or create tags"
+    placeholder="Search or create tags">
+    <option selected data-icon="fa-seedling">Orchard Core</option>
+    <option selected data-icon="fa-cubes">Bootstrap 5</option>
+    <option data-icon="fa-code">Vue</option>
+    <option data-icon="fa-tags">Taxonomy</option>
+    <option data-icon="fa-circle-plus">Open option</option>
+    <option data-icon="fa-wand-magic-sparkles">Editor UX</option>
+  </select>`}
+/>
+
+```html
+<select
+  class="selectpicker"
+  multiple
+  data-icon-base="fa-solid"
+  data-tick-icon="fa-check"
+  data-live-search="true"
+  data-show-selected-tags="true"
+  data-open-options="true"
+  data-live-search-placeholder="Search or create tags"
+  placeholder="Search or create tags">
+  <option selected data-icon="fa-seedling">Orchard Core</option>
+  <option selected data-icon="fa-cubes">Bootstrap 5</option>
+  <option data-icon="fa-code">Vue</option>
+  <option data-icon="fa-tags">Taxonomy</option>
+  <option data-icon="fa-circle-plus">Open option</option>
+  <option data-icon="fa-wand-magic-sparkles">Editor UX</option>
+</select>
+```
+
+If you prefer a Bootstrap-style checkbox instead of the floating checkmark, set `selectionIndicator` to `checkbox`:
+
+<LiveExample
+  html={String.raw`  <select
+    class="selectpicker"
+    multiple
+    data-live-search="true"
+    data-show-selected-tags="true"
+    data-selection-indicator="checkbox"
+    data-live-search-placeholder="Search frameworks"
+    placeholder="Choose frameworks">
+    <option selected>Bootstrap 5</option>
+    <option>Vue</option>
+    <option>React</option>
+    <option>Svelte</option>
+  </select>`}
+/>
+
+```html
+<select
+  class="selectpicker"
+  multiple
+  data-live-search="true"
+  data-show-selected-tags="true"
+  data-selection-indicator="checkbox"
+  placeholder="Choose frameworks">
+  <option selected>Bootstrap 5</option>
+  <option>Vue</option>
+  <option>React</option>
+  <option>Svelte</option>
+</select>
+```
+
+## List-style menu
+
+Set `selectedItemsStyle` to `list` to render the removable selections as a stacked Bootstrap list group:
+
+<LiveExample
+  html={String.raw`  <select
+    class="selectpicker"
+    multiple
+    data-icon-base="fa-solid"
+    data-tick-icon="fa-check"
+    data-live-search="true"
+    data-show-selected-tags="true"
+    data-selected-items-style="list"
+    data-live-search-placeholder="Search topics"
+    placeholder="Choose topics">
+    <option selected data-icon="fa-seedling">Orchard Core</option>
+    <option selected data-icon="fa-cubes">Bootstrap 5</option>
+    <option data-icon="fa-code">Vue</option>
+    <option data-icon="fa-tags">Taxonomy</option>
+    <option data-icon="fa-wand-magic-sparkles">Editor UX</option>
+  </select>`}
+/>
+
+```html
+<select
+  class="selectpicker"
+  multiple
+  data-live-search="true"
+  data-show-selected-tags="true"
+  data-selected-items-style="list">
+  <option selected>Orchard Core</option>
+  <option selected>Bootstrap 5</option>
+  <option>Vue</option>
+</select>
+```
+
+## Floating labels with visible tags
+
+When a tags-style picker is placed inside a Bootstrap 5 `form-floating` wrapper, the selected tags stay visible inside the control after the menu closes, with balanced top and bottom spacing around the tags.
+
+<LiveExample
+  html={String.raw`  <div class="form-floating">
+    <select
+      id="floating-tags-example"
+      class="selectpicker"
+      multiple
+      data-live-search="true"
+      data-show-selected-tags="true"
+      data-open-options="true"
+      data-live-search-placeholder="Search years"
+      placeholder="Years">
+      <option selected>2026</option>
+      <option selected>2023</option>
+      <option selected>2021</option>
+      <option>2019</option>
+      <option>2018</option>
+    </select>
+    <label for="floating-tags-example">Years</label>
+  </div>`}
+/>
+
+```html
+<div class="form-floating">
+  <select
+    id="floating-tags-example"
+    class="selectpicker"
+    multiple
+    data-live-search="true"
+    data-show-selected-tags="true"
+    data-open-options="true"
+    placeholder="Years">
+    <option selected>2026</option>
+    <option selected>2023</option>
+    <option selected>2021</option>
+  </select>
+  <label for="floating-tags-example">Years</label>
+</div>
+```
+
+For remote-backed pickers, initialize with JavaScript and provide `source.create(callback, searchValue)` to save the new item before selecting it:
+
+```js
+new Selectpicker('#tag-editor', {
+  liveSearch: true,
+  showSelectedTags: true,
+  openOptions: true,
+  source: {
+    data: function (callback) {
+      callback(existingTags);
+    },
+    search: function (callback, page, searchValue) {
+      callback(filterTags(searchValue));
+    },
+    create: function (callback, searchValue) {
+      saveTag(searchValue).then(function (tag) {
+        callback({
+          text: tag.displayText,
+          value: tag.id
+        });
+      });
+    }
+  }
+});
 ```
 
 # Limit the number of selections
@@ -204,7 +371,7 @@ Use the `placeholder` attribute to set the default placeholder text when nothing
 <LiveExample
   html={String.raw`  <div class="form-group">
     <label>Multiple</label>
-    <select class="selectpicker" multiple placeholder="Choose one of the following..." data-width="fit">
+    <select class="selectpicker" multiple placeholder="Choose one of the following...">
       <option>Mustard</option>
       <option>Ketchup</option>
       <option>Relish</option>
@@ -213,7 +380,7 @@ Use the `placeholder` attribute to set the default placeholder text when nothing
 
   <div class="form-group">
     <label>Standard</label>
-    <select class="selectpicker" placeholder="Choose one of the following..." data-width="fit">
+    <select class="selectpicker" placeholder="Choose one of the following...">
       <option>Mustard</option>
       <option>Ketchup</option>
       <option>Relish</option>
@@ -313,7 +480,7 @@ You can set the button classes via the `data-style` attribute:
     </select>
   </div>
   <div class="form-group">
-    <select class="selectpicker" data-style="btn-info">
+    <select class="selectpicker" data-style="btn-secondary">
       <option>Mustard</option>
       <option>Ketchup</option>
       <option>Relish</option>
@@ -327,7 +494,14 @@ You can set the button classes via the `data-style` attribute:
     </select>
   </div>
   <div class="form-group">
-    <select class="selectpicker" data-style="btn-warning">
+    <select class="selectpicker" data-style="btn-dark">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select class="selectpicker" data-style="btn-light">
       <option>Mustard</option>
       <option>Ketchup</option>
       <option>Relish</option>
@@ -347,7 +521,7 @@ You can set the button classes via the `data-style` attribute:
   ...
 </select>
 
-<select class="selectpicker" data-style="btn-info">
+<select class="selectpicker" data-style="btn-secondary">
   ...
 </select>
 
@@ -355,7 +529,11 @@ You can set the button classes via the `data-style` attribute:
   ...
 </select>
 
-<select class="selectpicker" data-style="btn-warning">
+<select class="selectpicker" data-style="btn-dark">
+  ...
+</select>
+
+<select class="selectpicker" data-style="btn-light">
   ...
 </select>
 
@@ -516,105 +694,33 @@ Wrap selects in grid columns, or any custom parent element, to easily enforce de
 </div>
 ```
 
-<div id="data-width"></div>
-
-Alternatively, use the `data-width` attribute to set the width of the select. Set `data-width` to `'auto'` to automatically adjust the width of the select to its widest option. `'fit'` automatically adjusts the width of the select to the width of its currently selected option. An exact value can also be specified, e.g., `300px` or `50%`.
-
-<LiveExample
-  html={String.raw`  <div class="row">
-    <div class="col-sm-12">
-      <div class="form-group">
-        <label><code>width: 'auto'</code></label>
-        <select class="selectpicker form-control" data-width="auto">
-          <option>Mustard</option>
-          <option>Ketchup</option>
-          <option>Relish</option>
-          <option>All of the above (and much, much more!)</option>
-        </select>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="form-group">
-        <label><code>width: 'fit'</code></label>
-        <select class="selectpicker form-control" data-width="fit">
-          <option>Mustard</option>
-          <option>Ketchup</option>
-          <option>Relish</option>
-          <option>All of the above (and much, much more!)</option>
-        </select>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="form-group">
-        <label><code>width: '150px'</code></label>
-        <select class="selectpicker form-control" data-width="150px">
-          <option>Mustard</option>
-          <option>Ketchup</option>
-          <option>Relish</option>
-          <option>All of the above (and much, much more!)</option>
-        </select>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="form-group">
-        <label><code>width: '75%'</code></label>
-        <select class="selectpicker form-control" data-width="75%">
-          <option>Mustard</option>
-          <option>Ketchup</option>
-          <option>Relish</option>
-          <option>All of the above (and much, much more!)</option>
-        </select>
-      </div>
-    </div>
-  </div>`}
-/>
-
-```html
-<select class="selectpicker" data-width="auto">
-  ...
-</select>
-<select class="selectpicker" data-width="fit">
-  ...
-</select>
-<select class="selectpicker" data-width="100px">
-  ...
-</select>
-<select class="selectpicker" data-width="75%">
-  ...
-</select>
-```
-
 # Customize options
 
 ---
 
-## Icons
+## Font Awesome icons
 
-Add an icon to an option or optgroup with the `data-icon` attribute:
+This example uses Font Awesome. Add an icon to an option or optgroup with the `data-icon` attribute:
 
 :::info Bootstrap 5 icons
 Bootstrap 5 does not include an icon font. To use Font Awesome or another icon library, set `iconBase` and `tickIcon` to match that library.
 :::
 
+The selected option renders its icon in the button, and the menu shows the icons for the remaining options as well.
+
 <LiveExample
-  html={String.raw`  <select class="selectpicker">
-    <option data-icon="fa-glass">Mustard</option>
-    <option data-icon="fa-heart">Ketchup</option>
-    <option data-icon="fa-film">Relish</option>
-    <option data-icon="fa-home">Mayonnaise</option>
-    <option data-icon="fa-print">Barbecue Sauce</option>
+  html={String.raw`  <select class="selectpicker" data-icon-base="fa-solid" data-tick-icon="fa-check">
+    <option selected data-icon="fa-heart">Ketchup</option>
+    <option data-icon="fa-fire">Barbecue Sauce</option>
+    <option data-icon="fa-burger">Mustard</option>
+    <option data-icon="fa-pepper-hot">Relish</option>
+    <option data-icon="fa-house">Mayonnaise</option>
   </select>`}
 />
 
 ```html
-<select class="selectpicker">
-  <option data-icon="fa-heart">Ketchup</option>
+<select class="selectpicker" data-icon-base="fa-solid" data-tick-icon="fa-check">
+  <option selected data-icon="fa-heart">Ketchup</option>
 </select>
 ```
 
@@ -810,55 +916,6 @@ Add a header to the dropdown menu, e.g. `header: 'Select a condiment'` or `data-
 <select class="selectpicker" data-header="Select a condiment">
   ...
 </select>
-```
-
-## Container
-
-Append the select menu to a specific element, e.g. `container: 'body'` or `data-container=".main-content"`. This is useful if the select element is inside an element with `overflow: hidden`.
-
-<LiveExample
-  html={String.raw`  <div class="row">
-    <div class="col-md-3">
-      <label><code>container: false</code></label>
-      <select class="selectpicker form-control">
-        <option data-subtext="French's">Mustard</option>
-        <option data-subtext="Heinz">Ketchup</option>
-        <option data-subtext="Sweet">Relish</option>
-        <option data-subtext="Miracle Whip">Mayonnaise</option>
-        <option data-divider="true"></option>
-        <option data-subtext="Honey">Barbecue Sauce</option>
-        <option data-subtext="Ranch">Salad Dressing</option>
-        <option data-subtext="Sweet & Spicy">Tabasco</option>
-        <option data-subtext="Chunky">Salsa</option>
-      </select>
-    </div>
-    <div class="col-md-3">
-    <label><code>container: 'body'</code></label>
-      <select class="selectpicker form-control" data-container="body">
-        <option data-subtext="French's">Mustard</option>
-        <option data-subtext="Heinz">Ketchup</option>
-        <option data-subtext="Sweet">Relish</option>
-        <option data-subtext="Miracle Whip">Mayonnaise</option>
-        <option data-divider="true"></option>
-        <option data-subtext="Honey">Barbecue Sauce</option>
-        <option data-subtext="Ranch">Salad Dressing</option>
-        <option data-subtext="Sweet & Spicy">Tabasco</option>
-        <option data-subtext="Chunky">Salsa</option>
-      </select>
-    </div>
-  </div>`}
-  style={{ overflow: 'hidden' }}
-/>
-
-```html
-<div style="overflow:hidden;">
-  <select class="selectpicker">
-    ...
-  </select>
-  <select class="selectpicker" data-container="body">
-    ...
-  </select>
-</div>
 ```
 
 ## Dropup menu

@@ -1,3 +1,14 @@
+# v1.1.0 (CrestApps fork)
+
+### Highlights
+
+- Added release-time docs versioning for `major.minor` releases so published docs
+  snapshots remain selectable after future updates.
+- Fixed Font Awesome loading in the Docusaurus site by bundling the CSS and
+  webfonts with the docs build.
+- Expanded the docs examples page with a dedicated list-style selected-items
+  example.
+
 # v1.0.1 (CrestApps fork)
 
 This is the first release of the CrestApps fork of
