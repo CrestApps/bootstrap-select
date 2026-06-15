@@ -1,3 +1,11 @@
+# v1.1.2 (CrestApps fork)
+
+### Fixes
+
+- Restored support for legacy `title="..."` placeholder text on single selects.
+- Restored support for `data-width="fit"` and `width: 'fit'` so compact picker layouts continue to work.
+- Documented the native `*.bs.select` events, including `maxReached`, `maxReachedGrp`, and `fetched`, and clarified the `event.detail` payloads.
+
 # v1.1.0 (CrestApps fork)
 
 ### Highlights

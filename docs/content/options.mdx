@@ -192,6 +192,15 @@ For security reasons, the `sanitize`, `sanitizeFn`, and `whiteList` options cann
     </td>
   </tr>
   <tr>
+    <td>placeholder</td>
+    <td>string | null</td>
+    <td><code>null</code></td>
+    <td>
+      <p>Sets the placeholder text shown in the button when nothing is selected.</p>
+      <p>For backward compatibility, a single select's <code>title</code> attribute is also used when <code>placeholder</code> is not set.</p>
+    </td>
+  </tr>
+  <tr>
     <td>selectAllText</td>
     <td>string</td>
     <td><code>'Select All'</code></td>
@@ -326,6 +335,16 @@ For security reasons, the `sanitize`, `sanitizeFn`, and `whiteList` options cann
     </td>
   </tr>
   <tr>
+    <td>width</td>
+    <td><code>'auto'</code> | <code>'fit'</code> | css-width | false</td>
+    <td><code>false</code></td>
+    <td>
+      <p>Controls the rendered width of the picker. Use the <code>data-width</code> attribute in markup or pass <code>width</code> in JavaScript.</p>
+      <p><code>'auto'</code> expands to the widest option, <code>'fit'</code> keeps the control compact to the selected option, and a CSS width such as <code>300px</code> or <code>75%</code> is applied inline.</p>
+      <p>When set to <code>false</code>, the picker follows the width of its container.</p>
+    </td>
+  </tr>
+  <tr>
     <td>sanitize</td>
     <td>boolean</td>
     <td><code>true</code></td>
@@ -354,7 +373,7 @@ For security reasons, the `sanitize`, `sanitizeFn`, and `whiteList` options cann
 />
 
 :::info Bootstrap 5 runtime defaults
-This Bootstrap 5 build no longer supports the legacy `container`, `mobile`, `styleBase`, `width`, or `windowPadding` options. Layout should follow normal Bootstrap sizing and grid utilities, and the picker now fills its container by default.
+This Bootstrap 5 build no longer supports the legacy `container`, `mobile`, `styleBase`, or `windowPadding` options. When `width` is not set, the picker follows normal Bootstrap sizing and fills its container by default.
 :::
 
 ## Tags-style live search and open options
@@ -428,9 +447,9 @@ Selectpicker.DEFAULTS.multipleSeparator = ' | ';
 
 ---
 
-Bootstrap-select exposes a few events for hooking into select functionality.
+bootstrap-select emits native `CustomEvent`s on the original `<select>` element.
 
-hide.bs.select, hidden.bs.select, show.bs.select, and shown.bs.select all have a `relatedTarget` property, whose value is the toggling anchor element.
+For `show.bs.select`, `shown.bs.select`, `hide.bs.select`, and `hidden.bs.select`, the original Bootstrap dropdown event is exposed as `event.detail.bsEvent`. Its `relatedTarget` property is the toggling button element.
 
 <RawHtml
   html={String.raw`<table class="table table-bordered table-striped">
@@ -443,19 +462,19 @@ hide.bs.select, hidden.bs.select, show.bs.select, and shown.bs.select all have a
   <tbody>
     <tr>
       <td>show.bs.select</td>
-      <td>This event fires immediately when the show instance method is called.</td>
+      <td>This event fires immediately when the menu starts opening.</td>
     </tr>
     <tr>
       <td>shown.bs.select</td>
-      <td>This event is fired when the dropdown has been made visible to the user (will wait for CSS transitions, to complete).</td>
+      <td>This event is fired when the menu has been made visible to the user (after CSS transitions complete).</td>
     </tr>
     <tr>
       <td>hide.bs.select</td>
-      <td>This event is fired immediately when the hide instance method has been called.</td>
+      <td>This event is fired immediately when the menu starts closing.</td>
     </tr>
     <tr>
       <td>hidden.bs.select</td>
-      <td>This event is fired when the dropdown has finished being hidden from the user (will wait for CSS transitions, to complete).</td>
+      <td>This event is fired when the menu has finished being hidden from the user (after CSS transitions complete).</td>
     </tr>
     <tr>
       <td>loaded.bs.select</td>
@@ -476,6 +495,18 @@ hide.bs.select, hidden.bs.select, show.bs.select, and shown.bs.select all have a
         <p><code>previousValue</code> is the value of the select prior to being changed. If the select's value has been changed either via the <code>val()</code>, <code>selectAll()</code>, or <code>deselectAll()</code> methods, clickedIndex and isSelected will be <code>null</code>.</p>
       </td>
     </tr>
+    <tr>
+      <td>maxReached.bs.select</td>
+      <td>This event fires when a multi-select tries to exceed the configured <code>maxOptions</code> limit on the select.</td>
+    </tr>
+    <tr>
+      <td>maxReachedGrp.bs.select</td>
+      <td>This event fires when a multi-select tries to exceed the configured <code>data-max-options</code> limit on an <code>&lt;optgroup&gt;</code>.</td>
+    </tr>
+    <tr>
+      <td>fetched.bs.select</td>
+      <td>This event fires after async or callback-backed source data has been fetched and applied to the picker.</td>
+    </tr>
   </tbody>
 </table>`}
 />
@@ -484,6 +515,11 @@ hide.bs.select, hidden.bs.select, show.bs.select, and shown.bs.select all have a
 document.querySelector('#mySelect').addEventListener('changed.bs.select', function (e) {
   const { clickedIndex, isSelected, previousValue } = e.detail;
   // do something...
+});
+
+document.querySelector('#mySelect').addEventListener('show.bs.select', function (e) {
+  const bootstrapEvent = e.detail.bsEvent;
+  const button = bootstrapEvent.relatedTarget;
 });
 ```
 

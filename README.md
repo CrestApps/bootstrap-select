@@ -74,11 +74,11 @@ jsDelivr. Prefer pinning an explicit package version in production:
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- @crestapps/bootstrap-select from jsDelivr -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.1/dist/css/bootstrap-select.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.1/dist/js/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.2/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.2/dist/js/bootstrap-select.min.js"></script>
 ```
 
-You can replace `@1.1.1` with the version you want to consume. During
+You can replace `@1.1.2` with the version you want to consume. During
 development, `@latest` also works, but a fixed version is safer for production
 deployments.
 
@@ -101,6 +101,16 @@ automatically initialized once the DOM is ready — no JavaScript required.
   <option>Mustard</option>
   <option>Ketchup</option>
   <option>Barbecue</option>
+</select>
+```
+
+Existing bootstrap-select markup that uses `title="..."` placeholders or
+`data-width="fit"` is also supported:
+
+```html
+<select class="selectpicker" title="Content Type" data-width="fit">
+  <option>Article</option>
+  <option>Blog Post</option>
 </select>
 ```
 
@@ -155,6 +165,11 @@ const select = document.querySelector('#my-select');
 select.addEventListener('changed.bs.select', function (e) {
   // e.detail = { clickedIndex, isSelected, previousValue }
   console.log('value changed', e.detail);
+});
+
+select.addEventListener('show.bs.select', function (e) {
+  // e.detail.bsEvent is the original Bootstrap dropdown event
+  console.log('opening from', e.detail.bsEvent.relatedTarget);
 });
 
 select.addEventListener('loaded.bs.select', function () { /* ... */ });

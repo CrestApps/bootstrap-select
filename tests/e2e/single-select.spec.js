@@ -80,7 +80,7 @@ test('right-aligned dropdown uses Bootstrap 5 menu-end class', async ({ page }) 
   await expect(menu).not.toHaveClass(/dropdown-menu-right/);
 });
 
-test('placeholder attribute replaces legacy select title placeholder behavior', async ({ page }) => {
+test('placeholder attribute and legacy select title both render placeholder text', async ({ page }) => {
   await page.goto('/tests/index.html');
   await page.waitForFunction(() => window.Selectpicker);
 
@@ -93,7 +93,76 @@ test('placeholder attribute replaces legacy select title placeholder behavior', 
   });
 
   await expect(page.locator('[data-id="with-placeholder"] .filter-option-inner-inner')).toHaveText('Choose one');
-  await expect(page.locator('[data-id="with-title"] .filter-option-inner-inner')).toHaveText('One');
+  await expect(page.locator('[data-id="with-title"] .filter-option-inner-inner')).toHaveText('Legacy title');
+});
+
+test('data-width fit keeps the picker compact', async ({ page }) => {
+  await page.goto('/tests/index.html');
+  await page.waitForFunction(() => window.Selectpicker);
+
+  await page.evaluate(() => {
+    document.body.innerHTML += '<select id="with-fit-width" class="selectpicker" data-width="fit" title="Sort"><option>Published</option><option>Draft</option></select>';
+    new Selectpicker('#with-fit-width');
+  });
+
+  const picker = page.locator('.bootstrap-select').filter({ has: page.locator('[data-id="with-fit-width"]') });
+
+  await expect(picker).toHaveClass(/fit-width/);
+});
+
+test('native bs.select events are emitted on the original select', async ({ page }) => {
+  await page.goto('/tests/index.html');
+  await page.waitForFunction(() => window.Selectpicker);
+
+  await page.evaluate(() => {
+    document.body.innerHTML += '<select id="eventful"><option>One</option><option>Two</option></select>';
+
+    const select = document.getElementById('eventful');
+    const eventNames = ['loaded', 'rendered', 'refreshed', 'show', 'shown', 'hide', 'hidden', 'changed'];
+
+    window.__selectpickerEvents = [];
+
+    eventNames.forEach((name) => {
+      select.addEventListener(name + '.bs.select', function (e) {
+        window.__selectpickerEvents.push({
+          name,
+          detail: e.detail || null,
+          hasBootstrapRelatedTarget: !!(e.detail && e.detail.bsEvent && e.detail.bsEvent.relatedTarget)
+        });
+      });
+    });
+
+    new Selectpicker(select);
+  });
+
+  await expect.poll(() => page.evaluate(() => window.__selectpickerEvents.some((e) => e.name === 'loaded'))).toBe(true);
+
+  await page.evaluate(() => Selectpicker.getInstance('#eventful').render());
+  await expect.poll(() => page.evaluate(() => window.__selectpickerEvents.some((e) => e.name === 'rendered'))).toBe(true);
+
+  await page.evaluate(() => Selectpicker.getInstance('#eventful').refresh());
+  await expect.poll(() => page.evaluate(() => window.__selectpickerEvents.some((e) => e.name === 'refreshed'))).toBe(true);
+
+  await page.locator('[data-id="eventful"]').click();
+  await expect.poll(() => page.evaluate(() => window.__selectpickerEvents.some((e) => e.name === 'show' && e.hasBootstrapRelatedTarget))).toBe(true);
+  await expect.poll(() => page.evaluate(() => window.__selectpickerEvents.some((e) => e.name === 'shown'))).toBe(true);
+
+  await page.locator('[data-id="eventful"]').click();
+  await expect.poll(() => page.evaluate(() => window.__selectpickerEvents.some((e) => e.name === 'hide' && e.hasBootstrapRelatedTarget))).toBe(true);
+  await expect.poll(() => page.evaluate(() => window.__selectpickerEvents.some((e) => e.name === 'hidden'))).toBe(true);
+
+  await page.evaluate(() => Selectpicker.getInstance('#eventful').val('Two'));
+
+  await expect.poll(() => page.evaluate(() => {
+    return window.__selectpickerEvents.find((e) => e.name === 'changed') || null;
+  })).toMatchObject({
+    name: 'changed',
+    detail: {
+      clickedIndex: null,
+      isSelected: null,
+      previousValue: 'One'
+    }
+  });
 });
 
 test('font awesome style icons render in the button and menu when iconBase is configured', async ({ page }) => {
