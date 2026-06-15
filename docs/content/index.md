@@ -47,11 +47,11 @@ Prefer pinning an explicit package version in production:
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- @crestapps/bootstrap-select from jsDelivr -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.0/dist/css/bootstrap-select.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.0/dist/js/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.1/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.1/dist/js/bootstrap-select.min.js"></script>
 ```
 
-You can replace `@1.1.0` with the version you want to consume. During development,
+You can replace `@1.1.1` with the version you want to consume. During development,
 `@latest` also works, but a fixed version is safer for production deployments.
 
 When loaded via a `<script>` tag, the plugin exposes a global `Selectpicker` class.

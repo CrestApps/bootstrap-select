@@ -1,0 +1,18 @@
+{
+  "entries": [
+    "404.html",
+    "CNAME",
+    "assets",
+    "dist",
+    "docs",
+    "examples",
+    "img",
+    "index.html",
+    "js",
+    "playground",
+    "search",
+    "search-index.json",
+    "sitemap.xml",
+    "vendor"
+  ]
+}

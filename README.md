@@ -74,11 +74,11 @@ jsDelivr. Prefer pinning an explicit package version in production:
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- @crestapps/bootstrap-select from jsDelivr -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.0/dist/css/bootstrap-select.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.0/dist/js/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.1/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.1/dist/js/bootstrap-select.min.js"></script>
 ```
 
-You can replace `@1.1.0` with the version you want to consume. During
+You can replace `@1.1.1` with the version you want to consume. During
 development, `@latest` also works, but a fixed version is safer for production
 deployments.
 
@@ -141,7 +141,7 @@ picker.selectAll();       // (multiple selects)
 picker.destroy();         // remove the plugin and restore the original <select>
 ```
 
-See [Methods](docs/docs/methods.md) for the full list.
+See [Methods](docs/content/methods.md) for the full list.
 
 ### Events
 
@@ -201,6 +201,10 @@ npm run docs:start
 `docs/static/dist/`, and starts Docusaurus. Open `http://localhost:3000/`, then
 use the **Examples** page to exercise the plugin in the docs site.
 
+The Docusaurus source lives under `docs/content/`. Because GitHub Pages is
+configured to publish from `main:/docs`, the deploy workflow builds the site
+and syncs the generated static files back into `docs/`.
+
 Standalone hosted examples are also available from the same site:
 
 - `http://localhost:3000/examples/basic.html`
@@ -211,7 +215,8 @@ Other docs commands:
 
 ```sh
 npm run docs:prepare # build plugin assets and copy them into docs/static/dist/
-npm run docs:build   # build the static Docusaurus site into docs/build/
+npm run docs:build   # build the static Docusaurus site into docs/.pages-build/
+npm run docs:pages   # copy the built site into docs/ for branch-based Pages
 npm run docs:serve   # serve the built Docusaurus site locally
 ```
 

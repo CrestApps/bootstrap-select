@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-options" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.10.1">
+<title data-rh="true">Options | bootstrap-select</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://bootstrap-select.crestapps.com/img/logo.png"><meta data-rh="true" name="twitter:image" content="https://bootstrap-select.crestapps.com/img/logo.png"><meta data-rh="true" property="og:url" content="https://bootstrap-select.crestapps.com/docs/options/"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Options | bootstrap-select"><meta data-rh="true" name="description" content="bootstrap-select options, events, and sanitizer settings."><meta data-rh="true" property="og:description" content="bootstrap-select options, events, and sanitizer settings."><link data-rh="true" rel="icon" href="/img/logo.svg"><link data-rh="true" rel="canonical" href="https://bootstrap-select.crestapps.com/docs/options/"><link data-rh="true" rel="alternate" href="https://bootstrap-select.crestapps.com/docs/options/" hreflang="en"><link data-rh="true" rel="alternate" href="https://bootstrap-select.crestapps.com/docs/options/" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Options","item":"https://bootstrap-select.crestapps.com/docs/options"}]}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css">
+<link rel="stylesheet" href="/dist/css/bootstrap-select.min.css">
+<script src="/js/chunk-recovery.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" defer="defer"></script>
+<script src="/dist/js/bootstrap-select.min.js" defer="defer"></script><link rel="stylesheet" href="/assets/css/styles.30561164.css">
+<script src="/assets/js/runtime~main.b432c503.js" defer="defer"></script>
+<script src="/assets/js/main.24f6b2fe.js" defer="defer"></script>
+</head>
+<body>
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/img/logo.svg"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo.svg" alt="CrestApps Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo.svg" alt="CrestApps Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">bootstrap-select</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/docs/">Docs</a><a class="navbar__item navbar__link" href="/docs/examples/">Examples</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a class="navbar__link" aria-haspopup="true" aria-expanded="false" role="button" href="/docs/options/">Latest</a><ul class="dropdown__menu"><li><a aria-current="page" class="dropdown__link dropdown__link--active" href="/docs/options/">Latest</a></li><li><a class="dropdown__link" href="/docs/1.1/options/">1.1</a></li><li><a class="dropdown__link" href="/docs/1.0/options/">1.0</a></li></ul></div><a href="https://github.com/CrestApps/crestapps-bootstrap-select" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"><div class="navbar__search searchBarContainer_NW3z" dir="ltr"><input placeholder="Search" aria-label="Search" class="navbar__search-input searchInput_YFbd" value=""><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/docs/"><span title="Getting Started" class="linkLabel_WmDU">Getting Started</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/docs/examples/"><span title="Examples" class="linkLabel_WmDU">Examples</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" href="/docs/options/"><span title="Options" class="linkLabel_WmDU">Options</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/docs/methods/"><span title="Methods" class="linkLabel_WmDU">Methods</span></a></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Options</span></li></ul></nav><span class="theme-doc-version-badge badge badge--secondary">Version: Latest</span><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>CrestApps fork</div><div class="admonitionContent_BuS1"><p>The options and data attributes documented on this page are part of the current forward-only API. Initialize with <code>new Selectpicker(&#x27;#sel&#x27;, options)</code> or add the <code>selectpicker</code> class for automatic initialization. Global defaults are set with <code>Selectpicker.setDefaults({ ... })</code>.</p></div></div>
+<header><h1>Core options</h1></header>
+<hr>
+<p>Options can be passed via data attributes or JavaScript. For data attributes, append the option name to <code>data-</code>, as in
+<code>data-style=&quot;&quot;</code> or <code>data-selected-text-format=&quot;count&quot;</code>.</p>
+<div class="theme-admonition theme-admonition-warning admonition_xJq3 alert alert--warning"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>Data attributes</div><div class="admonitionContent_BuS1"><p>For security reasons, the <code>sanitize</code>, <code>sanitizeFn</code>, and <code>whiteList</code> options cannot be supplied using data attributes.</p></div></div>
+<div><table class="table table-bordered table-striped">
+<thead>
+<tr>
+  <th style="width: 15%;">Name</th>
+  <th style="width: 22%;">Type</th>
+  <th style="width: 20%;">Default</th>
+  <th style="width: 43%;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>actionsBox</td>
+  <td>boolean</td>
+  <td><code>false</code></td>
+  <td>
+    <p>When set to <code>true</code>, adds two buttons to the top of the dropdown menu (<strong>Select All</strong> &amp; <strong>Deselect All</strong>).</p>
+  </td>
+</tr>
+<tr>
+  <td>countSelectedText</td>
+  <td>string | function</td>
+  <td><code>function</code></td>
+  <td>
+    <p>Sets the format for the text displayed when selectedTextFormat is <code>count</code> or <code>count > #</code>. {0} is the selected amount. {1} is total available for selection.</p>
+    <p>When set to a function, the first parameter is the number of selected options, and the second is the total number of 
+    options. The function must return a string.</p>
+  </td>
+</tr>
+<tr>
+  <td>deselectAllText</td>
+  <td>string</td>
+  <td><code>'Deselect All'</code></td>
+  <td>
+    <p>The text on the button that deselects all options when <code>actionsBox</code> is enabled.</p>
+  </td>
+</tr>
+<tr>
+  <td>dropdownAlignRight</td>
+  <td>boolean | <code>'auto'</code></td>
+  <td><code>false</code></td>
+  <td>
+    <p>Align the menu to the right instead of the left. If set to <code>'auto'</code>, the menu will automatically align right if there isn't room for the menu's full width when aligned to the left.</p>
+  </td>
+</tr>
+<tr>
+  <td>dropupAuto</td>
+  <td>boolean</td>
+  <td><code>true</code></td>
+  <td>
+    <p>checks to see which has more room, above or below. If the dropup has enough room to fully open normally, but
+    there is more room above, the dropup still opens normally. Otherwise, it becomes a dropup. If dropupAuto is
+    set to false, dropups must be called manually.</p>
+  </td>
+</tr>
+<tr>
+  <td>header</td>
+  <td>string</td>
+  <td><code>false</code></td>
+  <td>
+    <p>adds a header to the top of the menu; includes a close button by default</p>
+  </td>
+</tr>
+<tr>
+  <td>hideDisabled</td>
+  <td>boolean</td>
+  <td><code>false</code></td>
+  <td>
+    <p>removes disabled options and optgroups from the menu <code>data-hide-disabled: true</code></p>
+  </td>
+</tr>
+<tr>
+  <td>iconBase</td>
+  <td>string</td>
+  <td><code>''</code></td>
+  <td>
+    <p>Set the base class for an icon font such as Font Awesome. If changing <code>iconBase</code>, you might also want to change <code>tickIcon</code>, in case the icon font uses a different naming scheme.</p>
+  </td>
+</tr>
+<tr>
+  <td>liveSearch</td>
+  <td>boolean</td>
+  <td><code>false</code></td>
+  <td>
+    <p>When set to <code>true</code>, adds a search box to the top of the selectpicker dropdown.</p>
+  </td>
+</tr>
+<tr>
+  <td>liveSearchNormalize</td>
+  <td>boolean</td>
+  <td><code>false</code></td>
+  <td>
+    <p>Setting liveSearchNormalize to <code>true</code> allows for accent-insensitive searching.</p>
+  </td>
+</tr>
+<tr>
+  <td>liveSearchPlaceholder</td>
+  <td>string</td>
+  <td><code>null</code></td>
+  <td>
+    <p>When set to a string, a placeholder attribute equal to the string will be added to the liveSearch input.</p>
+  </td>
+</tr>
+<tr>
+  <td>liveSearchStyle</td>
+  <td>string | function</td>
+  <td><code>'contains'</code></td>
+  <td>
+    <p>When set to <code>'contains'</code>, searching will reveal options that contain the searched text. For example, searching for pl with return both Ap<b>pl</b>e, <b>Pl</b>um, and <b>Pl</b>antain. When set to <code>'startsWith'</code>, searching for pl will return only <b>Pl</b>um and <b>Pl</b>antain. If a function is used, the arguments are the option string and the searched text and it must return <code>true</code> if the option matches or <code>false<code>.</code></code></p>
+  </td>
+</tr>
+<tr>
+  <td>openOptions</td>
+  <td>boolean</td>
+  <td><code>false</code></td>
+  <td>
+    <p>When set to <code>true</code>, the live-search UI shows a <strong>Create</strong> action whenever the current search text does not exactly match an existing option.</p>
+    <p>If <code>options.source.create(callback, searchValue)</code> is supplied, it will be used to resolve the created option. Otherwise the control creates a local option using the search text for both <code>text</code> and <code>value</code>.</p>
+  </td>
+</tr>
+<tr>
+  <td>openOptionsText</td>
+  <td>string</td>
+  <td><code>'Create "{0}"'</code></td>
+  <td>
+    <p>Sets the label for the open-option create action. <code>{0}</code> is replaced with the current search text.</p>
+  </td>
+</tr>
+<tr>
+  <td>maxOptions</td>
+  <td>integer | false</td>
+  <td><code>false</code></td>
+  <td>
+    <p>When set to an integer and in a multi-select, the number of selected options cannot exceed the given value.</p>
+    <p>This option can also exist as a data-attribute for an <code>&lt;optgroup&gt;</code>, in which case it only applies to that <code>&lt;optgroup&gt;</code>.</p>
+  </td>
+</tr>
+<tr>
+  <td>maxOptionsText</td>
+  <td>string | array | function</td>
+  <td><code>function</code></td>
+  <td>
+    <p>The text that is displayed when maxOptions is enabled and the maximum number of options for the given scenario have been selected.</p>
+    <p>If a function is used, it must return an array. array[0] is the text used when maxOptions is applied to the entire select element. array[1] is the text used when maxOptions is used on an optgroup. If a string is used, the same text is used for both the element and the optgroup.</p>
+  </td>
+</tr>
+<tr>
+  <td>multipleSeparator</td>
+  <td>string</td>
+  <td><code>', '</code></td>
+  <td>
+    <p>Set the character displayed in the button that separates selected options.</p>
+  </td>
+</tr>
+<tr>
+  <td>noneSelectedText</td>
+  <td>string</td>
+  <td><code>'Nothing selected'</code></td>
+  <td>
+    <p>The text that is displayed when a multiple select has no selected options.</p>
+  </td>
+</tr>
+<tr>
+  <td>noneResultsText</td>
+  <td>string</td>
+  <td><code>'No results matched {0}'</code></td>
+  <td>
+    <p>The text displayed when a search doesn't return any results.</p>
+  </td>
+</tr>
+<tr>
+  <td>selectAllText</td>
+  <td>string</td>
+  <td><code>'Select All'</code></td>
+  <td>
+    <p>The text on the button that selects all options when <code>actionsBox</code> is enabled.</p>
+  </td>
+</tr>
+<tr>
+  <td>selectedTextFormat</td>
+  <td><code>'values'</code> | <code>'static'</code> | <code>'count'</code> | <code>'count > x'</code> (where x is an integer)</td>
+  <td><code>'values'</code></td>
+  <td>
+    <p>Specifies how the selection is displayed with a multiple select.</p>
+    <p>
+      <code>'values'</code> displays a list of the selected options (separated by <code>multipleSeparator</code>).
+      <br>
+      <code>'static'</code> displays the configured placeholder text.
+      <br>
+      <code>'count > x'</code> behaves like <code>'values'</code> until the number of selected options is greater than x; after that, it displays the total number of selected options.
+      <br>
+      <code>'count'</code> is an alias for <code>'count > 1'</code>.
+    </p>
+  </td>
+</tr>
+<tr>
+  <td>selectOnTab</td>
+  <td>boolean</td>
+  <td><code>false</code></td>
+  <td>
+    <p>When set to <code>true</code>, treats the tab character like the enter or space characters within the selectpicker dropdown.</p>
+  </td>
+</tr>
+<tr>
+  <td>showContent</td>
+  <td>boolean</td>
+  <td><code>true</code></td>
+  <td>
+    <p>When set to <code>true</code>, display custom HTML associated with selected option(s) in the button. When set to <code>false</code>, the option value will be displayed instead.</p>
+  </td>
+</tr>
+<tr>
+  <td>showIcon</td>
+  <td>boolean</td>
+  <td><code>true</code></td>
+  <td>
+    <p>When set to <code>true</code>, display icon(s) associated with selected option(s) in the button.</p>
+  </td>
+</tr>
+<tr>
+  <td>showSubtext</td>
+  <td>boolean</td>
+  <td><code>false</code></td>
+  <td>
+    <p>When set to <code>true</code>, display subtext associated with a selected option in the button.</p>
+  </td>
+</tr>
+<tr>
+  <td>showSelectedTags</td>
+  <td>boolean</td>
+  <td><code>false</code></td>
+  <td>
+    <p>For live-search selects, shows the current selections as removable tags that stay visible on the control, similar to a taxonomy tags editor. The button uses a compact summary instead of repeating the selected values.</p>
+  </td>
+</tr>
+<tr>
+  <td>showTick</td>
+  <td>boolean</td>
+  <td><code>false</code></td>
+  <td>
+    <p>Show checkmark on selected option (for items without <code>multiple</code> attribute).</p>
+  </td>
+</tr>
+<tr>
+  <td>selectedItemsStyle</td>
+  <td><code>'tags'</code> | <code>'list'</code></td>
+  <td><code>'tags'</code></td>
+  <td>
+    <p>Controls how removable selected items are rendered when <code>showSelectedTags</code> is enabled. Use <code>'list'</code> to render them as a Bootstrap list group with a remove button aligned to the right.</p>
+  </td>
+</tr>
+<tr>
+  <td>selectedTagRemoveLabel</td>
+  <td>string</td>
+  <td><code>'Remove'</code></td>
+  <td>
+    <p>Accessible label prefix used for each removable selected item when <code>showSelectedTags</code> is enabled.</p>
+  </td>
+</tr>
+<tr>
+  <td>selectionIndicator</td>
+  <td><code>'checkmark'</code> | <code>'checkbox'</code></td>
+  <td><code>'checkmark'</code></td>
+  <td>
+    <p>Controls how selected items are indicated in the dropdown. Use <code>'checkbox'</code> to render a Bootstrap-style checkbox column instead of the default floating checkmark.</p>
+  </td>
+</tr>
+<tr>
+  <td>size</td>
+  <td><code>'auto'</code> | integer | false</td>
+  <td><code>'auto'</code></td>
+  <td>
+    <p>When set to <code>'auto'</code>, the menu always opens up to show as many items as the window will allow
+    without being cut off.</p>
+    <p>When set to an integer, the menu will show the given number of items, even if the dropdown is cut off.</p>
+    <p>When set to <code>false</code>, the menu will always show all items.</p>
+  </td>
+</tr>
+<tr>
+  <td>style</td>
+  <td>string | null</td>
+  <td>
+    <code>'btn-light'</code>
+  </td>
+  <td>
+    <p>When set to a string, add the value to the button's style.</p>
+  </td>
+</tr>
+<tr>
+  <td>tickIcon</td>
+  <td>string</td>
+  <td><code>'bs-ok-default'</code></td>
+  <td>
+    <p>Set which icon to use to display as the "tick" next to selected options.</p>
+  </td>
+</tr>
+<tr>
+  <td>virtualScroll</td>
+  <td>boolean | integer</td>
+  <td><code>600</code></td>
+  <td>
+    <p>If enabled, the items in the dropdown will be rendered using virtualization (i.e. only the items that are within the viewport will be rendered). This drastically improves performance for selects with a large number of options. Set to an integer to only use virtualization if the select has at least that number of options.</p>
+  </td>
+</tr>
+<tr>
+  <td>sanitize</td>
+  <td>boolean</td>
+  <td><code>true</code></td>
+  <td>
+    <p>Enable or disable the sanitization. If activated, <code>'data-content'</code> on individual options will be sanitized.</p>
+  </td>
+</tr>
+<tr>
+  <td>whiteList</td>
+  <td>object</td>
+  <td><a href="#sanitizer">Default value</a></td>
+  <td>
+    <p>Object which contains allowed attributes and tags</p>
+  </td>
+</tr>
+<tr>
+  <td>sanitizeFn</td>
+  <td>null | function</td>
+  <td><code>null</code></td>
+  <td>
+    <p>Here you can supply your own sanitize function. This can be useful if you prefer to use a dedicated library to perform sanitization.</p>
+  </td>
+</tr>
+</tbody>
+</table></div>
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>Bootstrap 5 runtime defaults</div><div class="admonitionContent_BuS1"><p>This Bootstrap 5 build no longer supports the legacy <code>container</code>, <code>mobile</code>, <code>styleBase</code>, <code>width</code>, or <code>windowPadding</code> options. Layout should follow normal Bootstrap sizing and grid utilities, and the picker now fills its container by default.</p></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="tags-style-live-search-and-open-options">Tags-style live search and open options<a href="#tags-style-live-search-and-open-options" class="hash-link" aria-label="Direct link to Tags-style live search and open options" title="Direct link to Tags-style live search and open options" translate="no">​</a></h2>
+<p>The <code>showSelectedTags</code> and <code>openOptions</code> settings are intended for taxonomy-style editors where authors need to keep selected values visible while continuing to search.</p>
+<p>When both are enabled on a multiple select:</p>
+<ol>
+<li class="">Selected values stay visible as removable tags on the control while the search UI stays available.</li>
+<li class="">Typing a value that does not exactly match an existing option shows a create action.</li>
+<li class="">Choosing that action creates and selects the option immediately.</li>
+</ol>
+<p>Use data attributes when local in-browser creation is enough:</p>
+<div class="language-html codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-html codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token tag punctuation" style="color:#393A34">&lt;</span><span class="token tag" style="color:#00009f">select</span><span class="token tag" style="color:#00009f"></span><br></div><div class="token-line" style="color:#393A34"><span class="token tag" style="color:#00009f">  </span><span class="token tag attr-name" style="color:#00a4db">class</span><span class="token tag attr-value punctuation attr-equals" style="color:#393A34">=</span><span class="token tag attr-value punctuation" style="color:#393A34">&quot;</span><span class="token tag attr-value" style="color:#e3116c">selectpicker</span><span class="token tag attr-value punctuation" style="color:#393A34">&quot;</span><span class="token tag" style="color:#00009f"></span><br></div><div class="token-line" style="color:#393A34"><span class="token tag" style="color:#00009f">  </span><span class="token tag attr-name" style="color:#00a4db">multiple</span><span class="token tag" style="color:#00009f"></span><br></div><div class="token-line" style="color:#393A34"><span class="token tag" style="color:#00009f">  </span><span class="token tag attr-name" style="color:#00a4db">data-live-search</span><span class="token tag attr-value punctuation attr-equals" style="color:#393A34">=</span><span class="token tag attr-value punctuation" style="color:#393A34">&quot;</span><span class="token tag attr-value" style="color:#e3116c">true</span><span class="token tag attr-value punctuation" style="color:#393A34">&quot;</span><span class="token tag" style="color:#00009f"></span><br></div><div class="token-line" style="color:#393A34"><span class="token tag" style="color:#00009f">  </span><span class="token tag attr-name" style="color:#00a4db">data-show-selected-tags</span><span class="token tag attr-value punctuation attr-equals" style="color:#393A34">=</span><span class="token tag attr-value punctuation" style="color:#393A34">&quot;</span><span class="token tag attr-value" style="color:#e3116c">true</span><span class="token tag attr-value punctuation" style="color:#393A34">&quot;</span><span class="token tag" style="color:#00009f"></span><br></div><div class="token-line" style="color:#393A34"><span class="token tag" style="color:#00009f">  </span><span class="token tag attr-name" style="color:#00a4db">data-open-options</span><span class="token tag attr-value punctuation attr-equals" style="color:#393A34">=</span><span class="token tag attr-value punctuation" style="color:#393A34">&quot;</span><span class="token tag attr-value" style="color:#e3116c">true</span><span class="token tag attr-value punctuation" style="color:#393A34">&quot;</span><span class="token tag" style="color:#00009f"></span><br></div><div class="token-line" style="color:#393A34"><span class="token tag" style="color:#00009f">  </span><span class="token tag attr-name" style="color:#00a4db">placeholder</span><span class="token tag attr-value punctuation attr-equals" style="color:#393A34">=</span><span class="token tag attr-value punctuation" style="color:#393A34">&quot;</span><span class="token tag attr-value" style="color:#e3116c">Search or create tags</span><span class="token tag attr-value punctuation" style="color:#393A34">&quot;</span><span class="token tag punctuation" style="color:#393A34">&gt;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token tag punctuation" style="color:#393A34">&lt;</span><span class="token tag" style="color:#00009f">option</span><span class="token tag" style="color:#00009f"> </span><span class="token tag attr-name" style="color:#00a4db">selected</span><span class="token tag punctuation" style="color:#393A34">&gt;</span><span class="token plain">Orchard Core</span><span class="token tag punctuation" style="color:#393A34">&lt;/</span><span class="token tag" style="color:#00009f">option</span><span class="token tag punctuation" style="color:#393A34">&gt;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token tag punctuation" style="color:#393A34">&lt;</span><span class="token tag" style="color:#00009f">option</span><span class="token tag punctuation" style="color:#393A34">&gt;</span><span class="token plain">Vue</span><span class="token tag punctuation" style="color:#393A34">&lt;/</span><span class="token tag" style="color:#00009f">option</span><span class="token tag punctuation" style="color:#393A34">&gt;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token tag punctuation" style="color:#393A34">&lt;</span><span class="token tag" style="color:#00009f">option</span><span class="token tag punctuation" style="color:#393A34">&gt;</span><span class="token plain">Taxonomy</span><span class="token tag punctuation" style="color:#393A34">&lt;/</span><span class="token tag" style="color:#00009f">option</span><span class="token tag punctuation" style="color:#393A34">&gt;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token tag punctuation" style="color:#393A34">&lt;/</span><span class="token tag" style="color:#00009f">select</span><span class="token tag punctuation" style="color:#393A34">&gt;</span><br></div></code></pre></div></div>
+<p>Use JavaScript when the picker is backed by a remote source and new terms must be saved first:</p>
+<div class="language-js codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-js codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">new</span><span class="token plain"> </span><span class="token class-name">Selectpicker</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">&#x27;#tag-editor&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">liveSearch</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">true</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">showSelectedTags</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">true</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">openOptions</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">true</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">openOptionsText</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;Create tag &quot;{0}&quot;&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">selectedTagRemoveLabel</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;Remove tag&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">selectionIndicator</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;checkbox&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">source</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token function-variable function" style="color:#d73a49">data</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">function</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token parameter">callback</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token function" style="color:#d73a49">callback</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">existingTags</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">}</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token function-variable function" style="color:#d73a49">search</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">function</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token parameter">callback</span><span class="token parameter punctuation" style="color:#393A34">,</span><span class="token parameter"> page</span><span class="token parameter punctuation" style="color:#393A34">,</span><span class="token parameter"> searchValue</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token function" style="color:#d73a49">callback</span><span class="token punctuation" style="color:#393A34">(</span><span class="token function" style="color:#d73a49">findMatchingTags</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">searchValue</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">}</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token function-variable function" style="color:#d73a49">create</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">function</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token parameter">callback</span><span class="token parameter punctuation" style="color:#393A34">,</span><span class="token parameter"> searchValue</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token function" style="color:#d73a49">createTag</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">searchValue</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">then</span><span class="token punctuation" style="color:#393A34">(</span><span class="token keyword" style="color:#00009f">function</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token parameter">tag</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">        </span><span class="token function" style="color:#d73a49">callback</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">          </span><span class="token literal-property property" style="color:#36acaa">text</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> tag</span><span class="token punctuation" style="color:#393A34">.</span><span class="token property-access">displayText</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">          </span><span class="token literal-property property" style="color:#36acaa">value</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> tag</span><span class="token punctuation" style="color:#393A34">.</span><span class="token property-access">id</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">        </span><span class="token punctuation" style="color:#393A34">}</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">}</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token punctuation" style="color:#393A34">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><br></div></code></pre></div></div>
+<p><code>source.create</code> can return the created option synchronously, invoke the provided callback later, or resolve a Promise. In each case, the picker adds the returned option and selects it automatically.</p>
+<h1>Default settings</h1>
+<hr>
+<p>You can change the default settings for bootstrap-select by modifying its <code>DEFAULTS</code> object (or by calling <code>Selectpicker.setDefaults({ … })</code>):</p>
+<div class="language-js codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-js codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token maybe-class-name">Selectpicker</span><span class="token punctuation" style="color:#393A34">.</span><span class="token constant" style="color:#36acaa">DEFAULTS</span><span class="token punctuation" style="color:#393A34">.</span><span class="token property-access">multipleSeparator</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27; | &#x27;</span><span class="token punctuation" style="color:#393A34">;</span><br></div></code></pre></div></div>
+<h1>Events</h1>
+<hr>
+<p>Bootstrap-select exposes a few events for hooking into select functionality.</p>
+<p>hide.bs.select, hidden.bs.select, show.bs.select, and shown.bs.select all have a <code>relatedTarget</code> property, whose value is the toggling anchor element.</p>
+<div><table class="table table-bordered table-striped">
+<thead>
+  <tr>
+    <th>Event Type</th>
+    <th>Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>show.bs.select</td>
+    <td>This event fires immediately when the show instance method is called.</td>
+  </tr>
+  <tr>
+    <td>shown.bs.select</td>
+    <td>This event is fired when the dropdown has been made visible to the user (will wait for CSS transitions, to complete).</td>
+  </tr>
+  <tr>
+    <td>hide.bs.select</td>
+    <td>This event is fired immediately when the hide instance method has been called.</td>
+  </tr>
+  <tr>
+    <td>hidden.bs.select</td>
+    <td>This event is fired when the dropdown has finished being hidden from the user (will wait for CSS transitions, to complete).</td>
+  </tr>
+  <tr>
+    <td>loaded.bs.select</td>
+    <td>This event fires after the select has been initialized.</td>
+  </tr>
+  <tr>
+    <td>rendered.bs.select</td>
+    <td>This event fires after the render instance has been called.</td>
+  </tr>
+  <tr>
+    <td>refreshed.bs.select</td>
+    <td>This event fires after the refresh instance has been called.</td>
+  </tr>
+  <tr>
+    <td>changed.bs.select</td>
+    <td>
+      <p>This event fires after the select's value has been changed. The detail object passes <code>clickedIndex</code>, <code>isSelected</code>, and <code>previousValue</code> via <code>event.detail</code>.</p>
+      <p><code>previousValue</code> is the value of the select prior to being changed. If the select's value has been changed either via the <code>val()</code>, <code>selectAll()</code>, or <code>deselectAll()</code> methods, clickedIndex and isSelected will be <code>null</code>.</p>
+    </td>
+  </tr>
+</tbody>
+</table></div>
+<div class="language-js codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-js codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token dom variable" style="color:#36acaa">document</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">querySelector</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">&#x27;#mySelect&#x27;</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">addEventListener</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">&#x27;changed.bs.select&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">function</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token parameter">e</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token keyword" style="color:#00009f">const</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"> clickedIndex</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> isSelected</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> previousValue </span><span class="token punctuation" style="color:#393A34">}</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> e</span><span class="token punctuation" style="color:#393A34">.</span><span class="token property-access">detail</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token comment" style="color:#999988;font-style:italic">// do something...</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><br></div></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="sanitizer">Sanitizer<a href="#sanitizer" class="hash-link" aria-label="Direct link to Sanitizer" title="Direct link to Sanitizer" translate="no">​</a></h2>
+<hr>
+<p>HTML added via the <code>data-content</code> attribute on individual options is sanitized using our built-in sanitizer.</p>
+<p>The default <code>whiteList</code> value is the following:</p>
+<div class="language-js codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-js codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">var</span><span class="token plain"> </span><span class="token constant" style="color:#36acaa">ARIA_ATTRIBUTE_PATTERN</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token regex regex-delimiter" style="color:#36acaa">/</span><span class="token regex regex-source language-regex anchor function" style="color:#d73a49">^</span><span class="token regex regex-source language-regex" style="color:#36acaa">aria-</span><span class="token regex regex-source language-regex char-class char-class-punctuation punctuation" style="color:#393A34">[</span><span class="token regex regex-source language-regex char-class char-set class-name" style="color:#36acaa">\w</span><span class="token regex regex-source language-regex char-class" style="color:#36acaa">-</span><span class="token regex regex-source language-regex char-class char-class-punctuation punctuation" style="color:#393A34">]</span><span class="token regex regex-source language-regex quantifier number" style="color:#36acaa">*</span><span class="token regex regex-source language-regex anchor function" style="color:#d73a49">$</span><span class="token regex regex-delimiter" style="color:#36acaa">/</span><span class="token regex regex-flags" style="color:#36acaa">i</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">var</span><span class="token plain"> </span><span class="token maybe-class-name">DefaultWhitelist</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token comment" style="color:#999988;font-style:italic">// Global attributes allowed on any supplied element below.</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token string-property property" style="color:#36acaa">&#x27;*&#x27;</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token string" style="color:#e3116c">&#x27;class&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;dir&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;id&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;lang&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;role&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;tabindex&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;style&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token constant" style="color:#36acaa">ARIA_ATTRIBUTE_PATTERN</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">a</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token string" style="color:#e3116c">&#x27;target&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;href&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;title&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;rel&#x27;</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">area</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">b</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">br</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">col</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">code</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">div</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">em</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">hr</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">h1</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">h2</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">h3</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">h4</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">h5</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">h6</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">i</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">img</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token string" style="color:#e3116c">&#x27;src&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;alt&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;title&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;width&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;height&#x27;</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">li</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">ol</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">p</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">pre</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">s</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">small</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">span</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">sub</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">sup</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">strong</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">u</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">ul</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></div></code></pre></div></div>
+<p>If you want to add new values to this default <code>whiteList</code> you can do the following:</p>
+<div class="language-js codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-js codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">var</span><span class="token plain"> myDefaultWhiteList </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token maybe-class-name">Selectpicker</span><span class="token punctuation" style="color:#393A34">.</span><span class="token constant" style="color:#36acaa">DEFAULTS</span><span class="token punctuation" style="color:#393A34">.</span><span class="token property-access">whiteList</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token comment" style="color:#999988;font-style:italic">// To allow table elements</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">myDefaultWhiteList</span><span class="token punctuation" style="color:#393A34">.</span><span class="token property-access">table</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token comment" style="color:#999988;font-style:italic">// To allow td elements and data-option attributes on td elements</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">myDefaultWhiteList</span><span class="token punctuation" style="color:#393A34">.</span><span class="token property-access">td</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">[</span><span class="token string" style="color:#e3116c">&#x27;data-option&#x27;</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token comment" style="color:#999988;font-style:italic">// You can push your custom regex to validate your attributes.</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token comment" style="color:#999988;font-style:italic">// Be careful about your regular expressions being too lax</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">var</span><span class="token plain"> myCustomRegex </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token regex regex-delimiter" style="color:#36acaa">/</span><span class="token regex regex-source language-regex anchor function" style="color:#d73a49">^</span><span class="token regex regex-source language-regex" style="color:#36acaa">data-my-app-</span><span class="token regex regex-source language-regex char-class char-class-punctuation punctuation" style="color:#393A34">[</span><span class="token regex regex-source language-regex char-class char-set class-name" style="color:#36acaa">\w</span><span class="token regex regex-source language-regex char-class" style="color:#36acaa">-</span><span class="token regex regex-source language-regex char-class char-class-punctuation punctuation" style="color:#393A34">]</span><span class="token regex regex-source language-regex quantifier number" style="color:#36acaa">+</span><span class="token regex regex-delimiter" style="color:#36acaa">/</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">myDefaultWhiteList</span><span class="token punctuation" style="color:#393A34">[</span><span class="token string" style="color:#e3116c">&#x27;*&#x27;</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">push</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">myCustomRegex</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><br></div></code></pre></div></div>
+<p>If you want to bypass our sanitizer because you prefer to use a dedicated library, you should do the following:</p>
+<div class="language-js codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-js codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">new</span><span class="token plain"> </span><span class="token class-name">Selectpicker</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">&#x27;#yourSelect&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token function-variable function" style="color:#d73a49">sanitizeFn</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">function</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token parameter">domNodes</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token keyword control-flow" style="color:#00009f">return</span><span class="token plain"> </span><span class="token maybe-class-name">DOMPurify</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">sanitize</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">domNodes</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token punctuation" style="color:#393A34">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><br></div></code></pre></div></div>
+<p>For performance reasons, our built-in sanitizer accepts an array of DOM nodes as its first argument, rather than an HTML string. Keep that in mind if deciding to use your own <code>sanitizeFn</code>.</p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/CrestApps/crestapps-bootstrap-select/tree/main/docs/content/options.mdx" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/examples/"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Examples</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/methods/"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Methods</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#tags-style-live-search-and-open-options" class="table-of-contents__link toc-highlight">Tags-style live search and open options</a></li><li><a href="#sanitizer" class="table-of-contents__link toc-highlight">Sanitizer</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Documentation</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/docs/">Getting Started</a></li><li class="footer__item"><a class="footer__link-item" href="/docs/examples/">Examples</a></li><li class="footer__item"><a class="footer__link-item" href="/docs/options/">Options</a></li><li class="footer__item"><a class="footer__link-item" href="/docs/methods/">Methods</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/CrestApps/crestapps-bootstrap-select/issues" target="_blank" rel="noopener noreferrer" class="footer__link-item">Issues<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/CrestApps/crestapps-bootstrap-select" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://crestapps.com" target="_blank" rel="noopener noreferrer" class="footer__link-item">CrestApps<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 CrestApps bootstrap-select.</div></div></div></footer></div>
+</body>
+</html>

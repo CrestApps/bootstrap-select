@@ -18,6 +18,7 @@ blob-report/
 .playwright/
 
 docs/build
+docs/.pages-build
 docs/.docusaurus
-docs/docs/dist/
+docs/content/dist/
 docs/static/dist/

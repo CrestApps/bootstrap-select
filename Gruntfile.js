@@ -207,7 +207,7 @@ module.exports = function (grunt) {
         },
         src: [
           'README.md',
-          'docs/docs/index.md'
+          'docs/content/index.md'
         ]
       },
       cdn: {
@@ -216,7 +216,7 @@ module.exports = function (grunt) {
         },
         src: [
           'README.md',
-          'docs/docs/index.md'
+          'docs/content/index.md'
         ]
       },
       nuget: {
