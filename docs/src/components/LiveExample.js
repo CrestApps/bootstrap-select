@@ -48,8 +48,6 @@ function LiveExampleInner ({ html, className = '', style }) {
         return;
       }
 
-      destroyInstances();
-
       // Keep the marker class in place so a remount can't strand the examples
       // as plain selects before the assets finish loading.
       instances = Array.from(exampleRef.current.querySelectorAll('select.selectpicker')).map(function (select) {

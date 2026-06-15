@@ -41,6 +41,7 @@ const config = {
 
   stylesheets: [
     'https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css',
+    'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css',
     withBaseUrl('dist/css/bootstrap-select.min.css')
   ],
 
