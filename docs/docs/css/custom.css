@@ -336,4 +336,28 @@ ul.nav li.main {
   .logo-container {
     max-width: 25%;
   }
+
+/* Dark mode readability fixes */
+[data-theme='dark'] body,
+[data-theme='dark'] .content,
+[data-theme='dark'] .bs-docs-example,
+[data-theme='dark'] .bs-docs-header,
+[data-theme='dark'] .standaloneExampleCard,
+[data-theme='dark'] .featureCard {
+  color: #e6e6e6 !important;
+}
+
+[data-theme='dark'] .bs-docs-example {
+  background-color: #1e1e1e !important;
+  border-color: rgba(255,255,255,0.06) !important;
+}
+
+[data-theme='dark'] .bs-docs-header {
+  color: #fff !important;
+}
+
+[data-theme='dark'] .highlight {
+  background-color: rgba(255,255,255,0.02) !important;
+  color: #f5f5f5 !important;
+}
 }
