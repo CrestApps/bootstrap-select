@@ -148,15 +148,6 @@ module.exports = function (grunt) {
               '**/*'
             ],
             dest: 'docs/static/dist/'
-          },
-          {
-            expand: true,
-            cwd: 'node_modules/@fortawesome/fontawesome-free/',
-            src: [
-              'css/all.min.css',
-              'webfonts/*'
-            ],
-            dest: 'docs/static/vendor/fontawesome/'
           }
         ]
       }
