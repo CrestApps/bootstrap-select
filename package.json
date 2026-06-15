@@ -27,7 +27,7 @@
     "README.md"
   ],
   "description": "A dependency-free, vanilla JavaScript plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Supports Bootstrap 5+. Forked from snapappointments/bootstrap-select with jQuery and Bootstrap 3/4 support removed.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "homepage": "https://github.com/CrestApps/crestapps-bootstrap-select",
   "author": {
     "name": "CrestApps",
