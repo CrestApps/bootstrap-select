@@ -31,6 +31,43 @@
   --ifm-background-color: #1e1e1e;
   --ifm-background-surface-color: #1e1e1e;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, .3);
+
+  /* Ensure readable text in dark mode */
+  color: #e6e6e6;
+  --ifm-color-emphasis-900: #e6e6e6;
+  --ifm-color-emphasis-200: rgba(255,255,255,0.06);
+}
+
+/* Make sure main elements inherit readable color in dark mode */
+[data-theme='dark'] html,
+[data-theme='dark'] body,
+[data-theme='dark'] .main-wrapper,
+[data-theme='dark'] .theme-doc-root,
+[data-theme='dark'] .theme-doc-page,
+[data-theme='dark'] article {
+  color: #e6e6e6;
+}
+
+/* Cards, examples and standalone components */
+[data-theme='dark'] .featureCard,
+[data-theme='dark'] .standaloneExampleCard,
+[data-theme='dark'] .bs-docs-example {
+  background: var(--ifm-background-surface-color);
+  color: inherit;
+  border-color: var(--ifm-color-emphasis-200);
+}
+
+/* Header adjustments for dark mode */
+[data-theme='dark'] .bs-docs-header,
+[data-theme='dark'] .bs-docs-sub-header {
+  color: #fff;
+}
+
+/* Ensure code blocks/highlight contrast */
+[data-theme='dark'] .highlight,
+[data-theme='dark'] pre,
+[data-theme='dark'] code {
+  color: #f5f5f5;
 }
 
 html,
@@ -259,3 +296,30 @@ article {
     grid-template-columns: 1fr;
   }
 }
+
+/* Dark-mode table styles for docs (tables like Core options) */
+[data-theme='dark'] .table,
+[data-theme='dark'] .table > thead > tr > th,
+[data-theme='dark'] .table > tbody > tr > td {
+  color: #e6e6e6;
+  background-color: transparent;
+  border-color: rgba(255,255,255,0.06);
+}
+
+[data-theme='dark'] .table thead th {
+  background-color: rgba(255,255,255,0.03);
+  color: #f1f1f1;
+}
+
+[data-theme='dark'] .table.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(255,255,255,0.02);
+}
+
+[data-theme='dark'] .table.table-striped tbody tr:nth-of-type(even) {
+  background-color: transparent;
+}
+
+[data-theme='dark'] .table.table-bordered {
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
