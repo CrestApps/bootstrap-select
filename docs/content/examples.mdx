@@ -412,6 +412,24 @@ Use the `placeholder` attribute to set the default placeholder text when nothing
 </select>
 ```
 
+Legacy bootstrap-select markup that uses the select element's `title` attribute for placeholder text is also supported on single selects:
+
+<LiveExample
+  html={String.raw`  <select class="selectpicker" title="Choose a content type">
+    <option>Article</option>
+    <option>Blog Post</option>
+    <option>Landing Page</option>
+  </select>`}
+/>
+
+```html
+<select class="selectpicker" title="Choose a content type">
+  <option>Article</option>
+  <option>Blog Post</option>
+  <option>Landing Page</option>
+</select>
+```
+
 ## Selected text
 
 <p id="title"></p>
@@ -708,6 +726,80 @@ Wrap selects in grid columns, or any custom parent element, to easily enforce de
     </div>
   </div>
 </div>
+```
+
+<div id="data-width"></div>
+
+Alternatively, use the `data-width` attribute to set the width of the select. Set `data-width` to `'auto'` to automatically adjust the width of the select to its widest option. `'fit'` automatically adjusts the width of the select to the width of its currently selected option. An exact value can also be specified, e.g., `300px` or `50%`.
+
+<LiveExample
+  html={String.raw`  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label><code>width: 'auto'</code></label>
+        <select class="selectpicker form-control" data-width="auto">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+          <option>All of the above (and much, much more!)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label><code>width: 'fit'</code></label>
+        <select class="selectpicker form-control" data-width="fit">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+          <option>All of the above (and much, much more!)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label><code>width: '150px'</code></label>
+        <select class="selectpicker form-control" data-width="150px">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+          <option>All of the above (and much, much more!)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label><code>width: '75%'</code></label>
+        <select class="selectpicker form-control" data-width="75%">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+          <option>All of the above (and much, much more!)</option>
+        </select>
+      </div>
+    </div>
+  </div>`}
+/>
+
+```html
+<select class="selectpicker" data-width="auto">
+  ...
+</select>
+<select class="selectpicker" data-width="fit">
+  ...
+</select>
+<select class="selectpicker" data-width="100px">
+  ...
+</select>
+<select class="selectpicker" data-width="75%">
+  ...
+</select>
 ```
 
 # Customize options

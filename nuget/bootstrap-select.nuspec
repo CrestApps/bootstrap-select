@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>bootstrap-select</id>
-        <version>1.1.0</version>
+        <version>1.1.2</version>
         <title>bootstrap-select</title>
         <authors>CrestApps, Casey Holzer, Silvio Moreto, SnapAppointments LLC</authors>
         <owners>CrestApps</owners>
