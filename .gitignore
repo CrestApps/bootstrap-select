@@ -10,6 +10,8 @@ bower_components
 # Dist zip
 bootstrap-select-*.zip
 dist/
+!docs/dist/
+!docs/dist/**
 
 # Playwright
 test-results/

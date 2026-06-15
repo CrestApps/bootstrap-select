@@ -319,45 +319,61 @@ new Selectpicker('#tag-editor', {
 Limit the number of options that can be selected via the `data-max-options` attribute. It also works for option groups. Customize the message displayed when the limit is reached with `maxOptionsText`.
 
 <LiveExample
-  html={String.raw`  <select class="selectpicker" multiple data-max-options="2">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-  </select>
+  html={String.raw`  <div class="row g-3">
+    <div class="col-md-6">
+      <label for="max-options-example">Overall limit</label>
+      <select id="max-options-example" class="selectpicker" multiple data-max-options="2" data-width="100%">
+        <option>Mustard</option>
+        <option>Ketchup</option>
+        <option>Relish</option>
+      </select>
+    </div>
 
-  <select class="selectpicker" multiple>
-    <optgroup label="Condiments" data-max-options="2">
-      <option>Mustard</option>
-      <option>Ketchup</option>
-      <option>Relish</option>
-    </optgroup>
-    <optgroup label="Breads" data-max-options="2">
-      <option>Plain</option>
-      <option>Steamed</option>
-      <option>Toasted</option>
-    </optgroup>
-  </select>`}
+    <div class="col-md-6">
+      <label for="max-options-groups-example">Per-group limit</label>
+      <select id="max-options-groups-example" class="selectpicker" multiple data-width="100%">
+        <optgroup label="Condiments" data-max-options="2">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+        </optgroup>
+        <optgroup label="Breads" data-max-options="2">
+          <option>Plain</option>
+          <option>Steamed</option>
+          <option>Toasted</option>
+        </optgroup>
+      </select>
+    </div>
+  </div>`}
 />
 
 ```html
-<select class="selectpicker" multiple data-max-options="2">
-  <option>Mustard</option>
-  <option>Ketchup</option>
-  <option>Relish</option>
-</select>
+<div class="row g-3">
+  <div class="col-md-6">
+    <label for="max-options-example">Overall limit</label>
+    <select id="max-options-example" class="selectpicker" multiple data-max-options="2" data-width="100%">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </div>
 
-<select class="selectpicker" multiple>
-  <optgroup label="Condiments" data-max-options="2">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-  </optgroup>
-  <optgroup label="Breads" data-max-options="2">
-    <option>Plain</option>
-    <option>Steamed</option>
-    <option>Toasted</option>
-  </optgroup>
-</select>
+  <div class="col-md-6">
+    <label for="max-options-groups-example">Per-group limit</label>
+    <select id="max-options-groups-example" class="selectpicker" multiple data-width="100%">
+      <optgroup label="Condiments" data-max-options="2">
+        <option>Mustard</option>
+        <option>Ketchup</option>
+        <option>Relish</option>
+      </optgroup>
+      <optgroup label="Breads" data-max-options="2">
+        <option>Plain</option>
+        <option>Steamed</option>
+        <option>Toasted</option>
+      </optgroup>
+    </select>
+  </div>
+</div>
 ```
 
 # Custom button text
