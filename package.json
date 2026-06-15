@@ -95,8 +95,9 @@
   },
   "scripts": {
     "build": "grunt build",
-    "docs:build": "npm run docs:prepare && docusaurus build docs",
+    "docs:build": "npm run docs:prepare && docusaurus build docs --out-dir .pages-build",
     "docs:clear": "docusaurus clear docs",
+    "docs:pages": "node scripts/publish-docs-to-pages.js",
     "docs:prepare": "npm run build && grunt copy-docs",
     "docs:serve": "docusaurus serve docs",
     "docs:start": "npm run docs:prepare && docusaurus start docs",

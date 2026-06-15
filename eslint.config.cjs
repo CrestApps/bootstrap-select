@@ -150,7 +150,7 @@ module.exports = [
   {
     ignores: [
       'dist/**',
-      'docs/docs/dist/**',
+      'docs/content/dist/**',
       'docs/build/**',
       'docs/.docusaurus/**',
       'docs/static/dist/**',

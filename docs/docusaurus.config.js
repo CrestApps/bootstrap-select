@@ -17,7 +17,7 @@ const config = {
   baseUrl: normalizedBaseUrl,
   organizationName: 'CrestApps',
   projectName: 'crestapps-bootstrap-select',
-  trailingSlash: false,
+  trailingSlash: true,
   onBrokenLinks: 'throw',
   markdown: {
     hooks: {
@@ -68,6 +68,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          path: 'content',
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: 'https://github.com/CrestApps/crestapps-bootstrap-select/tree/main/docs/',
           lastVersion: 'current',
