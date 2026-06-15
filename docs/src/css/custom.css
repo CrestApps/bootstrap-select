@@ -296,3 +296,30 @@ article {
     grid-template-columns: 1fr;
   }
 }
+
+/* Dark-mode table styles for docs (tables like Core options) */
+[data-theme='dark'] .table,
+[data-theme='dark'] .table > thead > tr > th,
+[data-theme='dark'] .table > tbody > tr > td {
+  color: #e6e6e6;
+  background-color: transparent;
+  border-color: rgba(255,255,255,0.06);
+}
+
+[data-theme='dark'] .table thead th {
+  background-color: rgba(255,255,255,0.03);
+  color: #f1f1f1;
+}
+
+[data-theme='dark'] .table.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(255,255,255,0.02);
+}
+
+[data-theme='dark'] .table.table-striped tbody tr:nth-of-type(even) {
+  background-color: transparent;
+}
+
+[data-theme='dark'] .table.table-bordered {
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
