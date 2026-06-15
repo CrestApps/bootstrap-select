@@ -6,9 +6,7 @@ on:
       - 'v*.*.*'
 
 permissions:
-  contents: write
-  pages: write
-  id-token: write
+  contents: read
 
 jobs:
   publish:
@@ -153,43 +151,6 @@ jobs:
           git commit -m "docs: snapshot ${DOCS_VERSION} release docs"
           git push origin HEAD:main
 
-  build_docs:
-    runs-on: ubuntu-latest
-    name: Build release docs
-    needs:
-      - publish
-      - snapshot_docs
-    if: always() && needs.publish.result == 'success' && (needs.snapshot_docs.result == 'success' || needs.snapshot_docs.result == 'skipped')
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          ref: main
-
-      - name: Setup node
-        uses: actions/setup-node@v6
-        with:
-          node-version: '20.19'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build docs site
-        run: npm run docs:build
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs/build
-
-  deploy_docs:
-    runs-on: ubuntu-latest
-    name: Deploy release docs
-    needs: build_docs
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+  # Docs deployments must come from main because the github-pages environment
+  # is protected against tag refs. When a release needs a new versioned docs
+  # snapshot, this workflow pushes it to main and deploy-docs.yml publishes it.
