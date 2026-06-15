@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.1.1 (https://github.com/CrestApps/crestapps-bootstrap-select)
+ * Bootstrap-select v1.1.2 (https://github.com/CrestApps/crestapps-bootstrap-select)
  *
  * CrestApps fork (vanilla JavaScript, Bootstrap 5+) of snapappointments/bootstrap-select
  * Copyright 2012-2018 SnapAppointments, LLC (original work)
@@ -172,6 +172,15 @@ var SAFE_URL_PATTERN = /^(?:(?:https?|mailto|ftp|tel|file):|[^&:/?#]*(?:[/?#]|$)
 var DATA_URL_PATTERN = /^data:(?:image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm)|audio\/(?:mp3|oga|ogg|opus));base64,[a-z0-9+/]+=*$/i;
 
 var ParseableAttributes = ['placeholder']; // attributes to use as settings, can add others in the future
+
+function applyLegacyOptions (element, config) {
+  if (!config.placeholder) {
+    var title = element.getAttribute('title');
+    if (title) config.placeholder = title;
+  }
+
+  return config;
+}
 
 function allowedAttribute (attr, allowedAttributeList) {
   var attrName = attr.nodeName.toLowerCase();
@@ -702,7 +711,7 @@ var changedArguments = null;
 // shared flag for spacebar selection handling (mirrors original document data flag)
 var spaceSelectFlag = false;
 
-var REMOVED_OPTIONS = ['container', 'display', 'mobile', 'styleBase', 'width', 'windowPadding'];
+var REMOVED_OPTIONS = ['container', 'display', 'mobile', 'styleBase', 'windowPadding'];
 
 function stripRemovedOptions (source) {
   if (!source || typeof source !== 'object') return source;
@@ -2429,6 +2438,15 @@ class Selectpicker {
     this.menu.style.minWidth = '';
     this.newElement.style.width = '';
     this.newElement.classList.remove('fit-width');
+
+    if (this.options.width === 'fit') {
+      this.newElement.classList.add('fit-width');
+      return;
+    }
+
+    if (this.options.width && this.options.width !== 'auto') {
+      this.newElement.style.width = this.options.width;
+    }
   }
 
   selectPosition () {
@@ -3542,7 +3560,7 @@ class Selectpicker {
 var instanceMap = new WeakMap();
 
 Selectpicker.NAME = 'selectpicker';
-Selectpicker.VERSION = '1.1.0';
+Selectpicker.VERSION = '1.1.2';
 
 // user-provided global defaults (set via Selectpicker.setDefaults, used by i18n files)
 Selectpicker.defaults = null;
@@ -3575,6 +3593,7 @@ Selectpicker.DEFAULTS = {
   placeholder: null,
   allowClear: false,
   selectedTextFormat: 'values',
+  width: false,
   hideDisabled: false,
   showSubtext: false,
   showIcon: true,
@@ -3624,7 +3643,7 @@ Selectpicker._buildConfig = function (element, options) {
   config.template = Object.assign({}, Selectpicker.DEFAULTS.template, userDefaults.template || {}, dataAttributes.template, options.template);
   config.source = Object.assign({}, Selectpicker.DEFAULTS.source, userDefaults.source || {}, options.source);
 
-  return config;
+  return applyLegacyOptions(element, config);
 };
 
 Selectpicker.setDefaults = function (newDefaults) {

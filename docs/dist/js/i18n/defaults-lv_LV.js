@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.1.1 (https://github.com/CrestApps/crestapps-bootstrap-select)
+ * Bootstrap-select v1.1.2 (https://github.com/CrestApps/crestapps-bootstrap-select)
  *
  * CrestApps fork (vanilla JavaScript, Bootstrap 5+) of snapappointments/bootstrap-select
  * Copyright 2012-2018 SnapAppointments, LLC (original work)
