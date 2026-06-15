@@ -100,24 +100,32 @@
     <option>2018</option>
   </select>
   <label for="floating-tags-example">Years</label>
-</div>`}),"\n",(0,s.jsx)(t.pre,{children:(0,s.jsx)(t.code,{className:"language-html",children:'<div class="form-floating">\n  <select\n    id="floating-tags-example"\n    class="selectpicker"\n    multiple\n    data-live-search="true"\n    data-show-selected-tags="true"\n    data-open-options="true"\n    placeholder="Years">\n    <option selected>2026</option>\n    <option selected>2023</option>\n    <option selected>2021</option>\n  </select>\n  <label for="floating-tags-example">Years</label>\n</div>\n'})}),"\n",(0,s.jsxs)(t.p,{children:["For remote-backed pickers, initialize with JavaScript and provide ",(0,s.jsx)(t.code,{children:"source.create(callback, searchValue)"})," to save the new item before selecting it:"]}),"\n",(0,s.jsx)(t.pre,{children:(0,s.jsx)(t.code,{className:"language-js",children:"new Selectpicker('#tag-editor', {\n  liveSearch: true,\n  showSelectedTags: true,\n  openOptions: true,\n  source: {\n    data: function (callback) {\n      callback(existingTags);\n    },\n    search: function (callback, page, searchValue) {\n      callback(filterTags(searchValue));\n    },\n    create: function (callback, searchValue) {\n      saveTag(searchValue).then(function (tag) {\n        callback({\n          text: tag.displayText,\n          value: tag.id\n        });\n      });\n    }\n  }\n});\n"})}),"\n",(0,s.jsx)(t.h1,{id:"limit-the-number-of-selections",children:"Limit the number of selections"}),"\n",(0,s.jsxs)(t.p,{children:["Limit the number of options that can be selected via the ",(0,s.jsx)(t.code,{children:"data-max-options"})," attribute. It also works for option groups. Customize the message displayed when the limit is reached with ",(0,s.jsx)(t.code,{children:"maxOptionsText"}),"."]}),"\n",(0,s.jsx)(l.A,{html:String.raw`  <select class="selectpicker" multiple data-max-options="2">
-  <option>Mustard</option>
-  <option>Ketchup</option>
-  <option>Relish</option>
-</select>
+</div>`}),"\n",(0,s.jsx)(t.pre,{children:(0,s.jsx)(t.code,{className:"language-html",children:'<div class="form-floating">\n  <select\n    id="floating-tags-example"\n    class="selectpicker"\n    multiple\n    data-live-search="true"\n    data-show-selected-tags="true"\n    data-open-options="true"\n    placeholder="Years">\n    <option selected>2026</option>\n    <option selected>2023</option>\n    <option selected>2021</option>\n  </select>\n  <label for="floating-tags-example">Years</label>\n</div>\n'})}),"\n",(0,s.jsxs)(t.p,{children:["For remote-backed pickers, initialize with JavaScript and provide ",(0,s.jsx)(t.code,{children:"source.create(callback, searchValue)"})," to save the new item before selecting it:"]}),"\n",(0,s.jsx)(t.pre,{children:(0,s.jsx)(t.code,{className:"language-js",children:"new Selectpicker('#tag-editor', {\n  liveSearch: true,\n  showSelectedTags: true,\n  openOptions: true,\n  source: {\n    data: function (callback) {\n      callback(existingTags);\n    },\n    search: function (callback, page, searchValue) {\n      callback(filterTags(searchValue));\n    },\n    create: function (callback, searchValue) {\n      saveTag(searchValue).then(function (tag) {\n        callback({\n          text: tag.displayText,\n          value: tag.id\n        });\n      });\n    }\n  }\n});\n"})}),"\n",(0,s.jsx)(t.h1,{id:"limit-the-number-of-selections",children:"Limit the number of selections"}),"\n",(0,s.jsxs)(t.p,{children:["Limit the number of options that can be selected via the ",(0,s.jsx)(t.code,{children:"data-max-options"})," attribute. It also works for option groups. Customize the message displayed when the limit is reached with ",(0,s.jsx)(t.code,{children:"maxOptionsText"}),"."]}),"\n",(0,s.jsx)(l.A,{html:String.raw`  <div class="row g-3">
+  <div class="col-md-6">
+    <label for="max-options-example">Overall limit</label>
+    <select id="max-options-example" class="selectpicker" multiple data-max-options="2" data-width="100%">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </div>
 
-<select class="selectpicker" multiple>
-  <optgroup label="Condiments" data-max-options="2">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-  </optgroup>
-  <optgroup label="Breads" data-max-options="2">
-    <option>Plain</option>
-    <option>Steamed</option>
-    <option>Toasted</option>
-  </optgroup>
-</select>`}),"\n",(0,s.jsx)(t.pre,{children:(0,s.jsx)(t.code,{className:"language-html",children:'<select class="selectpicker" multiple data-max-options="2">\n  <option>Mustard</option>\n  <option>Ketchup</option>\n  <option>Relish</option>\n</select>\n\n<select class="selectpicker" multiple>\n  <optgroup label="Condiments" data-max-options="2">\n    <option>Mustard</option>\n    <option>Ketchup</option>\n    <option>Relish</option>\n  </optgroup>\n  <optgroup label="Breads" data-max-options="2">\n    <option>Plain</option>\n    <option>Steamed</option>\n    <option>Toasted</option>\n  </optgroup>\n</select>\n'})}),"\n",(0,s.jsx)(t.h1,{id:"custom-button-text",children:"Custom button text"}),"\n",(0,s.jsx)(t.hr,{}),"\n",(0,s.jsx)(t.h2,{id:"placeholder",children:"Placeholder"}),"\n",(0,s.jsx)("p",{id:"titleMultiples"}),"\n",(0,s.jsxs)(t.p,{children:["Use the ",(0,s.jsx)(t.code,{children:"placeholder"})," attribute to set the default placeholder text when nothing is selected. This works for both multiple and standard select boxes:"]}),"\n",(0,s.jsx)(l.A,{html:String.raw`  <div class="form-group">
+  <div class="col-md-6">
+    <label for="max-options-groups-example">Per-group limit</label>
+    <select id="max-options-groups-example" class="selectpicker" multiple data-width="100%">
+      <optgroup label="Condiments" data-max-options="2">
+        <option>Mustard</option>
+        <option>Ketchup</option>
+        <option>Relish</option>
+      </optgroup>
+      <optgroup label="Breads" data-max-options="2">
+        <option>Plain</option>
+        <option>Steamed</option>
+        <option>Toasted</option>
+      </optgroup>
+    </select>
+  </div>
+</div>`}),"\n",(0,s.jsx)(t.pre,{children:(0,s.jsx)(t.code,{className:"language-html",children:'<div class="row g-3">\n  <div class="col-md-6">\n    <label for="max-options-example">Overall limit</label>\n    <select id="max-options-example" class="selectpicker" multiple data-max-options="2" data-width="100%">\n      <option>Mustard</option>\n      <option>Ketchup</option>\n      <option>Relish</option>\n    </select>\n  </div>\n\n  <div class="col-md-6">\n    <label for="max-options-groups-example">Per-group limit</label>\n    <select id="max-options-groups-example" class="selectpicker" multiple data-width="100%">\n      <optgroup label="Condiments" data-max-options="2">\n        <option>Mustard</option>\n        <option>Ketchup</option>\n        <option>Relish</option>\n      </optgroup>\n      <optgroup label="Breads" data-max-options="2">\n        <option>Plain</option>\n        <option>Steamed</option>\n        <option>Toasted</option>\n      </optgroup>\n    </select>\n  </div>\n</div>\n'})}),"\n",(0,s.jsx)(t.h1,{id:"custom-button-text",children:"Custom button text"}),"\n",(0,s.jsx)(t.hr,{}),"\n",(0,s.jsx)(t.h2,{id:"placeholder",children:"Placeholder"}),"\n",(0,s.jsx)("p",{id:"titleMultiples"}),"\n",(0,s.jsxs)(t.p,{children:["Use the ",(0,s.jsx)(t.code,{children:"placeholder"})," attribute to set the default placeholder text when nothing is selected. This works for both multiple and standard select boxes:"]}),"\n",(0,s.jsx)(l.A,{html:String.raw`  <div class="form-group">
   <label>Multiple</label>
   <select class="selectpicker" multiple placeholder="Choose one of the following...">
     <option>Mustard</option>
