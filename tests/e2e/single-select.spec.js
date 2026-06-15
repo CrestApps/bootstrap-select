@@ -95,3 +95,38 @@ test('placeholder attribute replaces legacy select title placeholder behavior', 
   await expect(page.locator('[data-id="with-placeholder"] .filter-option-inner-inner')).toHaveText('Choose one');
   await expect(page.locator('[data-id="with-title"] .filter-option-inner-inner')).toHaveText('One');
 });
+
+test('font awesome style icons render in the button and menu when iconBase is configured', async ({ page }) => {
+  await page.goto('/tests/index.html');
+  await page.waitForFunction(() => window.Selectpicker);
+
+  await page.evaluate(() => {
+    document.body.innerHTML += '<select id="with-icons" data-icon-base="fa-solid" data-tick-icon="fa-check">' +
+      '<option data-icon="fa-heart">Ketchup</option>' +
+      '<option data-icon="fa-fire">Barbecue Sauce</option>' +
+      '<option data-icon="fa-burger">Mustard</option>' +
+      '</select>';
+
+    new Selectpicker('#with-icons');
+  });
+
+  const picker = page.locator('.bootstrap-select').filter({ has: page.locator('[data-id="with-icons"]') });
+
+  await expect(picker.locator('.filter-option-inner-inner .fa-solid.fa-heart')).toHaveCount(1);
+  await expect.poll(async () => page.evaluate(() => {
+    const icon = document.querySelector('.bootstrap-select [data-id="with-icons"] .filter-option-inner-inner .fa-solid.fa-heart');
+    return {
+      hasFontAwesomeFamily: /Font Awesome/.test(window.getComputedStyle(icon).fontFamily),
+      hasBeforeContent: !/^none$/i.test(window.getComputedStyle(icon, '::before').content.replace(/\s*\/\s*""$/, ''))
+    };
+  })).toEqual({
+    hasFontAwesomeFamily: true,
+    hasBeforeContent: true
+  });
+
+  await picker.locator('[data-id="with-icons"]').click();
+
+  await expect(picker.locator('.dropdown-menu li a .fa-solid.fa-heart')).toHaveCount(1);
+  await expect(picker.locator('.dropdown-menu li a .fa-solid.fa-fire')).toHaveCount(1);
+  await expect(picker.locator('.dropdown-menu li a .fa-solid.fa-burger')).toHaveCount(1);
+});

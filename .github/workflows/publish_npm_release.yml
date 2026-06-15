@@ -6,21 +6,42 @@ on:
       - 'v*.*.*'
 
 permissions:
-  contents: read
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     name: Publish crestapps-bootstrap-select
+    outputs:
+      version: ${{ steps.release_meta.outputs.version }}
+      docs_version: ${{ steps.release_meta.outputs.docs_version }}
+      should_snapshot_docs: ${{ steps.release_meta.outputs.should_snapshot_docs }}
     steps:
-      - name: Get the version
-        id: get_version
+      - name: Parse release metadata
+        id: release_meta
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+          if [[ -z "$MAJOR" || -z "$MINOR" || -z "$PATCH" ]]; then
+            echo "::error title=Invalid version tag::Expected a semantic version tag like v1.2.3, received '$GITHUB_REF_NAME'."
+            exit 1
+          fi
+
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "docs_version=${MAJOR}.${MINOR}" >> "$GITHUB_OUTPUT"
+
+          if [[ "$PATCH" == "0" ]]; then
+            echo "should_snapshot_docs=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_snapshot_docs=false" >> "$GITHUB_OUTPUT"
+          fi
         shell: bash
 
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v6
         with:
@@ -50,5 +71,125 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npm version "${{ steps.get_version.outputs.VERSION }}" --no-git-tag-version --allow-same-version
+          npm version "${{ steps.release_meta.outputs.version }}" --no-git-tag-version --allow-same-version
           npm publish --access public --tag latest
+
+  snapshot_docs:
+    runs-on: ubuntu-latest
+    name: Snapshot release docs
+    needs: publish
+    if: needs.publish.outputs.should_snapshot_docs == 'true'
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ github.sha }}
+
+      - name: Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20.19'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Skip existing docs snapshot
+        id: snapshot_state
+        env:
+          DOCS_VERSION: ${{ needs.publish.outputs.docs_version }}
+        run: |
+          git fetch origin main --depth=1
+
+          if git cat-file -e "origin/main:docs/versioned_sidebars/version-${DOCS_VERSION}-sidebars.json" 2>/dev/null; then
+            echo "should_commit=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "should_commit=true" >> "$GITHUB_OUTPUT"
+
+      - name: Create docs snapshot
+        if: steps.snapshot_state.outputs.should_commit == 'true'
+        env:
+          DOCS_VERSION: ${{ needs.publish.outputs.docs_version }}
+        run: |
+          pushd docs
+          npx docusaurus docs:version "$DOCS_VERSION"
+          popd
+
+      - name: Push docs snapshot to main
+        if: steps.snapshot_state.outputs.should_commit == 'true'
+        env:
+          DOCS_VERSION: ${{ needs.publish.outputs.docs_version }}
+        run: |
+          if git diff --quiet -- docs/versions.json docs/versioned_docs docs/versioned_sidebars; then
+            echo "No docs snapshot changes to commit."
+            exit 0
+          fi
+
+          SNAPSHOT_DIR="$RUNNER_TEMP/docs-version-$DOCS_VERSION"
+          mkdir -p "$SNAPSHOT_DIR"
+          cp docs/versions.json "$SNAPSHOT_DIR/versions.json"
+          cp -R docs/versioned_docs "$SNAPSHOT_DIR/versioned_docs"
+          cp -R docs/versioned_sidebars "$SNAPSHOT_DIR/versioned_sidebars"
+
+          git switch -C docs-version-sync origin/main
+          rm -rf docs/versioned_docs docs/versioned_sidebars
+          mkdir -p docs/versioned_docs docs/versioned_sidebars
+          cp "$SNAPSHOT_DIR/versions.json" docs/versions.json
+          cp -R "$SNAPSHOT_DIR/versioned_docs/." docs/versioned_docs/
+          cp -R "$SNAPSHOT_DIR/versioned_sidebars/." docs/versioned_sidebars/
+
+          if git diff --quiet -- docs/versions.json docs/versioned_docs docs/versioned_sidebars; then
+            echo "Main already contains the ${DOCS_VERSION} docs snapshot."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/versions.json docs/versioned_docs docs/versioned_sidebars
+          git commit -m "docs: snapshot ${DOCS_VERSION} release docs"
+          git push origin HEAD:main
+
+  build_docs:
+    runs-on: ubuntu-latest
+    name: Build release docs
+    needs:
+      - publish
+      - snapshot_docs
+    if: always() && needs.publish.result == 'success' && (needs.snapshot_docs.result == 'success' || needs.snapshot_docs.result == 'skipped')
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - name: Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20.19'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build docs site
+        run: npm run docs:build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/build
+
+  deploy_docs:
+    runs-on: ubuntu-latest
+    name: Deploy release docs
+    needs: build_docs
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

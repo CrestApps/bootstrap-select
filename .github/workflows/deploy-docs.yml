@@ -6,6 +6,12 @@ on:
       - main
     paths:
       - 'docs/**'
+      - 'js/**'
+      - 'less/**'
+      - 'sass/**'
+      - 'Gruntfile.js'
+      - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/deploy-docs.yml'
   workflow_dispatch:
 

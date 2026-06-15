@@ -272,6 +272,21 @@ function stringSearch (li, searchString, method, normalize) {
   return searchSuccess;
 }
 
+function normalizeSearchInput (value, normalize) {
+  if (value === undefined || value === null) value = '';
+  value = value.toString().trim();
+
+  if (normalize && value) value = normalizeToBase(value);
+
+  return value.toUpperCase();
+}
+
+function getOptionLabelText (option) {
+  if (!option) return '';
+
+  return option.title || option.text || option.value || '';
+}
+
 // Borrowed from Lodash (_.deburr)
 /** Used to map Latin Unicode letters to basic Latin letters. */
 var deburredLetters = {
@@ -675,6 +690,20 @@ var changedArguments = null;
 // shared flag for spacebar selection handling (mirrors original document data flag)
 var spaceSelectFlag = false;
 
+var REMOVED_OPTIONS = ['container', 'display', 'mobile', 'styleBase', 'width', 'windowPadding'];
+
+function stripRemovedOptions (source) {
+  if (!source || typeof source !== 'object') return source;
+
+  var result = Object.assign({}, source);
+
+  for (var i = 0; i < REMOVED_OPTIONS.length; i++) {
+    delete result[REMOVED_OPTIONS[i]];
+  }
+
+  return result;
+}
+
 class Selectpicker {
   constructor (element, options) {
     if (typeof element === 'string') {
@@ -709,6 +738,10 @@ class Selectpicker {
       view: {},
       // map of option values and their respective data (only used in conjunction with options.source)
       optionValuesDataMap: {},
+      createdOptions: [],
+      openOption: {
+        isCreating: false
+      },
       isSearching: false,
       keydown: {
         keyHistory: '',
@@ -723,12 +756,6 @@ class Selectpicker {
     };
 
     this.sizeInfo = {};
-
-    // Format window padding
-    var winPad = this.options.windowPadding;
-    if (typeof winPad === 'number') {
-      this.options.windowPadding = [winPad, winPad, winPad, winPad];
-    }
 
     this.init();
 
@@ -813,6 +840,8 @@ class Selectpicker {
     this.menu = this.newElement.querySelector(':scope > ' + Selector.MENU);
     this.menuInner = this.menu.querySelector('.inner');
     this.searchbox = this.menu.querySelector('input');
+    this.selectedItems = this.newElement.querySelector(':scope > .bs-selected-items-external') || this.menu.querySelector('.bs-selected-items');
+    this.createOptionButton = this.menu.querySelector('.bs-create-option');
 
     element.classList.remove('bs-select-hidden');
 
@@ -850,23 +879,17 @@ class Selectpicker {
 
     this.setStyle();
     this.setWidth();
-    if (this.options.container) {
-      this.selectPosition();
-    } else {
-      this._on(this.element, 'hide' + EVENT_KEY, function () {
-        if (that.isVirtual()) {
-          // empty menu on close
-          var menuInner = that.menuInner,
-              emptyMenu = menuInner.firstChild.cloneNode(false);
+    this._on(this.element, 'hide' + EVENT_KEY, function () {
+      if (that.isVirtual()) {
+        // empty menu on close
+        var menuInner = that.menuInner,
+            emptyMenu = menuInner.firstChild.cloneNode(false);
 
-          // replace the existing UL with an empty one - this is faster than emptying it
-          menuInner.replaceChild(emptyMenu, menuInner.firstChild);
-          menuInner.scrollTop = 0;
-        }
-      });
-    }
-
-    if (this.options.mobile) this.mobile();
+        // replace the existing UL with an empty one - this is faster than emptying it
+        menuInner.replaceChild(emptyMenu, menuInner.firstChild);
+        menuInner.scrollTop = 0;
+      }
+    });
 
     // re-emit Bootstrap dropdown events as bootstrap-select events
     this._on(this.newElement, 'hide.bs.dropdown', function (e) {
@@ -922,8 +945,16 @@ class Selectpicker {
   createDropdown () {
     // If we are multiple or showTick option is set, then add the show-tick class
     var showTick = (this.multiple || this.options.showTick) ? ' show-tick' : '',
+        showSelectedTags = this.options.showSelectedTags ? ' show-selected-tags' : '',
+        selectedItemsStyle = this.options.selectedItemsStyle === 'list' ? ' selected-items-style-list' : '',
+        selectionIndicator = this.options.selectionIndicator === 'checkbox' ? ' selection-indicator-checkbox' : '',
         multiselectable = this.multiple ? ' aria-multiselectable="true"' : '',
-        autofocus = this.autofocus ? ' autofocus' : '';
+        autofocus = this.autofocus ? ' autofocus' : '',
+        liveSearchPlaceholder = this.options.liveSearchPlaceholder;
+
+    if (liveSearchPlaceholder === null && (this.options.showSelectedTags || this.options.openOptions)) {
+      liveSearchPlaceholder = this.options.placeholder || 'Search';
+    }
 
     // Elements
     var drop,
@@ -936,7 +967,7 @@ class Selectpicker {
     if (this.options.header) {
       header =
           '<div class="' + classNames.POPOVERHEADER + '">' +
-            '<button type="button" class="close" aria-hidden="true">&times;</button>' +
+            '<button type="button" class="btn-close" aria-label="Close"></button>' +
               this.options.header +
           '</div>';
     }
@@ -946,11 +977,14 @@ class Selectpicker {
           '<div class="bs-searchbox">' +
             '<input type="search" class="form-control" autocomplete="off"' +
               (
-                this.options.liveSearchPlaceholder === null ? ''
+                liveSearchPlaceholder === null ? ''
                 :
-                ' placeholder="' + htmlEscape(this.options.liveSearchPlaceholder) + '"'
+                ' placeholder="' + htmlEscape(liveSearchPlaceholder) + '"'
               ) +
               ' role="combobox" aria-label="Search" aria-controls="' + this.selectId + '" aria-autocomplete="list">' +
+            (this.options.openOptions
+              ? '<button type="button" class="bs-create-option dropdown-item" hidden></button>'
+              : '') +
           '</div>';
     }
 
@@ -984,11 +1018,9 @@ class Selectpicker {
     }
 
     drop =
-        '<div class="dropdown bootstrap-select' + showTick + '">' +
+        '<div class="dropdown bootstrap-select' + showTick + showSelectedTags + selectedItemsStyle + selectionIndicator + '">' +
           '<button type="button" tabindex="-1" class="' +
-            this.options.styleBase +
-            ' dropdown-toggle" ' +
-            (this.options.display === 'static' ? 'data-bs-display="static"' : '') +
+            'btn dropdown-toggle" ' +
             Selector.DATA_TOGGLE +
             autofocus +
             ' role="combobox" aria-owns="' +
@@ -1012,6 +1044,9 @@ class Selectpicker {
             '</div>' +
             donebutton +
           '</div>' +
+          (this.multiple && this.options.showSelectedTags
+            ? '<div class="bs-selected-items bs-selected-items-external" hidden></div>'
+            : '') +
         '</div>';
 
     return createFromHTML(drop);
@@ -1588,9 +1623,14 @@ class Selectpicker {
         mainElements = [],
         widestOptionLength = 0;
 
-    if ((that.options.showTick || that.multiple) && !elementTemplates.checkMark.parentNode) {
-      elementTemplates.checkMark.className = this.options.iconBase + ' ' + that.options.tickIcon + ' check-mark';
-      elementTemplates.a.appendChild(elementTemplates.checkMark);
+    if (that.options.showTick || that.multiple) {
+      elementTemplates.checkMark.className = this.options.selectionIndicator === 'checkbox'
+        ? 'check-mark bs-selection-indicator'
+        : this.options.iconBase + ' ' + that.options.tickIcon + ' check-mark';
+
+      if (!elementTemplates.checkMark.parentNode) {
+        elementTemplates.a.appendChild(elementTemplates.checkMark);
+      }
     }
 
     function buildElement (mainElements, item) {
@@ -1697,6 +1737,7 @@ class Selectpicker {
         buttonInner = button.querySelector('.filter-option-inner-inner'),
         multipleSeparator = document.createTextNode(this.options.multipleSeparator),
         titleFragment = elementTemplates.fragment.cloneNode(false),
+        forceCount = this.multiple && this.options.showSelectedTags && selectedCount > 0,
         showCount,
         countMax,
         hasContent = false;
@@ -1726,10 +1767,10 @@ class Selectpicker {
     if (this.options.selectedTextFormat === 'static') {
       titleFragment = generateOption.text.call(this, { text: this.options.placeholder }, true);
     } else {
-      showCount = this.multiple && this.options.selectedTextFormat.indexOf('count') !== -1 && selectedCount > 0;
+      showCount = forceCount || this.multiple && this.options.selectedTextFormat.indexOf('count') !== -1 && selectedCount > 0;
 
       // determine if the number of selected options will be shown (showCount === true)
-      if (showCount) {
+      if (showCount && !forceCount) {
         countMax = this.options.selectedTextFormat.split('>');
         showCount = (countMax.length > 1 && selectedCount > countMax[1]) || (countMax.length === 1 && selectedCount >= 2);
       }
@@ -1803,7 +1844,291 @@ class Selectpicker {
     buttonInner.innerHTML = '';
     buttonInner.appendChild(titleFragment);
 
+    this.syncTagEditor();
+
     this._emit('rendered');
+  }
+
+  usesTagEditor () {
+    return this.options.liveSearch && (this.options.showSelectedTags || this.options.openOptions);
+  }
+
+  syncTagEditor () {
+    if (!this.usesTagEditor()) return;
+
+    if (this.selectedItems) {
+      var selectedOptions = getSelectedOptions.call(this),
+          useListStyle = this.options.selectedItemsStyle === 'list';
+
+      this.selectedItems.innerHTML = '';
+      this.selectedItems.hidden = !selectedOptions.length;
+      this.selectedItems.classList.toggle('list-group', useListStyle);
+
+      for (var i = 0; i < selectedOptions.length; i++) {
+        var item = selectedOptions[i],
+            selectedTag = document.createElement('button'),
+            removeText = this.options.selectedTagRemoveLabel + ' ' + getOptionLabelText(item),
+            content = document.createElement('span'),
+            label = document.createElement('span'),
+            remove = document.createElement('span'),
+            icon;
+
+        selectedTag.type = 'button';
+        selectedTag.className = useListStyle
+          ? 'bs-selected-item list-group-item list-group-item-action'
+          : 'bs-selected-item';
+        selectedTag.setAttribute('data-option-value', item.value);
+        selectedTag.setAttribute('aria-label', removeText);
+        selectedTag.title = removeText;
+
+        content.className = 'bs-selected-item-content';
+
+        if (item.icon && this.options.showIcon) {
+          icon = document.createElement('span');
+          icon.className = 'bs-selected-item-icon ' + this.options.iconBase + ' ' + item.icon;
+          icon.setAttribute('aria-hidden', 'true');
+          content.appendChild(icon);
+        }
+
+        label.className = 'bs-selected-item-label';
+        label.textContent = getOptionLabelText(item);
+        content.appendChild(label);
+
+        remove.className = 'bs-selected-item-remove';
+        remove.setAttribute('aria-hidden', 'true');
+        remove.textContent = '\u00d7';
+
+        selectedTag.appendChild(content);
+        selectedTag.appendChild(remove);
+        this.selectedItems.appendChild(selectedTag);
+      }
+    }
+
+    this.syncOpenOptionButton();
+
+    if (this.newElement && this.newElement.classList.contains(classNames.SHOW)) {
+      this.setSize(true);
+    }
+  }
+
+  syncOpenOptionButton () {
+    if (!this.createOptionButton) return;
+
+    var searchValue = this.searchbox ? this.searchbox.value : '',
+        normalizedValue = searchValue.toString().trim(),
+        shouldShow = !!normalizedValue &&
+          !this.selectpicker.openOption.isCreating &&
+          !this.findOptionBySearchValue(normalizedValue);
+
+    this.createOptionButton.hidden = !shouldShow;
+    this.createOptionButton.disabled = this.selectpicker.openOption.isCreating;
+
+    if (shouldShow) {
+      this.createOptionButton.textContent = this.options.openOptionsText.replace('{0}', normalizedValue);
+      this.createOptionButton.setAttribute('data-search-value', normalizedValue);
+    } else {
+      this.createOptionButton.textContent = '';
+      this.createOptionButton.removeAttribute('data-search-value');
+    }
+  }
+
+  findOptionByValue (value, dataSet) {
+    var options = dataSet || this.selectpicker.main.data,
+        stringValue = String(value);
+
+    for (var i = 0; i < options.length; i++) {
+      var option = options[i];
+
+      if (option.type === 'option' && String(option.value) === stringValue) {
+        return option;
+      }
+    }
+
+    return null;
+  }
+
+  findOptionBySearchValue (searchValue) {
+    var options = this.options.source.data || this.options.source.search
+          ? Object.values(this.selectpicker.optionValuesDataMap)
+          : this.selectpicker.main.data,
+        normalizedSearch = normalizeSearchInput(searchValue, this.options.liveSearchNormalize);
+
+    for (var i = 0; i < options.length; i++) {
+      var option = options[i];
+
+      if (option.type !== 'option') continue;
+
+      if (
+        normalizeSearchInput(option.text, this.options.liveSearchNormalize) === normalizedSearch ||
+        normalizeSearchInput(option.value, this.options.liveSearchNormalize) === normalizedSearch ||
+        normalizeSearchInput(option.title, this.options.liveSearchNormalize) === normalizedSearch
+      ) {
+        return option;
+      }
+    }
+
+    return null;
+  }
+
+  createOptionElement (optionData) {
+    var option = document.createElement('option');
+
+    option.value = optionData.value === undefined ? optionData.text : optionData.value;
+    option.textContent = optionData.text === undefined ? option.value : optionData.text;
+
+    if (optionData.className) option.className = optionData.className;
+    if (optionData.title) option.title = optionData.title;
+    if (optionData.content) option.setAttribute('data-content', optionData.content);
+    if (optionData.tokens) option.setAttribute('data-tokens', optionData.tokens);
+    if (optionData.subtext) option.setAttribute('data-subtext', optionData.subtext);
+    if (optionData.icon) option.setAttribute('data-icon', optionData.icon);
+    if (optionData.disabled) option.disabled = true;
+    if (optionData.hidden) option.hidden = true;
+
+    return option;
+  }
+
+  appendCreatedSearchResults (searchValue) {
+    if (!this.selectpicker.createdOptions.length) return;
+
+    var matches = [];
+
+    for (var i = 0; i < this.selectpicker.createdOptions.length; i++) {
+      var option = this.selectpicker.createdOptions[i];
+
+      if (
+        stringSearch(option, normalizeSearchInput(searchValue, this.options.liveSearchNormalize), this._searchStyle(), this.options.liveSearchNormalize) &&
+        !this.findOptionByValue(option.value, this.selectpicker.search.data)
+      ) {
+        matches.push(option);
+      }
+    }
+
+    if (matches.length) this.buildData(matches, 'search');
+  }
+
+  addCreatedOption (optionData) {
+    optionData = Object.assign({}, optionData);
+    optionData.value = optionData.value === undefined ? optionData.text : optionData.value;
+    optionData.text = optionData.text === undefined ? optionData.value : optionData.text;
+
+    var size = this.selectpicker.main.elements ? this.selectpicker.main.elements.length : 0,
+        option = this.createOptionElement(optionData);
+    optionData.option = option;
+
+    this.element.appendChild(option);
+    var builtOptions = this.buildData([optionData], 'data'),
+        builtOption = builtOptions[0];
+
+    this.buildList(size);
+    this.selectpicker.createdOptions.push(builtOption);
+
+    return builtOption;
+  }
+
+  removeSelectedTag (value) {
+    var option = this.findOptionByValue(value);
+
+    if (!option || !option.selected) return;
+
+    var prevValue = getSelectValues.call(this);
+
+    this.setSelected(option, false);
+    changedArguments = [option.index, false, prevValue];
+    triggerNative(this.element, 'change');
+
+    if (this.options.liveSearch) this.searchbox.focus();
+  }
+
+  createOpenOption (searchValue) {
+    searchValue = searchValue === undefined || searchValue === null ? '' : searchValue.toString().trim();
+
+    if (!searchValue || this.selectpicker.openOption.isCreating) return;
+
+    var existingOption = this.findOptionBySearchValue(searchValue);
+
+    if (existingOption) {
+      if (!existingOption.selected) {
+        var prevSelectedValue = getSelectValues.call(this);
+
+        this.setSelected(existingOption, true);
+        changedArguments = [existingOption.index, true, prevSelectedValue];
+        triggerNative(this.element, 'change');
+      }
+
+      if (this.options.liveSearch) this.searchbox.focus();
+      return;
+    }
+
+    var that = this,
+        prevValue = getSelectValues.call(this),
+        createHandler = this.options.source.create;
+
+    this.selectpicker.openOption.isCreating = true;
+    this.syncOpenOptionButton();
+
+    function finalize (createdOption) {
+      that.selectpicker.openOption.isCreating = false;
+
+      if (createdOption === undefined || createdOption === null || createdOption === false) {
+        that.syncOpenOptionButton();
+        return;
+      }
+
+      if (Array.isArray(createdOption)) createdOption = createdOption[0];
+      if (typeof createdOption !== 'object') {
+        createdOption = {
+          text: createdOption,
+          value: createdOption
+        };
+      }
+
+      if (!createdOption.text && !createdOption.value) {
+        createdOption.text = searchValue;
+      }
+
+      if (createdOption.value === undefined) createdOption.value = createdOption.text;
+      if (createdOption.text === undefined) createdOption.text = createdOption.value;
+
+      var option = that.findOptionByValue(createdOption.value) || that.findOptionBySearchValue(createdOption.text);
+
+      if (!option) {
+        option = that.addCreatedOption(createdOption);
+      }
+
+      that.setSelected(option, true);
+
+      if (that.options.source.data) that.element.appendChild(that.selectpicker.main.optionQueue);
+
+      if (that.searchbox) {
+        that.searchbox.value = '';
+      }
+
+      that.selectpicker.search.previousValue = '';
+      that.selectpicker.search.data = [];
+      that.selectpicker.search.elements = [];
+      that.createView(false);
+
+      changedArguments = [option.index, true, prevValue];
+      triggerNative(that.element, 'change');
+
+      if (that.options.liveSearch) that.searchbox.focus();
+    }
+
+    if (typeof createHandler === 'function') {
+      var returnedOption = createHandler.call(this, finalize, searchValue);
+
+      if (returnedOption && typeof returnedOption.then === 'function') {
+        returnedOption.then(finalize);
+      } else if (returnedOption !== undefined) {
+        finalize(returnedOption);
+      }
+    } else {
+      finalize({
+        text: searchValue,
+        value: searchValue
+      });
+    }
   }
 
   /**
@@ -1850,7 +2175,9 @@ class Selectpicker {
         a = elementTemplates.a.cloneNode(false),
         text = elementTemplates.span.cloneNode(false),
         header = this.options.header && this.menu.querySelectorAll('.' + classNames.POPOVERHEADER).length > 0 ? this.menu.querySelector('.' + classNames.POPOVERHEADER).cloneNode(true) : null,
-        search = this.options.liveSearch ? elementTemplates.div.cloneNode(false) : null,
+        search = this.options.liveSearch && this.menu.querySelector('.bs-searchbox')
+          ? this.menu.querySelector('.bs-searchbox').cloneNode(true)
+          : null,
         actions = this.options.actionsBox && this.multiple && this.menu.querySelectorAll('.bs-actionsbox').length > 0 ? this.menu.querySelector('.bs-actionsbox').cloneNode(true) : null,
         doneButton = this.options.doneButton && this.multiple && this.menu.querySelectorAll('.bs-donebutton').length > 0 ? this.menu.querySelector('.bs-donebutton').cloneNode(true) : null,
         firstOption = this.element.options[0];
@@ -1861,7 +2188,6 @@ class Selectpicker {
     a.className = 'dropdown-item ' + (firstOption ? firstOption.className : '');
     newElement.className = this.menu.parentNode.className + ' ' + classNames.SHOW;
     newElement.style.width = 0; // ensure button width doesn't affect natural width of menu when calculating
-    if (this.options.width === 'auto') menu.style.minWidth = 0;
     menu.className = classNames.MENU + ' ' + classNames.SHOW;
     menuInner.className = 'inner ' + classNames.SHOW;
     menuInnerInner.className = classNames.MENU + ' inner ' + classNames.SHOW;
@@ -1894,13 +2220,7 @@ class Selectpicker {
     menuInnerInner.appendChild(divider);
     menuInnerInner.appendChild(dropdownHeader);
     if (header) menu.appendChild(header);
-    if (search) {
-      var input = document.createElement('input');
-      search.className = 'bs-searchbox';
-      input.className = 'form-control';
-      search.appendChild(input);
-      menu.appendChild(search);
-    }
+    if (search) menu.appendChild(search);
     if (actions) menu.appendChild(actions);
     menuInner.appendChild(menuInnerInner);
     menu.appendChild(menuInner);
@@ -1968,27 +2288,12 @@ class Selectpicker {
         winScrollLeft = window.pageXOffset,
         winHeight = document.documentElement.clientHeight,
         winWidth = document.documentElement.clientWidth,
-        pos = offset(that.newElement),
-        container = resolveContainer(that.options.container),
-        containerPos;
+        pos = offset(that.newElement);
 
-    if (that.options.container && container && container !== document.body) {
-      containerPos = offset(container);
-      var containerStyle = window.getComputedStyle(container);
-      containerPos.top += toInteger(containerStyle.borderTopWidth);
-      containerPos.left += toInteger(containerStyle.borderLeftWidth);
-    } else {
-      containerPos = { top: 0, left: 0 };
-    }
-
-    var winPad = that.options.windowPadding;
-
-    this.sizeInfo.selectOffsetTop = pos.top - containerPos.top - winScrollTop;
-    this.sizeInfo.selectOffsetBot = winHeight - this.sizeInfo.selectOffsetTop - this.sizeInfo.selectHeight - containerPos.top - winPad[2];
-    this.sizeInfo.selectOffsetLeft = pos.left - containerPos.left - winScrollLeft;
-    this.sizeInfo.selectOffsetRight = winWidth - this.sizeInfo.selectOffsetLeft - this.sizeInfo.selectWidth - containerPos.left - winPad[1];
-    this.sizeInfo.selectOffsetTop -= winPad[0];
-    this.sizeInfo.selectOffsetLeft -= winPad[3];
+    this.sizeInfo.selectOffsetTop = pos.top - winScrollTop;
+    this.sizeInfo.selectOffsetBot = winHeight - this.sizeInfo.selectOffsetTop - this.sizeInfo.selectHeight;
+    this.sizeInfo.selectOffsetLeft = pos.left - winScrollLeft;
+    this.sizeInfo.selectOffsetRight = winWidth - this.sizeInfo.selectOffsetLeft - this.sizeInfo.selectWidth;
   }
 
   setMenuSize (isAuto) {
@@ -2109,50 +2414,9 @@ class Selectpicker {
   }
 
   setWidth () {
-    var that = this;
-
-    if (this.options.width === 'auto') {
-      requestAnimationFrame(function () {
-        that.menu.style.minWidth = '0';
-
-        var onLoaded = function () {
-          that.liHeight();
-          that.setMenuSize();
-
-          // Get correct width if element is hidden
-          var selectClone = that.newElement.cloneNode(true);
-          document.body.appendChild(selectClone);
-          selectClone.style.width = 'auto';
-          var btnWidth = selectClone.querySelector('button').offsetWidth;
-
-          document.body.removeChild(selectClone);
-
-          // Set width to whatever's larger, button title or longest option
-          that.sizeInfo.selectWidth = Math.max(that.sizeInfo.totalMenuWidth, btnWidth);
-          that.newElement.style.width = that.sizeInfo.selectWidth + 'px';
-
-          that.element.removeEventListener('loaded' + EVENT_KEY, onLoaded);
-        };
-        that._on(that.element, 'loaded' + EVENT_KEY, onLoaded);
-      });
-    } else if (this.options.width === 'fit') {
-      // Remove inline min-width so width can be changed from 'auto'
-      this.menu.style.minWidth = '';
-      this.newElement.style.width = '';
-      this.newElement.classList.add('fit-width');
-    } else if (this.options.width) {
-      // Remove inline min-width so width can be changed from 'auto'
-      this.menu.style.minWidth = '';
-      this.newElement.style.width = this.options.width;
-    } else {
-      // Remove inline min-width/width so width can be changed
-      this.menu.style.minWidth = '';
-      this.newElement.style.width = '';
-    }
-    // Remove fit-width class if width is changed programmatically
-    if (this.newElement.classList.contains('fit-width') && this.options.width !== 'fit') {
-      this.newElement.classList.remove('fit-width');
-    }
+    this.menu.style.minWidth = '';
+    this.newElement.style.width = '';
+    this.newElement.classList.remove('fit-width');
   }
 
   selectPosition () {
@@ -2286,8 +2550,6 @@ class Selectpicker {
         a,
         keepActive = thisIsActive || (selected && !this.multiple && !activeElementIsSet);
 
-    if (!li) return;
-
     if (selected !== undefined) {
       liData.selected = selected;
       if (liData.option) liData.option.selected = selected;
@@ -2296,6 +2558,8 @@ class Selectpicker {
     if (selected && this.options.source.data) {
       this.createOption(liData, false);
     }
+
+    if (!li) return;
 
     a = li.firstChild;
 
@@ -2471,11 +2735,11 @@ class Selectpicker {
       that.onOptionClick(this, e);
     });
 
-    this._delegate(this.menu, 'click', 'li.' + classNames.DISABLED + ' a, .' + classNames.POPOVERHEADER + ', .' + classNames.POPOVERHEADER + ' :not(.close)', function (e) {
+    this._delegate(this.menu, 'click', 'li.' + classNames.DISABLED + ' a, .' + classNames.POPOVERHEADER + ', .' + classNames.POPOVERHEADER + ' :not(.btn-close):not(.close)', function (e) {
       if (e.currentTarget === this || e.target === this) {
         e.preventDefault();
         e.stopPropagation();
-        if (that.options.liveSearch && !e.target.classList.contains('close')) {
+        if (that.options.liveSearch && !e.target.classList.contains('btn-close') && !e.target.classList.contains('close')) {
           that.searchbox.focus();
         } else {
           that.button.focus();
@@ -2493,8 +2757,20 @@ class Selectpicker {
       }
     });
 
-    this._delegate(this.menu, 'click', '.' + classNames.POPOVERHEADER + ' .close', function () {
+    this._delegate(this.menu, 'click', '.' + classNames.POPOVERHEADER + ' .btn-close, .' + classNames.POPOVERHEADER + ' .close', function () {
       that.dropdown.hide();
+    });
+
+    this._delegate(this.newElement, 'click', '.bs-selected-item', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      that.removeSelectedTag(this.getAttribute('data-option-value'));
+    });
+
+    this._delegate(this.menu, 'click', '.bs-create-option', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      that.createOpenOption(this.getAttribute('data-search-value'));
     });
 
     if (this.searchbox) {
@@ -2692,6 +2968,13 @@ class Selectpicker {
     this._on(this.searchbox, 'touchend', function (e) {
       e.stopPropagation();
     });
+    this._on(this.searchbox, 'keydown', function (e) {
+      if (e.key === 'Enter' && that.createOptionButton && !that.createOptionButton.hidden && !that.selectpicker.current.data.length) {
+        e.preventDefault();
+        e.stopPropagation();
+        that.createOpenOption(that.searchbox.value);
+      }
+    });
 
     this._on(this.searchbox, 'input', function () {
       var searchValue = that.searchbox.value;
@@ -2703,13 +2986,14 @@ class Selectpicker {
         that.selectpicker.search.previousValue = searchValue;
 
         if (that.options.source.search) {
-          that.fetchData(function (builtData) {
+          that.fetchData(function () {
+            that.appendCreatedSearchResults(searchValue);
             that.render();
             that.buildList(undefined, true);
             that.noScroll = true;
             that.menuInner.scrollTop = 0;
             that.createView(true);
-            showNoResults.call(that, builtData, searchValue);
+            showNoResults.call(that, that.selectpicker.search.data, searchValue);
           }, 'search', 0, searchValue);
         } else {
           var searchMatch = [],
@@ -2766,6 +3050,8 @@ class Selectpicker {
         that.menuInner.scrollTop = 0;
         that.createView(false);
       }
+
+      that.syncOpenOptionButton();
     });
   }
 
@@ -3151,7 +3437,7 @@ class Selectpicker {
   refresh () {
     var that = this;
     // update options if data attributes have been changed
-    var config = Object.assign({}, this.options, getAttributesObject(this.element), getDataset(this.element));
+    var config = stripRemovedOptions(Object.assign({}, this.options, getAttributesObject(this.element), getDataset(this.element)));
     this.options = config;
 
     if (this.options.source.data) {
@@ -3230,7 +3516,7 @@ class Selectpicker {
 var instanceMap = new WeakMap();
 
 Selectpicker.NAME = 'selectpicker';
-Selectpicker.VERSION = '1.0.1';
+Selectpicker.VERSION = '1.1.0';
 
 // user-provided global defaults (set via Selectpicker.setDefaults, used by i18n files)
 Selectpicker.defaults = null;
@@ -3251,20 +3537,18 @@ Selectpicker.DEFAULTS = {
   selectAllText: 'Select All',
   deselectAllText: 'Deselect All',
   source: {
-    pageSize: 40
+    pageSize: 40,
+    create: null
   },
   chunkSize: 40,
   doneButton: false,
   doneButtonText: 'Close',
   multipleSeparator: ', ',
-  styleBase: 'btn',
   style: classNames.BUTTONCLASS,
   size: 'auto',
   placeholder: null,
   allowClear: false,
   selectedTextFormat: 'values',
-  width: false,
-  container: false,
   hideDisabled: false,
   showSubtext: false,
   showIcon: true,
@@ -3275,29 +3559,32 @@ Selectpicker.DEFAULTS = {
   liveSearchPlaceholder: null,
   liveSearchNormalize: false,
   liveSearchStyle: 'contains',
+  openOptions: false,
+  openOptionsText: 'Create "{0}"',
+  selectionIndicator: 'checkmark',
   actionsBox: false,
   iconBase: classNames.ICONBASE,
   tickIcon: classNames.TICKICON,
   showTick: false,
+  showSelectedTags: false,
+  selectedItemsStyle: 'tags',
+  selectedTagRemoveLabel: 'Remove',
   template: {
     caret: '<span class="caret"></span>'
   },
   maxOptions: false,
-  mobile: false,
   selectOnTab: true,
   dropdownAlignRight: false,
-  windowPadding: 0,
   virtualScroll: 600,
-  display: false,
   sanitize: true,
   sanitizeFn: null,
   whiteList: DefaultWhitelist
 };
 
 Selectpicker._buildConfig = function (element, options) {
-  options = options || {};
+  options = stripRemovedOptions(options || {});
 
-  var dataAttributes = getDataset(element);
+  var dataAttributes = stripRemovedOptions(getDataset(element));
 
   for (var dataAttr in dataAttributes) {
     if (Object.prototype.hasOwnProperty.call(dataAttributes, dataAttr) && DISALLOWED_ATTRIBUTES.indexOf(dataAttr) !== -1) {
@@ -3305,7 +3592,7 @@ Selectpicker._buildConfig = function (element, options) {
     }
   }
 
-  var userDefaults = Selectpicker.defaults || {};
+  var userDefaults = stripRemovedOptions(Selectpicker.defaults || {});
 
   var config = Object.assign({}, Selectpicker.DEFAULTS, userDefaults, getAttributesObject(element), dataAttributes, options);
   config.template = Object.assign({}, Selectpicker.DEFAULTS.template, userDefaults.template || {}, dataAttributes.template, options.template);
@@ -3315,7 +3602,7 @@ Selectpicker._buildConfig = function (element, options) {
 };
 
 Selectpicker.setDefaults = function (newDefaults) {
-  Selectpicker.defaults = Object.assign({}, Selectpicker.defaults, newDefaults);
+  Selectpicker.defaults = stripRemovedOptions(Object.assign({}, Selectpicker.defaults, newDefaults));
 };
 
 Selectpicker.getInstance = function (element) {
@@ -3330,6 +3617,8 @@ Selectpicker.getOrCreateInstance = function (element, options) {
   var instance = instanceMap.get(element);
 
   if (instance) {
+    options = stripRemovedOptions(options);
+
     if (options && typeof options === 'object') {
       for (var i in options) {
         if (Object.prototype.hasOwnProperty.call(options, i)) {
