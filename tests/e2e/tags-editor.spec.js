@@ -134,6 +134,44 @@ test.describe('Tags-style live search editor', () => {
     await expect(optionAnchor(picker, 'DELTA')).toBeVisible();
   });
 
+  test('does not duplicate selected tags after repeated refresh calls', async ({ page }) => {
+    const id = await page.evaluate(() => {
+      document.body.innerHTML += `
+        <select id="tags-editor-refresh" multiple>
+          <option value="one" selected>Option 1</option>
+          <option value="two" selected>Option 2</option>
+          <option value="three">Option 3</option>
+        </select>
+      `;
+
+      new Selectpicker('#tags-editor-refresh', {
+        liveSearch: true,
+        showSelectedTags: true,
+        openOptions: true
+      });
+
+      return 'tags-editor-refresh';
+    });
+
+    const picker = widget(page, id);
+
+    await expect(picker.locator('> .bs-selected-items-external .bs-selected-item')).toHaveCount(2);
+    await expect(picker.locator('.filter-option-inner-inner')).toHaveText('2 items selected');
+
+    await page.evaluate((selectId) => {
+      const instance = Selectpicker.getInstance('#' + selectId);
+      instance.refresh();
+      instance.refresh();
+    }, id);
+
+    await expect(picker.locator('> .bs-selected-items-external .bs-selected-item')).toHaveCount(2);
+    await expect(picker.locator('> .bs-selected-items-external .bs-selected-item')).toContainText(['Option 1', 'Option 2']);
+    await expect(picker.locator('.filter-option-inner-inner')).toHaveText('2 items selected');
+    await expect.poll(async () => page.evaluate((selectId) => {
+      return Array.from(document.getElementById(selectId).selectedOptions).map(option => option.value);
+    }, id)).toEqual(['one', 'two']);
+  });
+
   test('supports checkbox selection indicators and search placeholder fallback', async ({ page }) => {
     const id = await page.evaluate(() => {
       document.body.innerHTML += `

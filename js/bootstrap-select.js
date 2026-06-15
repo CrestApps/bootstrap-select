@@ -3434,6 +3434,19 @@ class Selectpicker {
     this.element.classList.add('mobile-device');
   }
 
+  resetMenuData () {
+    this.selectpicker.main.data = [];
+    this.selectpicker.main.elements = [];
+    this.selectpicker.main.hasMore = false;
+    this.selectpicker.search.data = [];
+    this.selectpicker.search.elements = [];
+    this.selectpicker.search.hasMore = false;
+    this.selectpicker.current.data = this.selectpicker.main.data;
+    this.selectpicker.current.elements = this.selectpicker.main.elements;
+    this.selectpicker.current.hasMore = false;
+    this.selectpicker.isSearching = false;
+  }
+
   refresh () {
     var that = this;
     // update options if data attributes have been changed
@@ -3444,6 +3457,7 @@ class Selectpicker {
       this.render();
       this.buildList();
     } else {
+      this.resetMenuData();
       this.fetchData(function () {
         that.render();
         that.buildList();
