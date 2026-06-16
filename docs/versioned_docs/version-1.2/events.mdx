@@ -1,0 +1,53 @@
+---
+sidebar_position: 5
+title: Events
+description: bootstrap-select browser events such as changed.bs.select, show.bs.select, and refreshed.bs.select.
+---
+
+# Events
+
+bootstrap-select emits native `CustomEvent`s on the original `<select>`
+element.
+
+## Listening for events
+
+```js
+const select = document.querySelector('#mySelect');
+
+select.addEventListener('changed.bs.select', function (e) {
+  const { clickedIndex, isSelected, previousValue } = e.detail;
+  console.log('selection changed', { clickedIndex, isSelected, previousValue });
+});
+
+select.addEventListener('show.bs.select', function (e) {
+  const bootstrapEvent = e.detail.bsEvent;
+  const button = bootstrapEvent.relatedTarget;
+  console.log('opening from button', button);
+});
+```
+
+## Event detail
+
+- `show.bs.select`, `shown.bs.select`, `hide.bs.select`, and
+  `hidden.bs.select` expose the original Bootstrap dropdown event as
+  `event.detail.bsEvent`.
+- `changed.bs.select` exposes `clickedIndex`, `isSelected`, and
+  `previousValue` on `event.detail`.
+- If the value changed via `val()`, `selectAll()`, or `deselectAll()`,
+  `clickedIndex` and `isSelected` are `null`.
+
+## Event reference
+
+| Event type | Description |
+| --- | --- |
+| `show.bs.select` | Fires immediately when the menu starts opening. |
+| `shown.bs.select` | Fires after the menu is visible to the user. |
+| `hide.bs.select` | Fires immediately when the menu starts closing. |
+| `hidden.bs.select` | Fires after the menu has finished closing. |
+| `loaded.bs.select` | Fires after the selectpicker has been initialized. |
+| `rendered.bs.select` | Fires after `render()` updates the UI. |
+| `refreshed.bs.select` | Fires after `refresh()` syncs the UI with the underlying `<select>`. |
+| `changed.bs.select` | Fires after the value changes. `event.detail` contains `clickedIndex`, `isSelected`, and `previousValue`. |
+| `maxReached.bs.select` | Fires when a multi-select exceeds the configured `maxOptions` limit. |
+| `maxReachedGrp.bs.select` | Fires when an `<optgroup>` exceeds its configured `data-max-options` limit. |
+| `fetched.bs.select` | Fires after async or callback-backed source data has been fetched and applied. |
