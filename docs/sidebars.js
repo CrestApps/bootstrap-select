@@ -20,6 +20,11 @@ const sidebars = {
       type: 'doc',
       id: 'methods',
       label: 'Methods'
+    },
+    {
+      type: 'doc',
+      id: 'events',
+      label: 'Events'
     }
   ]
 };

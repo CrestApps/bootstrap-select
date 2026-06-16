@@ -17,6 +17,16 @@ function LiveExampleInner ({ html, className = '', style }) {
     let instances = [];
     const scriptListeners = [];
     const windowListeners = [];
+    let articleObserver;
+
+    function containsMarkNode (node) {
+      return !!(node &&
+        node.nodeType === 1 &&
+        (
+          node.tagName === 'MARK' ||
+          (typeof node.querySelector === 'function' && node.querySelector('mark'))
+        ));
+    }
 
     function destroyInstances () {
       instances.forEach(function (instance) {
@@ -81,6 +91,17 @@ function LiveExampleInner ({ html, className = '', style }) {
       scheduleInitialize(100);
     }
 
+    function handleArticleMutations (mutations) {
+      const shouldRecover = mutations.some(function (mutation) {
+        return Array.from(mutation.addedNodes || []).some(containsMarkNode) ||
+          Array.from(mutation.removedNodes || []).some(containsMarkNode);
+      });
+
+      if (shouldRecover) {
+        scheduleInitialize(150);
+      }
+    }
+
     attachWindowListener('load', initialize);
     attachWindowListener('hashchange', handleHashChange);
     attachWindowListener('resize', function () {
@@ -93,11 +114,24 @@ function LiveExampleInner ({ html, className = '', style }) {
       }
     });
 
+    if (typeof MutationObserver !== 'undefined') {
+      const article = exampleRef.current && exampleRef.current.closest('article');
+
+      if (article) {
+        articleObserver = new MutationObserver(handleArticleMutations);
+        articleObserver.observe(article, {
+          childList: true,
+          subtree: true
+        });
+      }
+    }
+
     initialize();
 
     return function () {
       isDisposed = true;
       window.clearTimeout(timeoutId);
+      if (articleObserver) articleObserver.disconnect();
       windowListeners.forEach(function (removeListener) {
         removeListener();
       });

@@ -74,11 +74,11 @@ jsDelivr. Prefer pinning an explicit package version in production:
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- @crestapps/bootstrap-select from jsDelivr -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.2/dist/css/bootstrap-select.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.2/dist/js/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.2.0/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.2.0/dist/js/bootstrap-select.min.js"></script>
 ```
 
-You can replace `@1.1.2` with the version you want to consume. During
+You can replace `@1.2.0` with the version you want to consume. During
 development, `@latest` also works, but a fixed version is safer for production
 deployments.
 
@@ -87,17 +87,19 @@ deployments.
 The package now ships three first-class JavaScript entry styles from the same
 source code:
 
-| Style | Entry | Use when |
-| --- | --- | --- |
-| ESM | `@crestapps/bootstrap-select` via `import` | You use native modules or a bundler that prefers ESM |
-| CommonJS | `@crestapps/bootstrap-select` via `require()` | You use a bundler or toolchain that still consumes CommonJS |
-| Browser global / UMD | `dist/js/bootstrap-select.js` or `.min.js` | You load the plugin directly from a `<script>` tag or CDN |
+| Style | Package entry | Direct file | Use when |
+| --- | --- | --- | --- |
+| ESM | `import Selectpicker from '@crestapps/bootstrap-select'` | `dist/js/bootstrap-select.esm.mjs` | You use native modules or a bundler that prefers ESM |
+| CommonJS | `require('@crestapps/bootstrap-select')` | `dist/js/bootstrap-select.cjs` | You use a bundler or toolchain that still consumes CommonJS |
+| Browser global / UMD | n/a | `dist/js/bootstrap-select.js` or `.min.js` | You load the plugin directly from a `<script>` tag or CDN |
 
 **Important:** bootstrap-select is still a browser plugin. The ESM and
 CommonJS builds are intended for browser bundles or browser-like runtimes with a
 DOM, not server-only Node.js execution.
 
 ### ESM
+
+Use the package `import` entry or the direct `.mjs` file:
 
 ```js
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -112,8 +114,11 @@ console.log(Selectpicker === NamedSelectpicker); // true
 ```
 
 The ESM build stays module-scoped; it does **not** add `window.Selectpicker`.
+If you prefer a direct file import, use `@crestapps/bootstrap-select/dist/js/bootstrap-select.esm.mjs`.
 
 ### CommonJS
+
+Use the package `require()` entry or the direct `.cjs` file:
 
 ```js
 require('bootstrap');
@@ -135,8 +140,9 @@ The CommonJS entry exports the class as:
 
 Like the ESM build, the CommonJS build stays module-scoped and does **not** add
 `window.Selectpicker`.
+If you prefer a direct file require, use `@crestapps/bootstrap-select/dist/js/bootstrap-select.cjs`.
 
-### Browser global / CDN
+### Browser global / UMD
 
 When loaded via a `<script>` tag, the UMD build exposes a global
 `window.Selectpicker` / `Selectpicker`:
@@ -147,8 +153,8 @@ When loaded via a `<script>` tag, the UMD build exposes a global
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- @crestapps/bootstrap-select from jsDelivr -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.2/dist/css/bootstrap-select.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.2/dist/js/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.2.0/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.2.0/dist/js/bootstrap-select.min.js"></script>
 
 <script>
   const picker = new Selectpicker('#my-select', {
@@ -179,6 +185,30 @@ Existing bootstrap-select markup that uses `title="..."` placeholders or
 <select class="selectpicker" title="Content Type" data-width="fit">
   <option>Article</option>
   <option>Blog Post</option>
+</select>
+```
+
+#### Selection indicators
+
+For single selects, use `show-tick` for the default checkmark, or set
+`data-selection-indicator="checkbox"` to render radio-style indicators
+automatically. On multiselects, `data-selection-indicator="checkbox"` renders a
+checkbox column.
+
+```html
+<select class="selectpicker show-tick">
+  <option>Article</option>
+  <option selected>Blog Post</option>
+</select>
+
+<select class="selectpicker" data-selection-indicator="checkbox">
+  <option>Article</option>
+  <option selected>Blog Post</option>
+</select>
+
+<select class="selectpicker" multiple data-selection-indicator="checkbox">
+  <option selected>Bootstrap 5</option>
+  <option>Vue</option>
 </select>
 ```
 
@@ -254,7 +284,8 @@ Full documentation is hosted at
 including [Getting Started](https://bootstrap-select.crestapps.com/docs/),
 [Examples](https://bootstrap-select.crestapps.com/docs/examples),
 [Options](https://bootstrap-select.crestapps.com/docs/options), and
-[Methods](https://bootstrap-select.crestapps.com/docs/methods).
+[Methods](https://bootstrap-select.crestapps.com/docs/methods), and
+[Events](https://bootstrap-select.crestapps.com/docs/events).
 
 ## Building and testing
 

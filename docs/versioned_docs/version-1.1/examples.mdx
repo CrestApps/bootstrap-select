@@ -14,7 +14,19 @@ The examples use the vanilla JavaScript / Bootstrap 5+ API: `new Selectpicker(el
 
 The main examples now live directly on this docs page so they inherit the docs theme, including light and dark mode. The standalone HTML files are still kept under `docs/static/examples/` for quick smoke-testing outside Docusaurus.
 
-## Standard select boxes
+## Browse by topic
+
+- [Core selection patterns](#core-selection-patterns)
+- [Search and multi-select workflows](#search-and-multi-select-workflows)
+- [Selection text and summaries](#selection-text-and-summaries)
+- [Styling and layout](#styling-and-layout)
+- [Rich option content](#rich-option-content)
+- [Menu behavior](#menu-behavior)
+- [Disabled states](#disabled-states)
+
+## Core selection patterns
+
+### Standard select boxes
 
 <LiveExample
   html={String.raw`  <div class="mb-3">
@@ -46,9 +58,49 @@ The main examples now live directly on this docs page so they inherit the docs t
 </select>
 ```
 
+### Single select with checkmark indicator
+
+Use the `show-tick` class when you want the default checkmark indicator on a single-select menu:
+
+<LiveExample
+  html={String.raw`  <select class="selectpicker show-tick">
+    <option>Mustard</option>
+    <option selected>Ketchup</option>
+    <option>Relish</option>
+  </select>`}
+/>
+
+```html
+<select class="selectpicker show-tick">
+  <option>Mustard</option>
+  <option selected>Ketchup</option>
+  <option>Relish</option>
+</select>
+```
+
+### Single select with radio indicators
+
+If you set `selectionIndicator` to `checkbox` on a single select, bootstrap-select renders radio-style indicators automatically:
+
+<LiveExample
+  html={String.raw`  <select class="selectpicker" data-selection-indicator="checkbox">
+    <option>Article</option>
+    <option selected>Blog Post</option>
+    <option>Landing Page</option>
+  </select>`}
+/>
+
+```html
+<select class="selectpicker" data-selection-indicator="checkbox">
+  <option>Article</option>
+  <option selected>Blog Post</option>
+  <option>Landing Page</option>
+</select>
+```
+
 <span id="optgroup" />
 
-## Select boxes with optgroups
+### Select boxes with optgroups
 
 <LiveExample
   html={String.raw`  <select class="selectpicker">
@@ -80,7 +132,7 @@ The main examples now live directly on this docs page so they inherit the docs t
 </select>
 ```
 
-## Multiple select boxes
+### Multiple select boxes
 
 <LiveExample
   html={String.raw`  <select class="selectpicker" multiple>
@@ -98,7 +150,31 @@ The main examples now live directly on this docs page so they inherit the docs t
 </select>
 ```
 
-## Live search
+### Multiple select with checkbox indicators
+
+Use `data-selection-indicator="checkbox"` on multiselects when you want a checkbox column instead of the floating checkmark:
+
+<LiveExample
+  html={String.raw`  <select class="selectpicker" multiple data-selection-indicator="checkbox" placeholder="Choose frameworks">
+    <option selected>Bootstrap 5</option>
+    <option>Vue</option>
+    <option>React</option>
+    <option>Svelte</option>
+  </select>`}
+/>
+
+```html
+<select class="selectpicker" multiple data-selection-indicator="checkbox">
+  <option selected>Bootstrap 5</option>
+  <option>Vue</option>
+  <option>React</option>
+  <option>Svelte</option>
+</select>
+```
+
+## Search and multi-select workflows
+
+### Live search
 
 You can add a search input by passing `data-live-search="true"` attribute:
 
@@ -111,7 +187,7 @@ You can add a search input by passing `data-live-search="true"` attribute:
   className="no-code"
 />
 
-## Key words
+### Key words
 
 Add key words to options to improve their searchability using `data-tokens`.
 
@@ -131,7 +207,7 @@ Add key words to options to improve their searchability using `data-tokens`.
 </select>
 ```
 
-## Tags-style live search with open options
+### Tags-style live search with open options
 
 Use `showSelectedTags` to keep selections visible as removable tags above the search box, while the button switches to a compact summary instead of repeating the same values.
 
@@ -176,40 +252,7 @@ Use `showSelectedTags` to keep selections visible as removable tags above the se
 </select>
 ```
 
-If you prefer a Bootstrap-style checkbox instead of the floating checkmark, set `selectionIndicator` to `checkbox`:
-
-<LiveExample
-  html={String.raw`  <select
-    class="selectpicker"
-    multiple
-    data-live-search="true"
-    data-show-selected-tags="true"
-    data-selection-indicator="checkbox"
-    data-live-search-placeholder="Search frameworks"
-    placeholder="Choose frameworks">
-    <option selected>Bootstrap 5</option>
-    <option>Vue</option>
-    <option>React</option>
-    <option>Svelte</option>
-  </select>`}
-/>
-
-```html
-<select
-  class="selectpicker"
-  multiple
-  data-live-search="true"
-  data-show-selected-tags="true"
-  data-selection-indicator="checkbox"
-  placeholder="Choose frameworks">
-  <option selected>Bootstrap 5</option>
-  <option>Vue</option>
-  <option>React</option>
-  <option>Svelte</option>
-</select>
-```
-
-## List-style menu
+### List-style menu
 
 Set `selectedItemsStyle` to `list` to render the removable selections as a stacked Bootstrap list group:
 
@@ -245,7 +288,7 @@ Set `selectedItemsStyle` to `list` to render the removable selections as a stack
 </select>
 ```
 
-## Floating labels with visible tags
+### Floating labels with visible tags
 
 When a tags-style picker is placed inside a Bootstrap 5 `form-floating` wrapper, the selected tags stay visible inside the control after the menu closes, with balanced top and bottom spacing around the tags.
 
@@ -314,7 +357,7 @@ new Selectpicker('#tag-editor', {
 });
 ```
 
-# Limit the number of selections
+### Limit the number of selections
 
 Limit the number of options that can be selected via the `data-max-options` attribute. It also works for option groups. Customize the message displayed when the limit is reached with `maxOptionsText`.
 
@@ -376,11 +419,11 @@ Limit the number of options that can be selected via the `data-max-options` attr
 </div>
 ```
 
-# Custom button text
+## Selection text and summaries
 
 ---
 
-## Placeholder
+### Placeholder
 <p id="titleMultiples"></p>
 Use the `placeholder` attribute to set the default placeholder text when nothing is selected. This works for both multiple and standard select boxes:
 
@@ -430,7 +473,7 @@ Legacy bootstrap-select markup that uses the select element's `title` attribute 
 </select>
 ```
 
-## Selected text
+### Selected text
 
 <p id="title"></p>
 Set the `title` attribute on individual options to display alternative text when the option is selected:
@@ -451,7 +494,7 @@ Set the `title` attribute on individual options to display alternative text when
   <option title="Combo 3">Sugar, Spice and all things nice</option>
 </select>
 ```
-## Selected text format
+### Selected text format
 
 <p id="titleMultiplesFormat"></p>
 Specify how the selection is displayed with the `data-selected-text-format` attribute on a multiple select.
@@ -497,11 +540,11 @@ The supported values are:
 </select>
 ```
 
-# Styling
+## Styling and layout
 
 ---
 
-## Button classes
+### Button classes
 
 You can set the button classes via the `data-style` attribute:
 
@@ -576,27 +619,7 @@ You can set the button classes via the `data-style` attribute:
 </select>
 ```
 
-## Checkmark on selected option
-
-You can also show the checkmark icon on standard select boxes with the `show-tick` class:
-
-<LiveExample
-  html={String.raw`  <select class="selectpicker show-tick">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-  </select>`}
-/>
-
-```html
-<select class="selectpicker show-tick">
-  <option>Mustard</option>
-  <option>Ketchup</option>
-  <option>Relish</option>
-</select>
-```
-
-## Menu arrow
+### Menu arrow
 
 The Bootstrap menu arrow can be added with the `show-menu-arrow` class:
 
@@ -616,7 +639,7 @@ The Bootstrap menu arrow can be added with the `show-menu-arrow` class:
 </select>
 ```
 
-## Style individual options
+### Style individual options
 
 <p id="classes"></p>
 Classes and styles added to options are transferred to the select box:
@@ -646,7 +669,7 @@ Classes and styles added to options are transferred to the select box:
 }
 ```
 
-## Width
+### Width
 
 <p id="grid"></p>
 Wrap selects in grid columns, or any custom parent element, to easily enforce desired widths.
@@ -802,11 +825,11 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
 </select>
 ```
 
-# Customize options
+## Rich option content
 
 ---
 
-## Font Awesome icons
+### Font Awesome icons
 
 This example uses Font Awesome. Add an icon to an option or optgroup with the `data-icon` attribute:
 
@@ -832,7 +855,7 @@ The selected option renders its icon in the button, and the menu shows the icons
 </select>
 ```
 
-## Custom content
+### Custom content
 
 Insert custom HTML into the option with the `data-content` attribute:
 
@@ -855,7 +878,7 @@ This feature inserts HTML into the DOM. By default, it is sanitized using our bu
 </select>
 ```
 
-## Subtext
+### Subtext
 Add subtext to an option or optgroup with the `data-subtext` attribute:
 
 <LiveExample
@@ -895,11 +918,11 @@ Add subtext to an option or optgroup with the `data-subtext` attribute:
 </select>
 ```
 
-# Customize menu
+## Menu behavior
 
 ---
 
-## Menu size
+### Menu size
 
 The `size` option is set to `'auto'` by default. When `size` is set to `'auto'`, the menu always opens up to show as many items as the window will allow without being cut off. Set `size` to `false` to always show all items. The size of the menu can also be specifed using the `data-size` attribute.
 
@@ -954,7 +977,7 @@ Specify a number for `data-size` to choose the maximum number of items to show i
 </select>
 ```
 
-## Select/deselect all options
+### Select/deselect all options
 
 Adds two buttons to the top of the menu - **Select All** & **Deselect All** with `data-actions-box="true"`.
 
@@ -974,7 +997,7 @@ Adds two buttons to the top of the menu - **Select All** & **Deselect All** with
 </select>
 ```
 
-## Divider
+### Divider
 
 Add `data-divider="true"` to an option to turn it into a divider.
 
@@ -998,7 +1021,7 @@ Add `data-divider="true"` to an option to turn it into a divider.
 </select>
 ```
 
-## Menu header
+### Menu header
 
 Add a header to the dropdown menu, e.g. `header: 'Select a condiment'` or `data-header="Select a condiment"`
 
@@ -1026,7 +1049,7 @@ Add a header to the dropdown menu, e.g. `header: 'Select a condiment'` or `data-
 </select>
 ```
 
-## Dropup menu
+### Dropup menu
 
 `dropupAuto` is set to true by default, which automatically determines whether or not the menu should display above or below the select box. If `dropupAuto` is set to false, manually make the select a dropup menu by adding the `.dropup` class to the select.
 
@@ -1044,11 +1067,11 @@ Add a header to the dropdown menu, e.g. `header: 'Select a condiment'` or `data-
 </select>
 ```
 
-# Disabled
+## Disabled states
 
 ---
 
-## Disabled select box
+### Disabled select box
 
 <LiveExample
   html={String.raw`  <select class="selectpicker" disabled>
@@ -1066,7 +1089,7 @@ Add a header to the dropdown menu, e.g. `header: 'Select a condiment'` or `data-
 </select>
 ```
 
-## Disabled options
+### Disabled options
 
 <LiveExample
   html={String.raw`  <select class="selectpicker">
@@ -1084,7 +1107,7 @@ Add a header to the dropdown menu, e.g. `header: 'Select a condiment'` or `data-
 </select>
 ```
 
-## Disabled option groups
+### Disabled option groups
 
 <LiveExample
   html={String.raw`  <select class="selectpicker test">

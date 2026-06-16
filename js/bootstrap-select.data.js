@@ -209,7 +209,7 @@
         mainElements = [],
         widestOptionLength = 0;
 
-    if (that.options.showTick || that.multiple) {
+    if (that.options.showTick || that.multiple || that.options.selectionIndicator === 'checkbox') {
       elementTemplates.checkMark.className = this.options.selectionIndicator === 'checkbox'
         ? 'check-mark bs-selection-indicator'
         : this.options.iconBase + ' ' + that.options.tickIcon + ' check-mark';
@@ -306,4 +306,3 @@
       }
     }
   }
-

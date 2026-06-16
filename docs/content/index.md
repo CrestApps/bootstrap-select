@@ -47,11 +47,11 @@ Prefer pinning an explicit package version in production:
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- @crestapps/bootstrap-select from jsDelivr -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.2/dist/css/bootstrap-select.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.2/dist/js/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.2.0/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.2.0/dist/js/bootstrap-select.min.js"></script>
 ```
 
-You can replace `@1.1.2` with the version you want to consume. During development,
+You can replace `@1.2.0` with the version you want to consume. During development,
 `@latest` also works, but a fixed version is safer for production deployments.
 
 ## Package formats
@@ -59,17 +59,19 @@ You can replace `@1.1.2` with the version you want to consume. During developmen
 bootstrap-select now ships three JavaScript consumption styles from the same
 shared source code:
 
-| Style | Entry | Use when |
-| --- | --- | --- |
-| ESM | `@crestapps/bootstrap-select` via `import` | Your app uses native modules or an ESM-first bundler |
-| CommonJS | `@crestapps/bootstrap-select` via `require()` | Your bundler or app still prefers CommonJS |
-| Browser global / UMD | `dist/js/bootstrap-select.js` or `.min.js` | You load the plugin directly from a `<script>` tag or CDN |
+| Style | Package entry | Direct file | Use when |
+| --- | --- | --- | --- |
+| ESM | `import Selectpicker from '@crestapps/bootstrap-select'` | `dist/js/bootstrap-select.esm.mjs` | Your app uses native modules or an ESM-first bundler |
+| CommonJS | `require('@crestapps/bootstrap-select')` | `dist/js/bootstrap-select.cjs` | Your bundler or app still prefers CommonJS |
+| Browser global / UMD | n/a | `dist/js/bootstrap-select.js` or `.min.js` | You load the plugin directly from a `<script>` tag or CDN |
 
 bootstrap-select is still a browser plugin, so the ESM and CommonJS entries are
 meant for browser bundles or browser-like runtimes with a DOM, not server-only
 Node.js execution.
 
 ### ESM
+
+Use the package `import` entry or the direct `.mjs` file:
 
 ```js
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -82,8 +84,11 @@ console.log(Selectpicker === NamedSelectpicker); // true
 ```
 
 The ESM build stays module-scoped and does **not** attach `window.Selectpicker`.
+If you prefer a direct file import, use `@crestapps/bootstrap-select/dist/js/bootstrap-select.esm.mjs`.
 
 ### CommonJS
+
+Use the package `require()` entry or the direct `.cjs` file:
 
 ```js
 require('bootstrap');
@@ -102,8 +107,9 @@ The CommonJS entry exports:
 - `module.exports.default = Selectpicker`
 
 Like the ESM build, it does **not** attach `window.Selectpicker`.
+If you prefer a direct file require, use `@crestapps/bootstrap-select/dist/js/bootstrap-select.cjs`.
 
-### Browser global / CDN
+### Browser global / UMD
 
 When loaded from a `<script>` tag, the UMD build exposes the global
 `window.Selectpicker` / `Selectpicker`:
@@ -114,8 +120,8 @@ When loaded from a `<script>` tag, the UMD build exposes the global
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- @crestapps/bootstrap-select from jsDelivr -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.2/dist/css/bootstrap-select.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.2/dist/js/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.2.0/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.2.0/dist/js/bootstrap-select.min.js"></script>
 
 <script>
   const picker = new Selectpicker('#my-select', { liveSearch: true });
@@ -171,18 +177,3 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 ```
-
-## Tags-style editor pattern
-
-For taxonomy-style experiences, combine live search, removable selected tags, and open-option creation so selections stay visible as tags without repeating the full list in the button:
-
-```js
-new Selectpicker('#tag-editor', {
-  liveSearch: true,
-  showSelectedTags: true,
-  openOptions: true,
-  selectionIndicator: 'checkbox'
-});
-```
-
-See **Examples** for a live demo and **Options** for the full `source.create(callback, searchValue)` flow used by remote-backed editors.

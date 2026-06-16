@@ -240,11 +240,15 @@ class Selectpicker {
   }
 
   createDropdown () {
-    // If we are multiple or showTick option is set, then add the show-tick class
-    var showTick = (this.multiple || this.options.showTick) ? ' show-tick' : '',
+    // Multiple selects always show an indicator. Single selects also need the
+    // indicator column when selectionIndicator is enabled.
+    var usesSelectionIndicator = this.options.selectionIndicator === 'checkbox',
+        showTick = (this.multiple || this.options.showTick || usesSelectionIndicator) ? ' show-tick' : '',
         showSelectedTags = this.options.showSelectedTags ? ' show-selected-tags' : '',
         selectedItemsStyle = this.options.selectedItemsStyle === 'list' ? ' selected-items-style-list' : '',
-        selectionIndicator = this.options.selectionIndicator === 'checkbox' ? ' selection-indicator-checkbox' : '',
+        selectionIndicator = usesSelectionIndicator
+          ? (this.multiple ? ' selection-indicator-checkbox' : ' selection-indicator-radio')
+          : '',
         multiselectable = this.multiple ? ' aria-multiselectable="true"' : '',
         autofocus = this.autofocus ? ' autofocus' : '',
         liveSearchPlaceholder = this.options.liveSearchPlaceholder;
@@ -264,8 +268,8 @@ class Selectpicker {
     if (this.options.header) {
       header =
           '<div class="' + classNames.POPOVERHEADER + '">' +
+            '<span class="popover-header-text">' + this.options.header + '</span>' +
             '<button type="button" class="btn-close" aria-label="Close"></button>' +
-              this.options.header +
           '</div>';
     }
 
@@ -348,4 +352,3 @@ class Selectpicker {
 
     return createFromHTML(drop);
   }
-

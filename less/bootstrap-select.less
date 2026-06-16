@@ -383,7 +383,8 @@ select.selectpicker {
     }
   }
 
-  &.selection-indicator-checkbox.show-tick .dropdown-menu {
+  &.selection-indicator-checkbox.show-tick .dropdown-menu,
+  &.selection-indicator-radio.show-tick .dropdown-menu {
     li a {
       padding-left: 2.5rem;
     }
@@ -409,6 +410,12 @@ select.selectpicker {
       color: transparent;
       transition: background-color .15s ease-in-out, border-color .15s ease-in-out, color .15s ease-in-out, box-shadow .15s ease-in-out;
     }
+  }
+
+  &.selection-indicator-checkbox.show-tick .dropdown-menu {
+    li a span.check-mark {
+      border-radius: 0.25rem;
+    }
 
     .selected span.check-mark {
       background: var(--bs-primary, #0d6efd);
@@ -424,6 +431,25 @@ select.selectpicker {
       border-width: 0 0.14rem 0.14rem 0;
       transform: rotate(45deg);
       margin-top: -0.05rem;
+    }
+  }
+
+  &.selection-indicator-radio.show-tick .dropdown-menu {
+    li a span.check-mark {
+      border-radius: 50%;
+    }
+
+    .selected span.check-mark {
+      border-color: var(--bs-primary, #0d6efd);
+      color: var(--bs-primary, #0d6efd);
+    }
+
+    .selected span.check-mark::after {
+      content: '';
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: currentColor;
     }
   }
 
@@ -516,17 +542,31 @@ select.selectpicker {
 .popover-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 0.75rem;
+  padding: 0.625rem 0.875rem;
+
+  .popover-header-text {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
 
   .btn-close,
   .close {
     flex: 0 0 auto;
     margin: 0;
+    margin-left: auto;
   }
 
   .btn-close {
-    padding: 0.375rem;
+    width: 0.875rem;
+    height: 0.875rem;
+    padding: 0.25rem;
+    background-size: 0.75rem;
+  }
+
+  .close {
+    font-size: 0.875rem;
+    line-height: 1;
   }
 }
 
