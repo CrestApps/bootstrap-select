@@ -1,4 +1,18 @@
 module.exports = function (grunt) {
+  var jsSources = [
+    'js/bootstrap-select.helpers.js',
+    'js/bootstrap-select.search.js',
+    'js/bootstrap-select.constants.js',
+    'js/bootstrap-select.class.js',
+    'js/bootstrap-select.virtual-scroll.js',
+    'js/bootstrap-select.data.js',
+    'js/bootstrap-select.render.js',
+    'js/bootstrap-select.sizing.js',
+    'js/bootstrap-select.interaction.js',
+    'js/bootstrap-select.api.js',
+    'js/bootstrap-select.runtime.js'
+  ];
+
   function asArray (value) {
     return Array.isArray(value) ? value.reduce(function (result, item) {
       return result.concat(asArray(item));
@@ -45,11 +59,15 @@ module.exports = function (grunt) {
       },
       main: {
         src: [
-          'js/*.js',
+          'js/bootstrap-select.helpers.js',
+          'js/bootstrap-select.search.js',
+          'js/bootstrap-select.constants.js',
           '!js/umd-intro.js',
           '!js/umd-outro.js',
           '!js/esm-intro.js',
-          '!js/esm-outro.js'
+          '!js/esm-outro.js',
+          '!js/cjs-intro.js',
+          '!js/cjs-outro.js'
         ]
       },
       i18n: {
@@ -63,7 +81,7 @@ module.exports = function (grunt) {
         sourceMap: true
       },
       main: {
-        src: 'js/bootstrap-select.js',
+        src: jsSources,
         dest: 'dist/js/bootstrap-select.js',
         options: {
           banner: '<%= banner %>\n' + grunt.file.read('js/umd-intro.js'),
@@ -71,11 +89,19 @@ module.exports = function (grunt) {
         }
       },
       esm: {
-        src: 'js/bootstrap-select.js',
+        src: jsSources,
         dest: 'dist/js/bootstrap-select.esm.mjs',
         options: {
           banner: '<%= banner %>\n' + grunt.file.read('js/esm-intro.js'),
           footer: grunt.file.read('js/esm-outro.js')
+        }
+      },
+      cjs: {
+        src: jsSources,
+        dest: 'dist/js/bootstrap-select.cjs',
+        options: {
+          banner: '<%= banner %>\n' + grunt.file.read('js/cjs-intro.js'),
+          footer: grunt.file.read('js/cjs-outro.js')
         }
       },
       i18n: {
@@ -197,7 +223,7 @@ module.exports = function (grunt) {
           prefix: 'Selectpicker.VERSION = \''
         },
         src: [
-          'js/bootstrap-select.js'
+          'js/bootstrap-select.api.js'
         ]
       },
       docs: {

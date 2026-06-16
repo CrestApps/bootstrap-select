@@ -16,3 +16,4 @@
     factory(typeof window !== 'undefined' ? window.bootstrap : undefined);
   }
 }(function (bootstrap) {
+  var __SELECTPICKER_EXPOSE_GLOBAL__ = true;

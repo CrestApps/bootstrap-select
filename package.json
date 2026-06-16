@@ -1,17 +1,18 @@
 {
   "name": "@crestapps/bootstrap-select",
   "title": "bootstrap-select",
-  "main": "dist/js/bootstrap-select.js",
+  "main": "dist/js/bootstrap-select.cjs",
   "module": "dist/js/bootstrap-select.esm.mjs",
   "style": "dist/css/bootstrap-select.min.css",
   "exports": {
     ".": {
       "import": "./dist/js/bootstrap-select.esm.mjs",
-      "require": "./dist/js/bootstrap-select.js",
+      "require": "./dist/js/bootstrap-select.cjs",
       "default": "./dist/js/bootstrap-select.js"
     },
     "./dist/css/bootstrap-select.css": "./dist/css/bootstrap-select.css",
     "./dist/css/bootstrap-select.min.css": "./dist/css/bootstrap-select.min.css",
+    "./dist/js/bootstrap-select.cjs": "./dist/js/bootstrap-select.cjs",
     "./dist/js/bootstrap-select.js": "./dist/js/bootstrap-select.js",
     "./dist/js/bootstrap-select.min.js": "./dist/js/bootstrap-select.min.js",
     "./dist/js/bootstrap-select.esm.mjs": "./dist/js/bootstrap-select.esm.mjs"

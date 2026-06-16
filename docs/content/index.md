@@ -21,7 +21,7 @@ Install with [npm](https://www.npmjs.com/package/@crestapps/bootstrap-select):
 npm install @crestapps/bootstrap-select bootstrap
 ```
 
-Load Bootstrap 5 first, then bootstrap-select's CSS and JS (after Bootstrap's JavaScript):
+Load Bootstrap 5 first, then bootstrap-select's CSS and JS (after Bootstrap's JavaScript when using the browser-global build):
 
 ```html
 <!-- Bootstrap 5 (includes Popper) -->
@@ -54,11 +54,72 @@ Prefer pinning an explicit package version in production:
 You can replace `@1.1.2` with the version you want to consume. During development,
 `@latest` also works, but a fixed version is safer for production deployments.
 
-When loaded via a `<script>` tag, the plugin exposes a global `Selectpicker` class.
-Modern JavaScript can import the ES module entry:
+## Package formats
+
+bootstrap-select now ships three JavaScript consumption styles from the same
+shared source code:
+
+| Style | Entry | Use when |
+| --- | --- | --- |
+| ESM | `@crestapps/bootstrap-select` via `import` | Your app uses native modules or an ESM-first bundler |
+| CommonJS | `@crestapps/bootstrap-select` via `require()` | Your bundler or app still prefers CommonJS |
+| Browser global / UMD | `dist/js/bootstrap-select.js` or `.min.js` | You load the plugin directly from a `<script>` tag or CDN |
+
+bootstrap-select is still a browser plugin, so the ESM and CommonJS entries are
+meant for browser bundles or browser-like runtimes with a DOM, not server-only
+Node.js execution.
+
+### ESM
 
 ```js
-import Selectpicker from '@crestapps/bootstrap-select';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '@crestapps/bootstrap-select/dist/css/bootstrap-select.css';
+import Selectpicker, { Selectpicker as NamedSelectpicker } from '@crestapps/bootstrap-select';
+
+const picker = new Selectpicker('#my-select', { liveSearch: true });
+
+console.log(Selectpicker === NamedSelectpicker); // true
+```
+
+The ESM build stays module-scoped and does **not** attach `window.Selectpicker`.
+
+### CommonJS
+
+```js
+require('bootstrap');
+require('@crestapps/bootstrap-select/dist/css/bootstrap-select.css');
+
+const Selectpicker = require('@crestapps/bootstrap-select');
+// or: const { Selectpicker } = require('@crestapps/bootstrap-select');
+
+const picker = new Selectpicker('#my-select', { liveSearch: true });
+```
+
+The CommonJS entry exports:
+
+- `module.exports = Selectpicker`
+- `module.exports.Selectpicker = Selectpicker`
+- `module.exports.default = Selectpicker`
+
+Like the ESM build, it does **not** attach `window.Selectpicker`.
+
+### Browser global / CDN
+
+When loaded from a `<script>` tag, the UMD build exposes the global
+`window.Selectpicker` / `Selectpicker`:
+
+```html
+<!-- Bootstrap 5 (includes Popper) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- @crestapps/bootstrap-select from jsDelivr -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.2/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@crestapps/bootstrap-select@1.1.2/dist/js/bootstrap-select.min.js"></script>
+
+<script>
+  const picker = new Selectpicker('#my-select', { liveSearch: true });
+</script>
 ```
 
 # Usage
