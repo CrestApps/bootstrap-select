@@ -24,7 +24,7 @@ concurrency:
 
 jobs:
   publish:
-    if: github.actor != 'github-actions[bot]'
+    if: "github.event_name != 'push' || github.event.head_commit.message != 'docs: publish static site'"
     runs-on: ubuntu-latest
     name: Build and sync docs site
     steps:
