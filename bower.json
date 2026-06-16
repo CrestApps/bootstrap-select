@@ -2,11 +2,11 @@
   "name": "crestapps-bootstrap-select",
   "description": "A dependency-free, vanilla JavaScript plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Supports Bootstrap 5+.",
   "main": [
-    "./less/bootstrap-select.less",
+    "./sass/bootstrap-select.scss",
     "./dist/css/bootstrap-select.css",
     "./dist/js/bootstrap-select.js"
   ],
-  "homepage": "https://github.com/CrestApps/crestapps-bootstrap-select",
+  "homepage": "https://github.com/CrestApps/bootstrap-select",
   "authors": [
     {
       "name": "CrestApps",
@@ -27,7 +27,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/CrestApps/crestapps-bootstrap-select.git"
+    "url": "git://github.com/CrestApps/bootstrap-select.git"
   },
   "keywords": [
     "javascript",
@@ -47,11 +47,11 @@
     ".eslintignore",
     ".gitignore",
     "CONTRIBUTING.md",
-    "Gruntfile.js",
     "composer.json",
     ".github",
     "docs",
     "js",
+    "less",
     "!dist/js",
     "nuget",
     "tests"

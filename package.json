@@ -1,17 +1,18 @@
 {
   "name": "@crestapps/bootstrap-select",
   "title": "bootstrap-select",
-  "main": "dist/js/bootstrap-select.js",
+  "main": "dist/js/bootstrap-select.cjs",
   "module": "dist/js/bootstrap-select.esm.mjs",
   "style": "dist/css/bootstrap-select.min.css",
   "exports": {
     ".": {
       "import": "./dist/js/bootstrap-select.esm.mjs",
-      "require": "./dist/js/bootstrap-select.js",
+      "require": "./dist/js/bootstrap-select.cjs",
       "default": "./dist/js/bootstrap-select.js"
     },
     "./dist/css/bootstrap-select.css": "./dist/css/bootstrap-select.css",
     "./dist/css/bootstrap-select.min.css": "./dist/css/bootstrap-select.min.css",
+    "./dist/js/bootstrap-select.cjs": "./dist/js/bootstrap-select.cjs",
     "./dist/js/bootstrap-select.js": "./dist/js/bootstrap-select.js",
     "./dist/js/bootstrap-select.min.js": "./dist/js/bootstrap-select.min.js",
     "./dist/js/bootstrap-select.esm.mjs": "./dist/js/bootstrap-select.esm.mjs"
@@ -21,14 +22,13 @@
   "files": [
     "dist",
     "js",
-    "less",
     "sass",
     "LICENSE",
     "README.md"
   ],
   "description": "A dependency-free, vanilla JavaScript plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Supports Bootstrap 5+. Forked from snapappointments/bootstrap-select with jQuery and Bootstrap 3/4 support removed.",
-  "version": "1.1.2",
-  "homepage": "https://github.com/CrestApps/crestapps-bootstrap-select",
+  "version": "1.2.0",
+  "homepage": "https://github.com/CrestApps/bootstrap-select",
   "author": {
     "name": "CrestApps",
     "url": "https://github.com/CrestApps"
@@ -49,10 +49,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CrestApps/crestapps-bootstrap-select.git"
+    "url": "git+https://github.com/CrestApps/bootstrap-select.git"
   },
   "bugs": {
-    "url": "https://github.com/CrestApps/crestapps-bootstrap-select/issues"
+    "url": "https://github.com/CrestApps/bootstrap-select/issues"
   },
   "license": "MIT",
   "publishConfig": {
@@ -71,38 +71,38 @@
     "@popperjs/core": "^2.11.8",
     "archiver": "^8.0.0",
     "autoprefixer": "^10.5.0",
+    "@rollup/plugin-terser": "^0.4.4",
     "bootstrap": "^5.3.8",
-    "chokidar": "^5.0.0",
+    "chokidar-cli": "^3.0.0",
     "clsx": "^2.1.1",
+    "cssnano": "^7.1.1",
+    "eslint": "^9.29.0",
     "globals": "^17.6.0",
-    "grunt": "^1.6.2",
-    "grunt-banner": "^0.6.0",
-    "grunt-contrib-clean": "^2.0.1",
-    "grunt-contrib-concat": "^2.1.0",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-csslint": "^2.0.0",
-    "grunt-contrib-cssmin": "^5.0.0",
-    "grunt-contrib-less": "^3.0.0",
-    "grunt-contrib-uglify": "^5.2.2",
-    "grunt-eslint": "^26.0.0",
-    "grunt-version": "^3.0.2",
-    "load-grunt-tasks": "^5.1.0",
     "postcss": "^8.5.15",
     "prism-react-renderer": "^2.4.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "rollup": "^4.44.1",
+    "sass": "^1.89.2",
     "webpack": "^5.107.2"
   },
   "scripts": {
-    "build": "grunt build",
+    "clean": "npm run clean:css && npm run clean:js",
+    "clean:css": "node scripts/clean.js dist/css",
+    "clean:js": "node scripts/clean.js dist/js",
+    "build": "npm run lint && npm run build:css && npm run build:js",
+    "build:css": "npm run clean:css && node scripts/build-css.js",
+    "build:js": "npm run clean:js && rollup -c",
     "docs:build": "npm run docs:prepare && docusaurus build docs --out-dir .pages-build",
     "docs:clear": "docusaurus clear docs",
     "docs:pages": "node scripts/publish-docs-to-pages.js",
-    "docs:prepare": "npm run build && grunt copy-docs",
-    "docs:serve": "docusaurus serve docs",
+    "docs:prepare": "npm run build && node scripts/copy-dist-to-docs.js",
+    "docs:serve": "npm run docs:build && docusaurus serve docs --dir .pages-build",
     "docs:start": "npm run docs:prepare && docusaurus start docs",
-    "lint": "grunt lint",
-    "test": "playwright test"
+    "dist": "npm run build && node scripts/create-dist-archive.js && node scripts/copy-dist-to-docs.js",
+    "lint": "eslint js/bootstrap-select.helpers.js js/bootstrap-select.search.js js/bootstrap-select.constants.js js/i18n/*.js rollup.config.js scripts/**/*.js",
+    "test": "playwright test",
+    "watch": "npm run build && chokidar \"js/**/*.js\" \"sass/**/*.scss\" -c \"npm run build\""
   },
   "browserslist": [
     "Chrome >= 60",

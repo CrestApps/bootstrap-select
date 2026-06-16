@@ -270,7 +270,7 @@ For security reasons, the `sanitize`, `sanitizeFn`, and `whiteList` options cann
     <td>boolean</td>
     <td><code>false</code></td>
     <td>
-      <p>Show checkmark on selected option (for items without <code>multiple</code> attribute).</p>
+      <p>Shows the default checkmark indicator on single-select menus. Multiselect menus already render a selection indicator by default.</p>
     </td>
   </tr>
   <tr>
@@ -294,7 +294,7 @@ For security reasons, the `sanitize`, `sanitizeFn`, and `whiteList` options cann
     <td><code>'checkmark'</code> | <code>'checkbox'</code></td>
     <td><code>'checkmark'</code></td>
     <td>
-      <p>Controls how selected items are indicated in the dropdown. Use <code>'checkbox'</code> to render a Bootstrap-style checkbox column instead of the default floating checkmark.</p>
+      <p>Controls how selected items are indicated in the dropdown. Use <code>'checkbox'</code> to render a Bootstrap-style checkbox column on multiselects, or radio-style indicators automatically on single selects, instead of the default floating checkmark.</p>
     </td>
   </tr>
   <tr>
@@ -448,80 +448,9 @@ Selectpicker.DEFAULTS.multipleSeparator = ' | ';
 ---
 
 bootstrap-select emits native `CustomEvent`s on the original `<select>` element.
-
-For `show.bs.select`, `shown.bs.select`, `hide.bs.select`, and `hidden.bs.select`, the original Bootstrap dropdown event is exposed as `event.detail.bsEvent`. Its `relatedTarget` property is the toggling button element.
-
-<RawHtml
-  html={String.raw`<table class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th>Event Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>show.bs.select</td>
-      <td>This event fires immediately when the menu starts opening.</td>
-    </tr>
-    <tr>
-      <td>shown.bs.select</td>
-      <td>This event is fired when the menu has been made visible to the user (after CSS transitions complete).</td>
-    </tr>
-    <tr>
-      <td>hide.bs.select</td>
-      <td>This event is fired immediately when the menu starts closing.</td>
-    </tr>
-    <tr>
-      <td>hidden.bs.select</td>
-      <td>This event is fired when the menu has finished being hidden from the user (after CSS transitions complete).</td>
-    </tr>
-    <tr>
-      <td>loaded.bs.select</td>
-      <td>This event fires after the select has been initialized.</td>
-    </tr>
-    <tr>
-      <td>rendered.bs.select</td>
-      <td>This event fires after the render instance has been called.</td>
-    </tr>
-    <tr>
-      <td>refreshed.bs.select</td>
-      <td>This event fires after the refresh instance has been called.</td>
-    </tr>
-    <tr>
-      <td>changed.bs.select</td>
-      <td>
-        <p>This event fires after the select's value has been changed. The detail object passes <code>clickedIndex</code>, <code>isSelected</code>, and <code>previousValue</code> via <code>event.detail</code>.</p>
-        <p><code>previousValue</code> is the value of the select prior to being changed. If the select's value has been changed either via the <code>val()</code>, <code>selectAll()</code>, or <code>deselectAll()</code> methods, clickedIndex and isSelected will be <code>null</code>.</p>
-      </td>
-    </tr>
-    <tr>
-      <td>maxReached.bs.select</td>
-      <td>This event fires when a multi-select tries to exceed the configured <code>maxOptions</code> limit on the select.</td>
-    </tr>
-    <tr>
-      <td>maxReachedGrp.bs.select</td>
-      <td>This event fires when a multi-select tries to exceed the configured <code>data-max-options</code> limit on an <code>&lt;optgroup&gt;</code>.</td>
-    </tr>
-    <tr>
-      <td>fetched.bs.select</td>
-      <td>This event fires after async or callback-backed source data has been fetched and applied to the picker.</td>
-    </tr>
-  </tbody>
-</table>`}
-/>
-
-```js
-document.querySelector('#mySelect').addEventListener('changed.bs.select', function (e) {
-  const { clickedIndex, isSelected, previousValue } = e.detail;
-  // do something...
-});
-
-document.querySelector('#mySelect').addEventListener('show.bs.select', function (e) {
-  const bootstrapEvent = e.detail.bsEvent;
-  const button = bootstrapEvent.relatedTarget;
-});
-```
+See the dedicated [Events](/docs/events) page for the full event reference, event
+payload details, and examples for `changed.bs.select`, `show.bs.select`, and
+the rest of the public event surface.
 
 ## Sanitizer
 

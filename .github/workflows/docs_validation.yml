@@ -7,9 +7,9 @@ on:
     paths:
       - 'docs/**'
       - 'js/**'
-      - 'less/**'
       - 'sass/**'
-      - 'Gruntfile.js'
+      - 'rollup.config.js'
+      - 'scripts/**'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/docs_validation.yml'

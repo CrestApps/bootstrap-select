@@ -96,6 +96,46 @@ test('placeholder attribute and legacy select title both render placeholder text
   await expect(page.locator('[data-id="with-title"] .filter-option-inner-inner')).toHaveText('Legacy title');
 });
 
+test('selectionIndicator checkbox renders radio-style indicators for single selects', async ({ page }) => {
+  await page.goto('/tests/index.html');
+  await page.waitForFunction(() => window.Selectpicker);
+
+  await page.evaluate(() => {
+    document.body.innerHTML += '<select id="single-radio-indicator"><option>Article</option><option selected>Blog Post</option><option>Landing Page</option></select>';
+    new Selectpicker('#single-radio-indicator', { selectionIndicator: 'checkbox' });
+  });
+
+  const picker = page.locator('.bootstrap-select').filter({ has: page.locator('[data-id="single-radio-indicator"]') });
+
+  await expect(picker).toHaveClass(/show-tick/);
+  await expect(picker).toHaveClass(/selection-indicator-radio/);
+
+  await picker.locator('[data-id="single-radio-indicator"]').click();
+
+  await expect(picker.locator('.dropdown-menu li a .check-mark')).toHaveCount(3);
+
+  await expect.poll(async () => page.evaluate(() => {
+    const picker = document.querySelector('.bootstrap-select:has([data-id="single-radio-indicator"])');
+    const selectedIndicator = picker.querySelector('.dropdown-menu li.selected .check-mark');
+    const indicatorStyle = window.getComputedStyle(selectedIndicator);
+    const dotStyle = window.getComputedStyle(selectedIndicator, '::after');
+
+    return {
+      hasRadioClass: picker.classList.contains('selection-indicator-radio'),
+      borderRadius: indicatorStyle.borderRadius,
+      dotWidth: dotStyle.width,
+      dotHeight: dotStyle.height,
+      dotBackground: dotStyle.backgroundColor
+    };
+  })).toEqual({
+    hasRadioClass: true,
+    borderRadius: '50%',
+    dotWidth: '8px',
+    dotHeight: '8px',
+    dotBackground: 'rgb(13, 110, 253)'
+  });
+});
+
 test('data-width fit keeps the picker compact', async ({ page }) => {
   await page.goto('/tests/index.html');
   await page.waitForFunction(() => window.Selectpicker);
@@ -108,6 +148,66 @@ test('data-width fit keeps the picker compact', async ({ page }) => {
   const picker = page.locator('.bootstrap-select').filter({ has: page.locator('[data-id="with-fit-width"]') });
 
   await expect(picker).toHaveClass(/fit-width/);
+});
+
+test('menu header renders its close button at the end with compact spacing', async ({ page }) => {
+  await page.goto('/tests/index.html');
+  await page.waitForFunction(() => window.Selectpicker);
+
+  await page.evaluate(() => {
+    document.body.innerHTML += '<select id="with-header"><option>One</option><option>Two</option></select>';
+    new Selectpicker('#with-header', { header: 'Select a condiment' });
+  });
+
+  const picker = page.locator('.bootstrap-select').filter({ has: page.locator('[data-id="with-header"]') });
+
+  await picker.locator('[data-id="with-header"]').click();
+
+  const header = picker.locator('.popover-header');
+
+  await expect(header.locator('.popover-header-text')).toHaveText('Select a condiment');
+
+  await expect.poll(async () => header.evaluate((el) => {
+    return {
+      firstClass: el.firstElementChild && el.firstElementChild.className,
+      lastClass: el.lastElementChild && el.lastElementChild.className
+    };
+  })).toMatchObject({
+    firstClass: 'popover-header-text',
+    lastClass: 'btn-close'
+  });
+
+  await expect.poll(async () => header.locator('.btn-close').evaluate((el) => {
+    const style = window.getComputedStyle(el);
+
+    return {
+      width: parseFloat(style.width),
+      height: parseFloat(style.height),
+      paddingTop: parseFloat(style.paddingTop),
+      paddingRight: parseFloat(style.paddingRight)
+    };
+  })).toEqual({
+    width: 14,
+    height: 14,
+    paddingTop: 4,
+    paddingRight: 4
+  });
+
+  await expect.poll(async () => header.evaluate((el) => {
+    const style = window.getComputedStyle(el);
+
+    return {
+      paddingTop: parseFloat(style.paddingTop),
+      paddingRight: parseFloat(style.paddingRight),
+      paddingBottom: parseFloat(style.paddingBottom),
+      paddingLeft: parseFloat(style.paddingLeft)
+    };
+  })).toEqual({
+    paddingTop: 10,
+    paddingRight: 14,
+    paddingBottom: 10,
+    paddingLeft: 14
+  });
 });
 
 test('native bs.select events are emitted on the original select', async ({ page }) => {

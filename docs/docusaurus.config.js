@@ -16,7 +16,7 @@ const config = {
   url: process.env.DOCUSAURUS_URL || 'https://bootstrap-select.crestapps.com',
   baseUrl: normalizedBaseUrl,
   organizationName: 'CrestApps',
-  projectName: 'crestapps-bootstrap-select',
+  projectName: 'bootstrap-select',
   trailingSlash: true,
   onBrokenLinks: 'throw',
   markdown: {
@@ -70,7 +70,7 @@ const config = {
         docs: {
           path: 'content',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/CrestApps/crestapps-bootstrap-select/tree/main/docs/',
+          editUrl: 'https://github.com/CrestApps/bootstrap-select/tree/main/docs/',
           lastVersion: 'current',
           versions: {
             current: {
@@ -119,7 +119,7 @@ const config = {
             dropdownActiveClassDisabled: true
           },
           {
-            href: 'https://github.com/CrestApps/crestapps-bootstrap-select',
+            href: 'https://github.com/CrestApps/bootstrap-select/',
             label: 'GitHub',
             position: 'right'
           }
@@ -154,7 +154,7 @@ const config = {
             items: [
               {
                 label: 'Issues',
-                href: 'https://github.com/CrestApps/crestapps-bootstrap-select/issues'
+                href: 'https://github.com/CrestApps/bootstrap-select/issues'
               }
             ]
           },
@@ -163,7 +163,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/CrestApps/crestapps-bootstrap-select'
+                href: 'https://github.com/CrestApps/bootstrap-select/'
               },
               {
                 label: 'CrestApps',

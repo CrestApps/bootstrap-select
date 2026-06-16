@@ -157,7 +157,9 @@ module.exports = [
       'js/umd-intro.js',
       'js/umd-outro.js',
       'js/esm-intro.js',
-      'js/esm-outro.js'
+      'js/esm-outro.js',
+      'js/cjs-intro.js',
+      'js/cjs-outro.js'
     ]
   },
   {
@@ -182,10 +184,13 @@ module.exports = [
     rules
   },
   {
-    files: ['Gruntfile.js'],
+    files: ['rollup.config.js', 'scripts/**/*.js'],
     languageOptions: {
       ecmaVersion: 2022,
-      sourceType: 'commonjs'
+      sourceType: 'commonjs',
+      globals: {
+        ...globals.node
+      }
     },
     rules
   }
