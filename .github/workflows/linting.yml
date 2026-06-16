@@ -20,4 +20,4 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run lint
-        run: npx grunt lint
+        run: npm run lint

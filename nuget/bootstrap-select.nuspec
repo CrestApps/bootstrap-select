@@ -6,7 +6,7 @@
         <title>bootstrap-select</title>
         <authors>CrestApps, Casey Holzer, Silvio Moreto, SnapAppointments LLC</authors>
         <owners>CrestApps</owners>
-        <projectUrl>https://github.com/CrestApps/crestapps-bootstrap-select</projectUrl>
+        <projectUrl>https://github.com/CrestApps/bootstrap-select</projectUrl>
         <description>A dependency-free, vanilla JavaScript plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Supports Bootstrap 5+.</description>
         <tags>javascript vanilla-js form bootstrap bootstrap-5 dropdown select replacement</tags>
         <readme>README.md</readme>

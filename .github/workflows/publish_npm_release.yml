@@ -11,7 +11,7 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    name: Publish crestapps-bootstrap-select
+    name: Publish bootstrap-select
     outputs:
       version: ${{ steps.release_meta.outputs.version }}
       docs_version: ${{ steps.release_meta.outputs.docs_version }}

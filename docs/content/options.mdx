@@ -365,7 +365,8 @@ For security reasons, the `sanitize`, `sanitizeFn`, and `whiteList` options cann
     <td>null | function</td>
     <td><code>null</code></td>
     <td>
-      <p>Here you can supply your own sanitize function. This can be useful if you prefer to use a dedicated library to perform sanitization.</p>
+      <p>Supply your own sanitize function when you want to keep the built-in zero-dependency default off the critical path and let application code use a dedicated sanitizer library instead.</p>
+      <p>The function receives an array of DOM nodes and should sanitize each node in place.</p>
     </td>
   </tr>
   </tbody>
@@ -456,7 +457,7 @@ the rest of the public event surface.
 
 ---
 
-HTML added via the `data-content` attribute on individual options is sanitized using our built-in sanitizer.
+HTML added via the `data-content` attribute on individual options is sanitized using the built-in zero-dependency sanitizer.
 
 The default `whiteList` value is the following:
 
@@ -514,14 +515,18 @@ var myCustomRegex = /^data-my-app-[\w-]+/;
 myDefaultWhiteList['*'].push(myCustomRegex);
 ```
 
-If you want to bypass our sanitizer because you prefer to use a dedicated library, you should do the following:
+If you prefer to use a dedicated sanitizer library such as DOMPurify, load or install it in your application and wire it through `sanitizeFn`:
 
 ```js
+import DOMPurify from 'dompurify';
+
 new Selectpicker('#yourSelect', {
   sanitizeFn: function (domNodes) {
-    return DOMPurify.sanitize(domNodes)
+    domNodes.forEach(function (node) {
+      node.innerHTML = DOMPurify.sanitize(node.innerHTML);
+    });
   }
 });
 ```
 
-For performance reasons, our built-in sanitizer accepts an array of DOM nodes as its first argument, rather than an HTML string. Keep that in mind if deciding to use your own `sanitizeFn`.
+For performance reasons, bootstrap-select passes an array of DOM nodes to `sanitizeFn`, not an HTML string. If you use a third-party sanitizer, sanitize each node in place as shown above.

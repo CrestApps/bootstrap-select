@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-	<a href="https://github.com/CrestApps/crestapps-bootstrap-select/blob/main/LICENSE" target="_blank">
+	<a href="https://github.com/CrestApps/bootstrap-select/blob/main/LICENSE" target="_blank">
 		<img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="License">
 	</a>
 	<a href="https://www.npmjs.com/package/@crestapps/bootstrap-select" target="_blank">
@@ -31,13 +31,16 @@ following goals:
   than Bootstrap itself).
 - **Support Bootstrap 5 and later only** — older Bootstrap and jQuery
   compatibility paths are intentionally out of scope.
+- **Ship modern distribution formats** — the package includes first-class ESM,
+  CommonJS, and browser-global UMD builds from the same source code.
+- **Use a modern build pipeline** — the fork no longer relies on Grunt or Less;
+  builds are produced with Rollup, Sass, and the current docs/tooling stack.
 - Keep the select-enhancement feature set while prioritizing a modern, small,
   forward-only API.
 
 ## Requirements
 
-- **Bootstrap 5+** (CSS and JS, including its bundled Popper). jQuery is **not**
-  required.
+- **Bootstrap 5+** (CSS and JS, including its bundled Popper).
 
 ## Quick start
 
@@ -251,6 +254,27 @@ picker.destroy();         // remove the plugin and restore the original <select>
 
 See [Methods](docs/content/methods.md) for the full list.
 
+### Sanitizing custom HTML
+
+`data-content` HTML is sanitized by bootstrap-select's built-in zero-dependency sanitizer by default.
+
+If you prefer a dedicated sanitizer such as [DOMPurify](https://github.com/cure53/DOMPurify), keep `sanitize: true` and provide a `sanitizeFn`. The hook receives an array of DOM nodes, so sanitize each node in place:
+
+```js
+import DOMPurify from 'dompurify';
+
+new Selectpicker('#my-select', {
+  sanitize: true,
+  sanitizeFn: function (domNodes) {
+    domNodes.forEach(function (node) {
+      node.innerHTML = DOMPurify.sanitize(node.innerHTML);
+    });
+  }
+});
+```
+
+This keeps the library dependency-free by default while letting applications opt into a library-backed sanitizer when they need one.
+
 ### Events
 
 Events are dispatched as native `CustomEvent`s on the original `<select>`
@@ -287,52 +311,25 @@ including [Getting Started](https://bootstrap-select.crestapps.com/docs/),
 [Methods](https://bootstrap-select.crestapps.com/docs/methods), and
 [Events](https://bootstrap-select.crestapps.com/docs/events).
 
-## Building and testing
+## Building locally
+
+To work with the package from source, install dependencies and build `dist/`:
 
 ```sh
 # Requires Node.js 20.19 or newer for the development toolchain.
 npm install
-npm run build   # grunt build (lint + compile JS and CSS into dist/)
-npm run lint    # grunt lint
-npm test        # Playwright end-to-end tests
+npm run build
 ```
 
-## Documentation site
-
-The documentation site is built with **Docusaurus 3.10** and uses the CrestApps
-theme colors. It is published to
-[bootstrap-select.crestapps.com](https://bootstrap-select.crestapps.com) via
-GitHub Pages whenever changes land on `main`.
-
-Run the site locally:
+Useful local workflows:
 
 ```sh
-npm install
-npm run docs:start
+npm run lint
+npm test
 ```
 
-`docs:start` builds the plugin, copies the local `dist/` files into
-`docs/static/dist/`, and starts Docusaurus. Open `http://localhost:3000/`, then
-use the **Examples** page to exercise the plugin in the docs site.
-
-The Docusaurus source lives under `docs/content/`. Because GitHub Pages is
-configured to publish from `main:/docs`, the deploy workflow builds the site
-and syncs the generated static files back into `docs/`.
-
-Standalone hosted examples are also available from the same site:
-
-- `http://localhost:3000/examples/basic.html`
-- `http://localhost:3000/examples/live-search.html`
-- `http://localhost:3000/examples/multiple.html`
-
-Other docs commands:
-
-```sh
-npm run docs:prepare # build plugin assets and copy them into docs/static/dist/
-npm run docs:build   # build the static Docusaurus site into docs/.pages-build/
-npm run docs:pages   # copy the built site into docs/ for branch-based Pages
-npm run docs:serve   # serve the built Docusaurus site locally
-```
+For documentation site commands and local Docusaurus setup, see
+[`docs/README.md`](docs/README.md).
 
 ## Bugs and feature requests
 

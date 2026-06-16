@@ -1,4 +1,4 @@
-# Contributing to crestapps-bootstrap-select
+# Contributing to bootstrap-select
 
 Thanks for contributing. This repository contains the vanilla JavaScript
 CrestApps fork of `bootstrap-select`, the built distribution artifacts, the
@@ -8,12 +8,12 @@ changes.
 ## Project layout
 
 - `js/` - source for the plugin runtime
-- `less/` and `sass/` - source stylesheets
+- `sass/` - source stylesheets
 - `dist/` - generated distributable assets
 - `docs/` - Docusaurus docs app and hosted standalone examples
 - `tests/` - manual HTML fixtures, helpers, and Playwright e2e coverage
 
-Edit the source files in `js/`, `less/`, `sass/`, or `docs/`. Do not hand-edit
+Edit the source files in `js/`, `sass/`, or `docs/`. Do not hand-edit
 generated files in `dist/`.
 
 ## Before you start
@@ -22,7 +22,7 @@ generated files in `dist/`.
 2. For non-trivial changes, open or reference an issue first so the scope is
    clear before implementation starts.
 3. For bugs, include the browser, OS, Bootstrap version, and
-   `crestapps-bootstrap-select` version you tested against.
+   `@crestapps/bootstrap-select` version you tested against.
 
 ## Local setup
 
@@ -44,7 +44,7 @@ generated files in `dist/`.
 
 ## Build and validation workflow
 
-The project uses Grunt for asset generation and Docusaurus for the docs site.
+The project uses Rollup and Sass for asset generation and Docusaurus for the docs site.
 
 - `npm run build` - rebuilds `dist/` from the source files
 - `npm run lint` - runs the configured ESLint checks
@@ -52,14 +52,8 @@ The project uses Grunt for asset generation and Docusaurus for the docs site.
 - `npm run docs:prepare` - builds the plugin and copies docs assets into
   `docs/static/dist/`
 - `npm run docs:start` - prepares the docs assets and starts the local docs site
-- `npm run docs:build` - creates a production docs build under `docs/build/`
-
-If you prefer Grunt directly, these tasks remain available:
-
-- `grunt build-css`
-- `grunt build-js`
-- `grunt copy-docs`
-- `grunt dev-watch`
+- `npm run docs:build` - creates a production docs build under `docs/.pages-build/`
+- `npm run watch` - rebuilds the plugin whenever JS or Sass sources change
 
 ## Working on docs
 
