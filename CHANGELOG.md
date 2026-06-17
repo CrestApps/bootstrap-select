@@ -1,3 +1,16 @@
+# v1.2.0 (CrestApps fork)
+
+### Highlights
+
+- Added ESM, CommonJS, and browser-global (UMD) package formats so the plugin
+  can be consumed from a bundler as well as a plain `<script>` tag.
+- Migrated the build system from Grunt to Rollup, producing three output formats
+  from a single shared source tree.
+- Documented all three package formats (ESM, CommonJS, browser global) in the
+  Getting Started guide.
+- Released as `@crestapps/bootstrap-select@1.2.0` on npm with the new
+  `import`/`require` entry points.
+
 # v1.1.2 (CrestApps fork)
 
 ### Fixes

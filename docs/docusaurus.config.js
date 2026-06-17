@@ -76,6 +76,9 @@ const config = {
             current: {
               label: 'Latest',
               path: ''
+            },
+            '1.2': {
+              label: '1.2'
             }
           }
         },
