@@ -25,6 +25,11 @@ const config = {
     }
   },
 
+  clientModules: [
+    require.resolve('./src/bootstrapTheme.js'),
+    require.resolve('./src/deepLinkScroll.js')
+  ],
+
   scripts: [
     {
       src: withBaseUrl('js/chunk-recovery.js')
