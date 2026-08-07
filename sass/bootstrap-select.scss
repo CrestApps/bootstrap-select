@@ -21,6 +21,22 @@
   cursor: not-allowed;
 }
 
+// Renders an SVG icon through a CSS mask so it inherits `currentColor`. This
+// keeps the caret chevron and the selection ticks visually consistent (same
+// stroke width, same rounded caps) and lets them follow the surrounding text
+// color in both light and dark themes.
+@mixin bs-mask-icon($svg) {
+  background-color: currentColor;
+  -webkit-mask-image: url("#{$svg}");
+  mask-image: url("#{$svg}");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
 // Rules
 select.bs-select-hidden,
 .bootstrap-select > select.bs-select-hidden,
@@ -44,8 +60,24 @@ select.selectpicker {
     align-items: center;
     justify-content: space-between;
 
-    &:after {
-      margin-top: -1px;
+    // Replace Bootstrap's default triangle caret with the same chevron used by
+    // `.form-select` so the control matches a native Bootstrap 5.3 select.
+    &::after {
+      flex: 0 0 auto;
+      width: 0.875rem;
+      height: 0.875rem;
+      margin-top: 0;
+      margin-left: 0.5em;
+      content: "";
+      border: 0;
+      transition: transform 0.15s ease-in-out;
+      @include bs-mask-icon($bs-chevron-svg);
+    }
+
+    // Flip the chevron to point up while the menu is open (chevron-up), then
+    // back to chevron-down when closed.
+    &[aria-expanded="true"]::after {
+      transform: rotate(180deg);
     }
 
     &.bs-placeholder {
@@ -462,12 +494,9 @@ select.selectpicker {
 
     .selected span.check-mark::after {
       content: '';
-      width: 0.3rem;
-      height: 0.55rem;
-      border: solid currentColor;
-      border-width: 0 0.14rem 0.14rem 0;
-      transform: rotate(45deg);
-      margin-top: -0.05rem;
+      width: 0.75rem;
+      height: 0.75rem;
+      @include bs-mask-icon($bs-check-svg);
     }
   }
 
@@ -490,16 +519,15 @@ select.selectpicker {
     }
   }
 
-  // default check mark for use without an icon font
+  // default check mark for use without an icon font. Shares the chevron's
+  // stroke width and rounded caps, and inherits the option's text color so the
+  // selected tick blends with the surrounding option.
   .bs-ok-default:after {
     content: '';
     display: block;
-    width: 0.5em;
+    width: 1em;
     height: 1em;
-    border-style: solid;
-    border-width: 0 0.26em 0.26em 0;
-    transform-style: preserve-3d;
-    transform: rotate(45deg);
+    @include bs-mask-icon($bs-check-svg);
   }
 }
 
