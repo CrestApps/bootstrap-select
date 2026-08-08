@@ -45,6 +45,40 @@
 
     <hr class="my-4">
 
+    <p class="swatch-label text-uppercase text-body-secondary mb-1">Groups, disabled options &amp; dividers</p>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <p class="small text-body-secondary mb-1">Native reference</p>
+        <select class="form-select" size="8" aria-label="Native grouped select">
+          <optgroup label="Condiments">
+            <option>Mustard</option>
+            <option disabled>Ketchup (out of stock)</option>
+            <option>Relish</option>
+          </optgroup>
+          <optgroup label="Sauces">
+            <option>Barbecue</option>
+            <option>Sriracha</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <p class="small text-body-secondary mb-1">bootstrap-select</p>
+        <select class="selectpicker form-control" id="grouped" data-show-tick="true">
+          <optgroup label="Condiments">
+            <option>Mustard</option>
+            <option disabled>Ketchup (out of stock)</option>
+            <option selected>Relish</option>
+          </optgroup>
+          <optgroup label="Sauces">
+            <option>Barbecue</option>
+            <option>Sriracha</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+
+    <hr class="my-4">
+
     <p class="swatch-label text-uppercase text-body-secondary mb-1">bootstrap-select, selection with checkmark</p>
     <select class="selectpicker form-control" data-show-tick="true">
       <option>Mustard</option>
