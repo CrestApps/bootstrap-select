@@ -119,6 +119,13 @@ const config = {
             position: 'left'
           },
           {
+            to: 'pathname:///examples/comparison.html',
+            label: 'Comparison',
+            position: 'left',
+            target: '_blank',
+            rel: 'noopener noreferrer'
+          },
+          {
             type: 'docsVersionDropdown',
             position: 'right',
             dropdownActiveClassDisabled: true
