@@ -5,6 +5,7 @@ description: Live bootstrap-select examples hosted by the Docusaurus docs site.
 ---
 
 import LiveExample from '@site/src/components/LiveExample';
+import Link from '@docusaurus/Link';
 
 # Basic examples
 
@@ -20,6 +21,7 @@ The main examples now live directly on this docs page so they inherit the docs t
 - [Search and multi-select workflows](#search-and-multi-select-workflows)
 - [Selection text and summaries](#selection-text-and-summaries)
 - [Styling and layout](#styling-and-layout)
+  - [Native Bootstrap comparison](#native-bootstrap-comparison)
 - [Rich option content](#rich-option-content)
 - [Menu behavior](#menu-behavior)
 - [Disabled states](#disabled-states)
@@ -543,6 +545,44 @@ The supported values are:
 ## Styling and layout
 
 ---
+
+### Native Bootstrap comparison
+
+`bootstrap-select` is styled to mirror a native Bootstrap&nbsp;5.3 `.form-select`: the
+placeholder color, chevron icon, disabled options, optgroup headers, and selection ticks
+all resolve from Bootstrap CSS variables, so they follow your theme automatically. Toggle
+this site's light/dark switch to see both controls stay in sync.
+
+<LiveExample
+  html={String.raw`  <div class="row g-3">
+    <div class="col-sm-6">
+      <p class="mb-1 text-body-secondary">Native <code>.form-select</code></p>
+      <select class="form-select" aria-label="Native select">
+        <option value="" selected disabled>Choose a condiment</option>
+        <option>Mustard</option>
+        <option>Ketchup</option>
+        <option>Relish</option>
+      </select>
+    </div>
+    <div class="col-sm-6">
+      <p class="mb-1 text-body-secondary">bootstrap-select</p>
+      <select class="selectpicker form-control" placeholder="Choose a condiment">
+        <option>Mustard</option>
+        <option>Ketchup</option>
+        <option>Relish</option>
+      </select>
+    </div>
+  </div>`}
+/>
+
+For a full side-by-side reference (placeholders, optgroups, disabled options, dividers, and
+selection checkmarks) with its own color-mode selector, open the standalone page:
+
+<p>
+  <Link to="pathname:///examples/comparison.html" target="_blank" rel="noopener noreferrer">
+    Open the native vs. bootstrap-select comparison ↗
+  </Link>
+</p>
 
 ### Button classes
 

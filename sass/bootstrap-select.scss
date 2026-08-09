@@ -21,6 +21,22 @@
   cursor: not-allowed;
 }
 
+// Renders an SVG icon through a CSS mask so it inherits `currentColor`. This
+// keeps the caret chevron and the selection ticks visually consistent (same
+// stroke width, same rounded caps) and lets them follow the surrounding text
+// color in both light and dark themes.
+@mixin bs-mask-icon($svg, $size: contain) {
+  background-color: currentColor;
+  -webkit-mask-image: url("#{$svg}");
+  mask-image: url("#{$svg}");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: #{$size};
+  mask-size: #{$size};
+}
+
 // Rules
 select.bs-select-hidden,
 .bootstrap-select > select.bs-select-hidden,
@@ -44,8 +60,27 @@ select.selectpicker {
     align-items: center;
     justify-content: space-between;
 
-    &:after {
-      margin-top: -1px;
+    // Replace Bootstrap's default triangle caret with the same chevron used by
+    // `.form-select` so the control matches a native Bootstrap 5.3 select.
+    &::after {
+      flex: 0 0 auto;
+      // Match Bootstrap's `.form-select` chevron exactly: a 16x16 viewBox drawn
+      // into a 16px x 12px box (`background-size: 16px 12px`). Using `contain`
+      // here would scale the icon uniformly and render it slightly too large.
+      width: 16px;
+      height: 12px;
+      margin-top: 0;
+      margin-left: 0.5rem;
+      content: "";
+      border: 0;
+      transition: transform 0.15s ease-in-out;
+      @include bs-mask-icon($bs-chevron-svg, 16px 12px);
+    }
+
+    // Flip the chevron to point up while the menu is open (chevron-up), then
+    // back to chevron-down when closed.
+    &[aria-expanded="true"]::after {
+      transform: rotate(180deg);
     }
 
     &.bs-placeholder {
@@ -98,12 +133,12 @@ select.selectpicker {
   .error & .dropdown-toggle,
   &.is-invalid .dropdown-toggle,
   .was-validated & select:invalid + .dropdown-toggle {
-    border-color: $color-red-error;
+    border-color: var(--bs-form-invalid-border-color, var(--bs-danger, #{$color-red-error}));
   }
 
   &.is-valid .dropdown-toggle,
   .was-validated & select:valid + .dropdown-toggle {
-    border-color: $color-green-success;
+    border-color: var(--bs-form-valid-border-color, var(--bs-success, #{$color-green-success}));
   }
 
   &:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
@@ -328,6 +363,7 @@ select.selectpicker {
       }
 
       &.disabled a {
+        color: var(--bs-dropdown-link-disabled-color, rgba(var(--bs-emphasis-color-rgb, 33, 37, 41), 0.5));
         @include cursor-disabled();
       }
 
@@ -462,12 +498,9 @@ select.selectpicker {
 
     .selected span.check-mark::after {
       content: '';
-      width: 0.3rem;
-      height: 0.55rem;
-      border: solid currentColor;
-      border-width: 0 0.14rem 0.14rem 0;
-      transform: rotate(45deg);
-      margin-top: -0.05rem;
+      width: 0.75rem;
+      height: 0.75rem;
+      @include bs-mask-icon($bs-check-svg);
     }
   }
 
@@ -490,16 +523,15 @@ select.selectpicker {
     }
   }
 
-  // default check mark for use without an icon font
+  // default check mark for use without an icon font. Shares the chevron's
+  // stroke width and rounded caps, and inherits the option's text color so the
+  // selected tick blends with the surrounding option.
   .bs-ok-default:after {
     content: '';
     display: block;
-    width: 0.5em;
+    width: 1em;
     height: 1em;
-    border-style: solid;
-    border-width: 0 0.26em 0.26em 0;
-    transform-style: preserve-3d;
-    transform: rotate(45deg);
+    @include bs-mask-icon($bs-check-svg);
   }
 }
 
@@ -670,9 +702,9 @@ select.selectpicker {
   & .bs-create-option {
     display: block;
     padding: 0.5rem 0.75rem;
-    border: 1px dashed rgba(13, 110, 253, 0.45);
+    border: 1px dashed rgba(var(--bs-primary-rgb, 13, 110, 253), 0.45);
     border-radius: 0.375rem;
-    background: rgba(13, 110, 253, 0.06);
+    background: rgba(var(--bs-primary-rgb, 13, 110, 253), 0.06);
     color: var(--bs-primary, #0d6efd);
     white-space: normal;
     text-align: left;
@@ -680,7 +712,7 @@ select.selectpicker {
 
   & .bs-create-option:hover,
   & .bs-create-option:focus {
-    background: rgba(13, 110, 253, 0.12);
+    background: rgba(var(--bs-primary-rgb, 13, 110, 253), 0.12);
     color: var(--bs-primary-text-emphasis, var(--bs-primary, #0d6efd));
   }
 }
@@ -730,9 +762,9 @@ select.selectpicker {
 
 .bs-selected-item:hover,
 .bs-selected-item:focus {
-  border-color: rgba(13, 110, 253, 0.35);
+  border-color: rgba(var(--bs-primary-rgb, 13, 110, 253), 0.35);
   background-color: var(--bs-secondary-bg, #e9ecef);
-  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.12);
+  box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb, 13, 110, 253), 0.12);
   outline: 0;
 }
 
@@ -743,19 +775,21 @@ select.selectpicker {
 }
 
 .bs-selected-item-remove {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.125rem;
-  height: 1.125rem;
-  border-radius: 999px;
-  background: rgba(108, 117, 125, 0.14);
-  color: var(--bs-secondary-color, #6c757d);
-  font-size: 0.875rem;
-  font-weight: 900;
-  line-height: 1;
+  width: 0.75rem;
+  height: 0.75rem;
   flex: 0 0 auto;
-  padding-bottom: 0;
+  // Match the chevron and selection tick: a masked stroke SVG that inherits the
+  // current text color with the same stroke width and rounded caps.
+  color: var(--bs-secondary-color, #6c757d);
+  opacity: 0.85;
+  transition: opacity .15s ease-in-out, color .15s ease-in-out;
+  @include bs-mask-icon($bs-x-svg);
+}
+
+.bs-selected-item:hover .bs-selected-item-remove,
+.bs-selected-item:focus .bs-selected-item-remove {
+  color: var(--bs-body-color, inherit);
+  opacity: 1;
 }
 
 .bootstrap-select.selected-items-style-list .bs-selected-items {
@@ -811,12 +845,9 @@ select.selectpicker {
 }
 
 .bootstrap-select.selected-items-style-list .bs-selected-item-remove {
-  width: auto;
-  height: auto;
+  width: 0.875rem;
+  height: 0.875rem;
   margin-left: auto;
-  border-radius: 0;
-  background: transparent;
-  font-size: 1rem;
   color: var(--bs-secondary-color, #6c757d);
 }
 
@@ -830,8 +861,8 @@ select.selectpicker {
 
   &:focus-within,
   &.show {
-    border-color: #86b7fe;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    border-color: var(--bs-primary, #86b7fe);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb, 13, 110, 253), 0.25);
   }
 
   > .dropdown-toggle {

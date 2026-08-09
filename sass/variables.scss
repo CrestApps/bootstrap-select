@@ -7,8 +7,20 @@ $width-default: 100% !default;
 $zindex-select-dropdown: 1060 !default; // must be higher than a modal background (1050)
 
 //** Placeholder text color
-$input-color-placeholder: #999 !default;
+// Mirror the placeholder color Bootstrap 5.3 uses for standard form controls
+// (`.form-control`/`.form-select` placeholders resolve to `--bs-secondary-color`)
+// so the selectpicker's placeholder matches native inputs in light and dark modes.
+$input-color-placeholder: var(--bs-secondary-color, #6c757d) !default;
 $input-alt-color-placeholder: rgba(255, 255, 255, 0.5) !default;
+
+//** Bootstrap 5.3-style chevron, checkmark, and remove (×) icons.
+// Rendered through CSS masks so they inherit the current text color and share a
+// single stroke width / rounded cap style across the caret, selection ticks, and
+// the remove control on selected tags.
+$bs-icon-stroke-width: 2 !default;
+$bs-chevron-svg: "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='#{$bs-icon-stroke-width}' d='m2 5 6 6 6-6'/%3e%3c/svg%3e" !default;
+$bs-check-svg: "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='#{$bs-icon-stroke-width}' d='m3.5 8.5 3 3 6-6.5'/%3e%3c/svg%3e" !default;
+$bs-x-svg: "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='#{$bs-icon-stroke-width}' d='M4 4 12 12M12 4 4 12'/%3e%3c/svg%3e" !default;
 
 $input-padding-y-sm: .25rem !default;
 $input-padding-x-sm: .5rem !default;

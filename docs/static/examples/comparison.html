@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>bootstrap-select vs native Bootstrap select</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../dist/css/bootstrap-select.min.css">
+  <style>
+    .swatch-label { font-size: .875rem; letter-spacing: .02em; }
+  </style>
+</head>
+<body class="p-4">
+  <main class="container" style="max-width: 720px;">
+    <h1 class="h4 mb-1">Native Bootstrap select vs. bootstrap-select</h1>
+    <p class="text-body-secondary">
+      Both controls share the same placeholder color (<code>--bs-secondary-color</code>) and the
+      same Bootstrap&nbsp;5.3 chevron. Use the color mode selector to confirm they stay in sync.
+    </p>
+
+    <div class="row align-items-end g-3 mb-3">
+      <div class="col-auto">
+        <label for="color-mode" class="form-label swatch-label text-uppercase text-body-secondary mb-1">Color mode</label>
+        <select class="form-select form-select-sm" id="color-mode" aria-label="Color mode selector" style="width: auto;">
+          <option value="light" selected>Light</option>
+          <option value="dark">Dark</option>
+          <option value="auto">Auto (system)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6">
+        <p class="swatch-label text-uppercase text-body-secondary mb-1">Native <code>.form-select</code></p>
+        <select class="form-select" aria-label="Native select">
+          <option value="" selected disabled>Choose a condiment</option>
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <p class="swatch-label text-uppercase text-body-secondary mb-1">bootstrap-select</p>
+        <select class="selectpicker form-control" placeholder="Choose a condiment">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+        </select>
+      </div>
+    </div>
+
+    <hr class="my-4">
+
+    <p class="swatch-label text-uppercase text-body-secondary mb-1">Groups, disabled options &amp; dividers</p>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <p class="small text-body-secondary mb-1">Native reference</p>
+        <select class="form-select" size="8" aria-label="Native grouped select">
+          <optgroup label="Condiments">
+            <option>Mustard</option>
+            <option disabled>Ketchup (out of stock)</option>
+            <option>Relish</option>
+          </optgroup>
+          <optgroup label="Sauces">
+            <option>Barbecue</option>
+            <option>Sriracha</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <p class="small text-body-secondary mb-1">bootstrap-select</p>
+        <select class="selectpicker form-control" id="grouped" data-show-tick="true">
+          <optgroup label="Condiments">
+            <option>Mustard</option>
+            <option disabled>Ketchup (out of stock)</option>
+            <option selected>Relish</option>
+          </optgroup>
+          <optgroup label="Sauces">
+            <option>Barbecue</option>
+            <option>Sriracha</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+
+    <hr class="my-4">
+
+    <p class="swatch-label text-uppercase text-body-secondary mb-1">bootstrap-select, selection with checkmark</p>
+    <select class="selectpicker form-control" data-show-tick="true">
+      <option>Mustard</option>
+      <option selected>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../dist/js/bootstrap-select.min.js"></script>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var selector = document.getElementById('color-mode');
+      var media = window.matchMedia('(prefers-color-scheme: dark)');
+
+      function resolvedTheme(mode) {
+        return mode === 'auto' ? (media.matches ? 'dark' : 'light') : mode;
+      }
+
+      function applyTheme() {
+        root.setAttribute('data-bs-theme', resolvedTheme(selector.value));
+      }
+
+      selector.addEventListener('change', applyTheme);
+      // Keep "Auto" in sync when the OS theme changes while selected.
+      media.addEventListener('change', function () {
+        if (selector.value === 'auto') applyTheme();
+      });
+
+      applyTheme();
+    })();
+  </script>
+</body>
+</html>
