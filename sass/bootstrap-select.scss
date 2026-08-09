@@ -775,19 +775,21 @@ select.selectpicker {
 }
 
 .bs-selected-item-remove {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.125rem;
-  height: 1.125rem;
-  border-radius: 999px;
-  background: rgba(108, 117, 125, 0.14);
-  color: var(--bs-secondary-color, #6c757d);
-  font-size: 0.875rem;
-  font-weight: 900;
-  line-height: 1;
+  width: 0.75rem;
+  height: 0.75rem;
   flex: 0 0 auto;
-  padding-bottom: 0;
+  // Match the chevron and selection tick: a masked stroke SVG that inherits the
+  // current text color with the same stroke width and rounded caps.
+  color: var(--bs-secondary-color, #6c757d);
+  opacity: 0.85;
+  transition: opacity .15s ease-in-out, color .15s ease-in-out;
+  @include bs-mask-icon($bs-x-svg);
+}
+
+.bs-selected-item:hover .bs-selected-item-remove,
+.bs-selected-item:focus .bs-selected-item-remove {
+  color: var(--bs-body-color, inherit);
+  opacity: 1;
 }
 
 .bootstrap-select.selected-items-style-list .bs-selected-items {
@@ -843,12 +845,9 @@ select.selectpicker {
 }
 
 .bootstrap-select.selected-items-style-list .bs-selected-item-remove {
-  width: auto;
-  height: auto;
+  width: 0.875rem;
+  height: 0.875rem;
   margin-left: auto;
-  border-radius: 0;
-  background: transparent;
-  font-size: 1rem;
   color: var(--bs-secondary-color, #6c757d);
 }
 
