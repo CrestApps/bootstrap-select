@@ -1949,7 +1949,6 @@ class Selectpicker {
 
         remove.className = 'bs-selected-item-remove';
         remove.setAttribute('aria-hidden', 'true');
-        remove.textContent = '\u00d7';
 
         selectedTag.appendChild(content);
         selectedTag.appendChild(remove);
