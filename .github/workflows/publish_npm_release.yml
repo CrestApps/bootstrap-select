@@ -63,13 +63,15 @@ jobs:
       - name: Build assets
         run: |
           npm ci
+          # Set the release version before building so the version banner baked
+          # into the dist files matches the tag, then publish those exact files.
+          npm version "${{ steps.release_meta.outputs.version }}" --no-git-tag-version --allow-same-version
           npm run build
 
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npm version "${{ steps.release_meta.outputs.version }}" --no-git-tag-version --allow-same-version
           npm publish --access public --tag latest
 
   snapshot_docs:
