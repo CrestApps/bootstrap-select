@@ -187,10 +187,10 @@ test('menu header renders its close button at the end with compact spacing', asy
       paddingRight: parseFloat(style.paddingRight)
     };
   })).toEqual({
-    width: 14,
-    height: 14,
-    paddingTop: 4,
-    paddingRight: 4
+    width: 12,
+    height: 12,
+    paddingTop: 0,
+    paddingRight: 0
   });
 
   await expect.poll(async () => header.evaluate((el) => {
