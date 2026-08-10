@@ -614,6 +614,13 @@ select.selectpicker {
   gap: 0.75rem;
   padding: 0.625rem 0.875rem;
 
+  // Give the header a distinct, standout background that matches Bootstrap's
+  // `.card-header`. Driving the color, background, and border from the card
+  // variables keeps it legible in both light and dark modes.
+  color: var(--bs-card-cap-color);
+  background-color: var(--bs-card-cap-bg, rgba(var(--bs-body-color-rgb, 33, 37, 41), 0.03));
+  border-bottom: var(--bs-card-border-width, var(--bs-border-width, 1px)) solid var(--bs-card-border-color, var(--bs-border-color-translucent, rgba(0, 0, 0, 0.175)));
+
   .popover-header-text {
     flex: 1 1 auto;
     min-width: 0;
