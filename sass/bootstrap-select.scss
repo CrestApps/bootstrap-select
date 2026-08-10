@@ -633,25 +633,11 @@ select.selectpicker {
     margin-left: auto;
   }
 
+  // Bootstrap's close button is sized in `em`, so scale it down with
+  // `font-size` to match the selection tick and other icons instead of
+  // overriding any of its own styles.
   .btn-close {
-    width: 0.75rem;
-    height: 0.75rem;
-    padding: 0;
-    border: 0;
-    opacity: 0.85;
-    color: var(--bs-secondary-color, #6c757d);
-    // Match the tag remove control and selection tick: a masked stroke SVG so
-    // the close X shares the same weight and size as the other icons instead
-    // of Bootstrap's heavier `.btn-close` background image.
-    background-image: none;
-    @include bs-mask-icon($bs-x-svg);
-    transition: opacity .15s ease-in-out, color .15s ease-in-out;
-  }
-
-  .btn-close:hover,
-  .btn-close:focus {
-    color: var(--bs-body-color, inherit);
-    opacity: 1;
+    font-size: 0.75rem;
   }
 
   .close {
