@@ -612,7 +612,7 @@ select.selectpicker {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.625rem 0.875rem;
+  padding: var(--bs-popover-header-padding-y, 0.5rem) var(--bs-popover-header-padding-x, 1rem) !important;
 
   // Give the header a distinct, standout background that matches Bootstrap's
   // `.card-header`. Driving the color, background, and border from the card
