@@ -35,7 +35,7 @@ const config = {
       src: withBaseUrl('js/chunk-recovery.js')
     },
     {
-      src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js',
+      src: withBaseUrl('vendor/bootstrap/js/bootstrap.bundle.min.js'),
       defer: true
     },
     {
@@ -45,8 +45,8 @@ const config = {
   ],
 
   stylesheets: [
-    'https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css',
-    'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css',
+    withBaseUrl('vendor/bootstrap/css/bootstrap.min.css'),
+    withBaseUrl('vendor/fontawesome/css/all.min.css'),
     withBaseUrl('dist/css/bootstrap-select.min.css')
   ],
 

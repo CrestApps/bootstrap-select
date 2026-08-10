@@ -608,11 +608,18 @@ select.selectpicker {
   padding: 4px 8px;
 }
 
-.popover-header {
+.bootstrap-select .popover-header {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.625rem 0.875rem;
+  padding: var(--bs-popover-header-padding-y, 0.5rem) var(--bs-popover-header-padding-x, 1rem) !important;
+
+  // Give the header a distinct, standout background that matches Bootstrap's
+  // `.card-header`. Driving the color, background, and border from the card
+  // variables keeps it legible in both light and dark modes.
+  color: var(--bs-card-cap-color);
+  background-color: var(--bs-card-cap-bg, rgba(var(--bs-body-color-rgb, 33, 37, 41), 0.03));
+  border-bottom: var(--bs-card-border-width, var(--bs-border-width, 1px)) solid var(--bs-card-border-color, var(--bs-border-color-translucent, rgba(0, 0, 0, 0.175)));
 
   .popover-header-text {
     flex: 1 1 auto;
@@ -626,11 +633,11 @@ select.selectpicker {
     margin-left: auto;
   }
 
+  // Bootstrap's close button is sized in `em`, so scale it down with
+  // `font-size` to match the selection tick and other icons instead of
+  // overriding any of its own styles.
   .btn-close {
-    width: 0.875rem;
-    height: 0.875rem;
-    padding: 0.25rem;
-    background-size: 0.75rem;
+    font-size: 0.75rem;
   }
 
   .close {

@@ -187,10 +187,10 @@ test('menu header renders its close button at the end with compact spacing', asy
       paddingRight: parseFloat(style.paddingRight)
     };
   })).toEqual({
-    width: 14,
-    height: 14,
-    paddingTop: 4,
-    paddingRight: 4
+    width: 12,
+    height: 12,
+    paddingTop: 3,
+    paddingRight: 3
   });
 
   await expect.poll(async () => header.evaluate((el) => {
@@ -203,10 +203,10 @@ test('menu header renders its close button at the end with compact spacing', asy
       paddingLeft: parseFloat(style.paddingLeft)
     };
   })).toEqual({
-    paddingTop: 10,
-    paddingRight: 14,
-    paddingBottom: 10,
-    paddingLeft: 14
+    paddingTop: 8,
+    paddingRight: 16,
+    paddingBottom: 8,
+    paddingLeft: 16
   });
 });
 
