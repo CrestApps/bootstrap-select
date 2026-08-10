@@ -203,10 +203,10 @@ test('menu header renders its close button at the end with compact spacing', asy
       paddingLeft: parseFloat(style.paddingLeft)
     };
   })).toEqual({
-    paddingTop: 10,
-    paddingRight: 14,
-    paddingBottom: 10,
-    paddingLeft: 14
+    paddingTop: 8,
+    paddingRight: 16,
+    paddingBottom: 8,
+    paddingLeft: 16
   });
 });
 
