@@ -21,6 +21,7 @@ The main examples now live directly on this docs page so they inherit the docs t
 - [Search and multi-select workflows](#search-and-multi-select-workflows)
 - [Selection text and summaries](#selection-text-and-summaries)
 - [Styling and layout](#styling-and-layout)
+  - [Bootstrap card with header](#bootstrap-card-with-header)
   - [Native Bootstrap comparison](#native-bootstrap-comparison)
 - [Rich option content](#rich-option-content)
 - [Menu behavior](#menu-behavior)
@@ -545,6 +546,70 @@ The supported values are:
 ## Styling and layout
 
 ---
+
+### Bootstrap card with header
+
+Use this layout to verify how the picker behaves when it sits directly below a Bootstrap `.card-header`. The menu is appended to `<body>` so it renders outside the card, and auto-dropup is disabled so it does not cover the card header.
+
+<LiveExample
+  html={String.raw`  <div class="card shadow-sm" style="max-width: 42rem;">
+    <div class="card-header d-flex align-items-center justify-content-between gap-3">
+      <div>
+        <strong class="me-2">Question pool</strong>
+        <span class="text-body-secondary small">Choose which questions are available for this interview.</span>
+      </div>
+      <span class="badge text-bg-light border">Draft</span>
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <label class="form-label">Choose candidates</label>
+        <div class="d-flex gap-3">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="candidate-scope" id="candidate-all">
+            <label class="form-check-label" for="candidate-all">All questions</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="candidate-scope" id="candidate-specific" checked>
+            <label class="form-check-label" for="candidate-specific">Specific questions</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-0">
+        <label class="form-label" for="card-header-example">Select questions</label>
+        <select
+          id="card-header-example"
+          class="selectpicker form-control"
+          multiple
+          data-container="body"
+          data-dropup-auto="false"
+          data-live-search="true"
+          data-actions-box="true"
+          data-selected-text-format="count > 2"
+          title="Nothing selected">
+          <option>Accessibility review</option>
+          <option>API design</option>
+          <option>Architecture tradeoffs</option>
+          <option>Background jobs</option>
+          <option>Bootstrap theming</option>
+          <option>Database migrations</option>
+          <option>Deployment readiness</option>
+          <option>Observability</option>
+          <option>Performance profiling</option>
+          <option>Testing strategy</option>
+        </select>
+      </div>
+    </div>
+  </div>`}
+/>
+
+For isolated testing outside the docs page, open the standalone page:
+
+<p>
+  <Link to="pathname:///examples/card-header.html" target="_blank" rel="noopener noreferrer">
+    Open the Bootstrap card header example ↗
+  </Link>
+</p>
 
 ### Native Bootstrap comparison
 

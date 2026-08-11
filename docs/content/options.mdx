@@ -345,6 +345,15 @@ For security reasons, the `sanitize`, `sanitizeFn`, and `whiteList` options cann
     </td>
   </tr>
   <tr>
+    <td>container</td>
+    <td>string | element | false</td>
+    <td><code>false</code></td>
+    <td>
+      <p>Appends the dropdown menu to another element, such as <code>'body'</code>, instead of keeping it inside the picker wrapper.</p>
+      <p>Use this when the picker sits inside constrained UI such as a card or another element with clipping or stacking styles.</p>
+    </td>
+  </tr>
+  <tr>
     <td>sanitize</td>
     <td>boolean</td>
     <td><code>true</code></td>
@@ -374,7 +383,7 @@ For security reasons, the `sanitize`, `sanitizeFn`, and `whiteList` options cann
 />
 
 :::info Bootstrap 5 runtime defaults
-This Bootstrap 5 build no longer supports the legacy `container`, `mobile`, `styleBase`, or `windowPadding` options. When `width` is not set, the picker follows normal Bootstrap sizing and fills its container by default.
+This Bootstrap 5 build no longer supports the legacy `mobile`, `styleBase`, or `windowPadding` options. When `width` is not set, the picker follows normal Bootstrap sizing and fills its container by default.
 :::
 
 ## Tags-style live search and open options

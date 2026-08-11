@@ -210,6 +210,70 @@ test('menu header renders its close button at the end with compact spacing', asy
   });
 });
 
+test('dropupAuto keeps the menu below when there is room for controls and one option', async ({ page }) => {
+  await page.setViewportSize({ width: 900, height: 520 });
+  await page.goto('/tests/index.html');
+  await page.waitForFunction(() => window.Selectpicker);
+
+  await page.evaluate(() => {
+    document.body.innerHTML += `
+      <div class="card shadow-sm" style="max-width: 42rem; margin-top: 3rem;">
+        <div class="card-header">
+          <strong>Question pool</strong>
+        </div>
+        <div class="card-body">
+          <label class="form-label" for="card-header-example">Select questions</label>
+          <select
+            id="card-header-example"
+            class="selectpicker form-control"
+            multiple
+            data-container="body"
+            data-live-search="true"
+            data-actions-box="true"
+            data-selected-text-format="count > 2"
+            title="Nothing selected">
+            <option>Accessibility review</option>
+            <option>API design</option>
+            <option>Architecture tradeoffs</option>
+            <option>Background jobs</option>
+            <option>Bootstrap theming</option>
+            <option>Database migrations</option>
+            <option>Deployment readiness</option>
+            <option>Observability</option>
+            <option>Performance profiling</option>
+            <option>Testing strategy</option>
+          </select>
+        </div>
+      </div>`;
+
+    new Selectpicker('#card-header-example');
+  });
+
+  const picker = page.locator('.bootstrap-select').filter({ has: page.locator('[data-id="card-header-example"]') });
+
+  await picker.locator('[data-id="card-header-example"]').click();
+
+  const bodyContainer = page.locator('body > .bs-container');
+
+  await expect(bodyContainer).toHaveCount(1);
+  await expect(bodyContainer.locator(':scope > .dropdown-menu')).toBeVisible();
+  await expect(picker).not.toHaveClass(/dropup/);
+
+  await expect.poll(async () => page.evaluate(() => {
+    const buttonRect = document.querySelector('[data-id="card-header-example"]').getBoundingClientRect();
+    const menuRect = document.querySelector('body > .bs-container .dropdown-menu').getBoundingClientRect();
+
+    return menuRect.top >= buttonRect.bottom - 1;
+  })).toBe(true);
+
+  await expect.poll(async () => page.evaluate(() => {
+    const search = document.querySelector('body > .bs-container .bs-searchbox');
+    const actionsButton = document.querySelector('body > .bs-container .bs-actionsbox .btn');
+
+    return Math.round(actionsButton.getBoundingClientRect().top - search.getBoundingClientRect().bottom);
+  })).toBeGreaterThan(0);
+});
+
 test('native bs.select events are emitted on the original select', async ({ page }) => {
   await page.goto('/tests/index.html');
   await page.waitForFunction(() => window.Selectpicker);

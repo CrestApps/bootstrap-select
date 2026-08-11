@@ -161,7 +161,7 @@ class Selectpicker {
     this.clickListener();
 
     var Dropdown = getDropdown();
-    this.dropdown = new Dropdown(this.button);
+    this.dropdown = new Dropdown(this.button, this.options.container ? { display: 'static' } : undefined);
 
     // store a reference to the instance for delegated handlers
     this.newElement.bootstrapSelectInstance = this;
@@ -176,6 +176,11 @@ class Selectpicker {
 
     this.setStyle();
     this.setWidth();
+
+    if (this.options.container) {
+      this.selectPosition();
+    }
+
     this._on(this.element, 'hide' + EVENT_KEY, function () {
       if (that.isVirtual()) {
         // empty menu on close
