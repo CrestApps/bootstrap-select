@@ -696,7 +696,7 @@ select.selectpicker {
   border-bottom: 1px solid var(--bs-border-color-translucent, rgba(0, 0, 0, 0.1));
 
   & + .bs-actionsbox {
-    padding: 0 8px 4px;
+    padding: 0.5rem 0.75rem 0.25rem;
   }
 
   & .form-control {

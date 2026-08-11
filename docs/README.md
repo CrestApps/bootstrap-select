@@ -37,6 +37,7 @@ Open `http://localhost:3000/` after startup. The examples are available from
 the docs UI and directly at:
 
 - `http://localhost:3000/examples/basic.html`
+- `http://localhost:3000/examples/card-header.html`
 - `http://localhost:3000/examples/live-search.html`
 - `http://localhost:3000/examples/multiple.html`
 

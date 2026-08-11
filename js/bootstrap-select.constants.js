@@ -294,7 +294,7 @@ var changedArguments = null;
 // shared flag for spacebar selection handling (mirrors original document data flag)
 var spaceSelectFlag = false;
 
-var REMOVED_OPTIONS = ['container', 'display', 'mobile', 'styleBase', 'windowPadding'];
+var REMOVED_OPTIONS = ['display', 'mobile', 'styleBase', 'windowPadding'];
 
 function stripRemovedOptions (source) {
   if (!source || typeof source !== 'object') return source;

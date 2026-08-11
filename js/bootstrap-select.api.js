@@ -497,6 +497,7 @@ Selectpicker.DEFAULTS = {
   showContent: true,
   dropupAuto: true,
   header: false,
+  container: false,
   liveSearch: false,
   liveSearchPlaceholder: null,
   liveSearchNormalize: false,
