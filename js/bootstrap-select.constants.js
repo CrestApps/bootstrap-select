@@ -34,7 +34,7 @@ var classNames = {
   DROPUP: 'dropup',
   MENU: 'dropdown-menu',
   MENUEND: 'dropdown-menu-end',
-  BUTTONCLASS: 'btn-light',
+  BUTTONCLASS: 'btn-theme',
   POPOVERHEADER: 'popover-header',
   ICONBASE: '',
   TICKICON: 'bs-ok-default'

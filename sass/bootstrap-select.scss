@@ -154,14 +154,15 @@ select.selectpicker {
   }
 }
 
-// Make the default toggle button look and behave like a native Bootstrap
-// form-control. Its colors are driven entirely by Bootstrap's CSS variables
-// (with fallbacks) so the control stays visually identical to inputs in both
-// light and dark modes, follows the site's --bs-border-color, and never
-// darkens on hover/active the way the stock .btn-light does. Consumers can
-// restyle it globally by overriding the Bootstrap variables, and choosing a
-// different `style` (e.g. btn-primary) opts out of these defaults entirely.
-.bootstrap-select > .dropdown-toggle.btn-light {
+// `btn-theme` is the default toggle style. It looks and behaves like a native
+// Bootstrap form-control: it renders light in light mode and dark in dark mode
+// because its colors are driven entirely by Bootstrap's CSS variables (with
+// fallbacks). It follows the site's --bs-border-color and never darkens on
+// hover/active the way the stock .btn-light does. Consumers can restyle it
+// globally by overriding the Bootstrap variables. `btn-light` and `btn-dark`
+// keep their stock Bootstrap look (always light / always dark) and, like any
+// other `style`, opt out of these defaults.
+.bootstrap-select > .dropdown-toggle.btn-theme {
   --bs-btn-color: var(--bs-body-color, #212529);
   --bs-btn-bg: var(--bs-body-bg, #fff);
   --bs-btn-border-color: var(--bs-border-color, #dee2e6);
@@ -175,6 +176,16 @@ select.selectpicker {
   --bs-btn-disabled-bg: var(--bs-secondary-bg, #e9ecef);
   --bs-btn-disabled-border-color: var(--bs-border-color, #dee2e6);
   --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb, 13, 110, 253);
+}
+
+// In dark mode a `btn-dark` toggle would otherwise blend into the page because
+// its border is the same color as its background. Give it the same visible
+// border a native dark-mode input has.
+[data-bs-theme="dark"] .bootstrap-select > .dropdown-toggle.btn-dark {
+  --bs-btn-border-color: var(--bs-border-color, #495057);
+  --bs-btn-hover-border-color: var(--bs-border-color, #495057);
+  --bs-btn-active-border-color: var(--bs-border-color, #495057);
+  --bs-btn-disabled-border-color: var(--bs-border-color, #495057);
 }
 
 // The selectpicker components
@@ -341,6 +352,21 @@ select.selectpicker {
     min-width: 100%;
     box-sizing: border-box;
 
+    // Bootstrap highlights the active item with the primary color. Use the same
+    // neutral gray a native select highlights with instead, driven by Bootstrap
+    // variables so it works in light and dark modes. Consumers can override
+    // these variables to restore the primary highlight.
+    --bs-dropdown-link-hover-color: var(--bs-body-color, #212529);
+    --bs-dropdown-link-hover-bg: var(--bs-tertiary-bg, #f8f9fa);
+    --bs-dropdown-link-active-color: var(--bs-body-color, #212529);
+    --bs-dropdown-link-active-bg: var(--bs-secondary-bg, #e9ecef);
+
+    // The popup floats over the page, so lift it with Bootstrap's standard
+    // shadow. The inner scroll container is excluded (see `.inner` below).
+    &:not(.inner) {
+      box-shadow: var(--bs-box-shadow, 0 0.5rem 1rem rgba(0, 0, 0, 0.15));
+    }
+
     > .inner:focus {
       outline: none !important;
     }
@@ -359,7 +385,7 @@ select.selectpicker {
       position: relative;
 
       &.active small {
-        color: $input-alt-color-placeholder !important;
+        color: var(--bs-secondary-color, #6c757d) !important;
       }
 
       &.disabled a {
@@ -660,6 +686,7 @@ select.selectpicker {
 
   // Drive the Select All / Deselect All buttons from Bootstrap variables so
   // they stay legible in dark mode instead of remaining light-on-light.
+  & .btn-theme,
   & .btn-light {
     --bs-btn-color: var(--bs-body-color, #212529);
     --bs-btn-bg: var(--bs-tertiary-bg, #f8f9fa);
