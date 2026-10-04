@@ -12,6 +12,13 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     name: Publish bootstrap-select
+    # npm trusted publishing (OIDC): the job exchanges its GitHub identity for a
+    # short-lived npm publish credential, so no NPM_TOKEN secret is needed. The
+    # trusted publisher must be configured for this repository and workflow file
+    # (publish_npm_release.yml) on npmjs.com.
+    permissions:
+      contents: read
+      id-token: write
     outputs:
       version: ${{ steps.release_meta.outputs.version }}
       docs_version: ${{ steps.release_meta.outputs.docs_version }}
@@ -43,22 +50,15 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: '20.19'
+          node-version: '24'
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
-          scope: '@crestapps'
-          always-auth: true
 
-      - name: Validate npm publish prerequisites
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # Trusted publishing needs npm 11.5.1 or newer.
+      - name: Ensure npm supports trusted publishing
         run: |
-          npm whoami
-          PACKAGE_NAME=$(node -p "require('./package.json').name")
-          if [[ "$PACKAGE_NAME" != @* ]] && ! npm view "$PACKAGE_NAME" version >/dev/null 2>&1; then
-            echo "::error title=Initial unscoped npm publish requires a different token::Package '$PACKAGE_NAME' does not exist on npm yet. First-time publish of a new unscoped package usually cannot be done with an npm automation token from GitHub Actions. Publish it once manually with an npm publish-capable user token/session, or rename it to a scoped package and retry."
-            exit 1
-          fi
+          npm install -g npm@^11.5.1
+          npm --version
 
       - name: Build assets
         run: |
@@ -68,9 +68,9 @@ jobs:
           npm version "${{ steps.release_meta.outputs.version }}" --no-git-tag-version --allow-same-version
           npm run build
 
+      # No token is passed on purpose: npm authenticates with the OIDC identity
+      # of this job and publishes with provenance.
       - name: Publish to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           npm publish --access public --tag latest
 
