@@ -196,6 +196,12 @@ select.selectpicker {
   --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb, 13, 110, 253);
 }
 
+// Deeper menu shadow on a dark page, where the default one is not visible. A
+// menu pinned to the light color mode (a `btn-light` toggle) keeps the light one.
+[data-bs-theme="dark"] .bootstrap-select .dropdown-menu:not(.inner):not([data-bs-theme="light"]) {
+  --bs-select-menu-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.65);
+}
+
 // In dark mode a `btn-dark` toggle would otherwise blend into the page because
 // its border is the same color as its background. Give it the same visible
 // border a native dark-mode input has.
@@ -379,10 +385,12 @@ select.selectpicker {
     --bs-dropdown-link-active-color: var(--bs-body-color, #212529);
     --bs-dropdown-link-active-bg: var(--bs-secondary-bg, #e9ecef);
 
-    // The popup floats over the page, so lift it with Bootstrap's standard
-    // shadow. The inner scroll container is excluded (see `.inner` below).
+    // The popup floats over the page, so lift it with a drop shadow. The inner
+    // scroll container is excluded (see `.inner` below). Bootstrap's own shadow
+    // is a faint black that vanishes on a dark page, so dark mode gets a deeper
+    // one. Override `--bs-select-menu-shadow` to change it.
     &:not(.inner) {
-      box-shadow: var(--bs-box-shadow, 0 0.5rem 1rem rgba(0, 0, 0, 0.15));
+      box-shadow: var(--bs-select-menu-shadow, 0 0.5rem 1rem rgba(0, 0, 0, 0.15));
     }
 
     > .inner:focus {

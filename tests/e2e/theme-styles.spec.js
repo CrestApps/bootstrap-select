@@ -33,6 +33,8 @@ async function render (page, { theme, style }) {
       buttonColor: css(button).color,
       bodyBg: css(document.body).backgroundColor,
       borderColor: css(document.documentElement).getPropertyValue('--bs-border-color').trim(),
+      menuBg: css(menu).backgroundColor,
+      menuColor: css(menu).color,
       menuShadow: css(menu).boxShadow,
       activeBg: active ? css(active).backgroundColor : null,
       primary: css(document.documentElement).getPropertyValue('--bs-primary').trim()
@@ -68,6 +70,17 @@ test.describe('Button styles and menu theming', () => {
     expect(dark.buttonBg).not.toBe(dark.bodyBg);
   });
 
+  test('btn-light menu stays light in dark mode', async ({ page }) => {
+    const dark = await render(page, { theme: 'dark', style: 'btn-light' });
+    expect(dark.menuBg).toBe('rgb(255, 255, 255)');
+    expect(dark.activeBg).toBe('rgb(233, 236, 239)');
+  });
+
+  test('btn-theme menu follows dark mode', async ({ page }) => {
+    const dark = await render(page, { theme: 'dark', style: 'btn-theme' });
+    expect(dark.menuBg).not.toBe('rgb(255, 255, 255)');
+  });
+
   test('btn-light looks exactly like btn-theme in light mode', async ({ page }) => {
     const theme = await render(page, { theme: 'light', style: 'btn-theme' });
     await page.reload();
@@ -86,6 +99,16 @@ test.describe('Button styles and menu theming', () => {
   test('open menu has a drop shadow', async ({ page }) => {
     const result = await render(page, { theme: 'light' });
     expect(result.menuShadow).not.toBe('none');
+  });
+
+  test('dark mode menu shadow is deeper than the light one', async ({ page }) => {
+    const light = await render(page, { theme: 'light' });
+    await page.reload();
+    await page.waitForFunction(() => window.Selectpicker);
+    const dark = await render(page, { theme: 'dark' });
+    expect(dark.menuShadow).not.toBe('none');
+    expect(dark.menuShadow).not.toBe(light.menuShadow);
+    expect(dark.menuShadow).toContain('0.65');
   });
 
   test('active item is gray, not the primary color', async ({ page }) => {
