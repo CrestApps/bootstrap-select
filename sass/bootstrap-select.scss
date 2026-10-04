@@ -159,9 +159,7 @@ select.selectpicker {
 // because its colors are driven entirely by Bootstrap's CSS variables (with
 // fallbacks). It follows the site's --bs-border-color and never darkens on
 // hover/active the way the stock .btn-light does. Consumers can restyle it
-// globally by overriding the Bootstrap variables. `btn-light` and `btn-dark`
-// keep their stock Bootstrap look (always light / always dark) and, like any
-// other `style`, opt out of these defaults.
+// globally by overriding the Bootstrap variables.
 .bootstrap-select > .dropdown-toggle.btn-theme {
   --bs-btn-color: var(--bs-body-color, #212529);
   --bs-btn-bg: var(--bs-body-bg, #fff);
@@ -175,6 +173,26 @@ select.selectpicker {
   --bs-btn-disabled-color: var(--bs-secondary-color, #6c757d);
   --bs-btn-disabled-bg: var(--bs-secondary-bg, #e9ecef);
   --bs-btn-disabled-border-color: var(--bs-border-color, #dee2e6);
+  --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb, 13, 110, 253);
+}
+
+// `btn-light` renders exactly like `btn-theme` does in light mode (a white,
+// bordered, form-control-like button that does not darken on hover) but stays
+// light in dark mode. It uses Bootstrap's fixed palette variables, which do not
+// change with `data-bs-theme`, instead of the theme-aware ones above.
+.bootstrap-select > .dropdown-toggle.btn-light {
+  --bs-btn-color: var(--bs-gray-900, #212529);
+  --bs-btn-bg: var(--bs-white, #fff);
+  --bs-btn-border-color: var(--bs-gray-300, #dee2e6);
+  --bs-btn-hover-color: var(--bs-gray-900, #212529);
+  --bs-btn-hover-bg: var(--bs-white, #fff);
+  --bs-btn-hover-border-color: var(--bs-gray-300, #dee2e6);
+  --bs-btn-active-color: var(--bs-gray-900, #212529);
+  --bs-btn-active-bg: var(--bs-white, #fff);
+  --bs-btn-active-border-color: var(--bs-gray-300, #dee2e6);
+  --bs-btn-disabled-color: var(--bs-gray-600, #6c757d);
+  --bs-btn-disabled-bg: var(--bs-gray-200, #e9ecef);
+  --bs-btn-disabled-border-color: var(--bs-gray-300, #dee2e6);
   --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb, 13, 110, 253);
 }
 

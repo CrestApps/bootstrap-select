@@ -30,6 +30,7 @@ async function render (page, { theme, style }) {
       buttonClass: button.className,
       buttonBg: css(button).backgroundColor,
       buttonBorder: css(button).borderTopColor,
+      buttonColor: css(button).color,
       bodyBg: css(document.body).backgroundColor,
       borderColor: css(document.documentElement).getPropertyValue('--bs-border-color').trim(),
       menuShadow: css(menu).boxShadow,
@@ -63,8 +64,18 @@ test.describe('Button styles and menu theming', () => {
 
   test('btn-light stays light in dark mode', async ({ page }) => {
     const dark = await render(page, { theme: 'dark', style: 'btn-light' });
-    expect(dark.buttonBg).toBe('rgb(248, 249, 250)');
+    expect(dark.buttonBg).toBe('rgb(255, 255, 255)');
     expect(dark.buttonBg).not.toBe(dark.bodyBg);
+  });
+
+  test('btn-light looks exactly like btn-theme in light mode', async ({ page }) => {
+    const theme = await render(page, { theme: 'light', style: 'btn-theme' });
+    await page.reload();
+    await page.waitForFunction(() => window.Selectpicker);
+    const light = await render(page, { theme: 'light', style: 'btn-light' });
+    expect(light.buttonBg).toBe(theme.buttonBg);
+    expect(light.buttonBorder).toBe(theme.buttonBorder);
+    expect(light.buttonColor).toBe(theme.buttonColor);
   });
 
   test('btn-dark has a visible border in dark mode', async ({ page }) => {
