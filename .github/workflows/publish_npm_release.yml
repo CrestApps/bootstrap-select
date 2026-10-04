@@ -4,6 +4,13 @@ on:
   push:
     tags:
       - 'v*.*.*'
+  # Manual run: publishes the selected branch under the version entered here.
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish, e.g. 1.2.6 (no leading "v")'
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -26,13 +33,16 @@ jobs:
     steps:
       - name: Parse release metadata
         id: release_meta
+        env:
+          # A tag push uses the tag name; a manual run uses the version input.
+          RELEASE_REF: ${{ github.event_name == 'workflow_dispatch' && inputs.version || github.ref_name }}
         run: |
-          VERSION="${GITHUB_REF_NAME#v}"
-          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
-          if [[ -z "$MAJOR" || -z "$MINOR" || -z "$PATCH" ]]; then
-            echo "::error title=Invalid version tag::Expected a semantic version tag like v1.2.3, received '$GITHUB_REF_NAME'."
+          VERSION="${RELEASE_REF#v}"
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error title=Invalid version::Expected a semantic version like 1.2.3 (or a tag like v1.2.3), received '$RELEASE_REF'."
             exit 1
           fi
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
 
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
           echo "docs_version=${MAJOR}.${MINOR}" >> "$GITHUB_OUTPUT"
