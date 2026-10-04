@@ -254,6 +254,13 @@
   </select>
 </div>
 <div class="form-group">
+  <select class="selectpicker" data-style="btn-theme">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </select>
+</div>
+<div class="form-group">
   <select class="selectpicker" data-style="btn-light">
     <option>Mustard</option>
     <option>Ketchup</option>
@@ -266,7 +273,7 @@
     <option>Ketchup</option>
     <option>Relish</option>
   </select>
-</div>`}),"\n",(0,n.jsx)(t.pre,{children:(0,n.jsx)(t.code,{className:"language-html",children:'<select class="selectpicker" data-style="btn-primary">\n  ...\n</select>\n\n<select class="selectpicker" data-style="btn-secondary">\n  ...\n</select>\n\n<select class="selectpicker" data-style="btn-success">\n  ...\n</select>\n\n<select class="selectpicker" data-style="btn-dark">\n  ...\n</select>\n\n<select class="selectpicker" data-style="btn-light">\n  ...\n</select>\n\n<select class="selectpicker" data-style="btn-danger">\n  ...\n</select>\n'})}),"\n",(0,n.jsx)(t.h3,{id:"menu-arrow",children:"Menu arrow"}),"\n",(0,n.jsxs)(t.p,{children:["The Bootstrap menu arrow can be added with the ",(0,n.jsx)(t.code,{children:"show-menu-arrow"})," class:"]}),"\n",(0,n.jsx)(l.A,{html:String.raw`  <select class="selectpicker show-menu-arrow">
+</div>`}),"\n",(0,n.jsx)(t.pre,{children:(0,n.jsx)(t.code,{className:"language-html",children:'<select class="selectpicker" data-style="btn-primary">\n  ...\n</select>\n\n<select class="selectpicker" data-style="btn-secondary">\n  ...\n</select>\n\n<select class="selectpicker" data-style="btn-success">\n  ...\n</select>\n\n<select class="selectpicker" data-style="btn-dark">\n  ...\n</select>\n\n<select class="selectpicker" data-style="btn-theme">\n  ...\n</select>\n\n<select class="selectpicker" data-style="btn-light">\n  ...\n</select>\n\n<select class="selectpicker" data-style="btn-danger">\n  ...\n</select>\n'})}),"\n",(0,n.jsx)(t.h3,{id:"menu-arrow",children:"Menu arrow"}),"\n",(0,n.jsxs)(t.p,{children:["The Bootstrap menu arrow can be added with the ",(0,n.jsx)(t.code,{children:"show-menu-arrow"})," class:"]}),"\n",(0,n.jsx)(l.A,{html:String.raw`  <select class="selectpicker show-menu-arrow">
   <option>Mustard</option>
   <option>Ketchup</option>
   <option>Relish</option>
