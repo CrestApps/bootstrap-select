@@ -1,3 +1,13 @@
+# Unreleased
+
+### Changes
+
+- Added the `btn-theme` button style and made it the default `style`. It renders light in light mode and dark in dark mode by following Bootstrap's CSS variables, which is how the default `btn-light` already behaved.
+- `btn-light` now looks exactly like `btn-theme` in light mode but stays light in every color mode, including dark mode. Use `btn-theme` (or omit `style`) to follow the color mode.
+- A `btn-dark` toggle now has a visible border in dark mode, matching a native dark-mode input.
+- The active (selected) menu item is highlighted with a neutral gray instead of the primary color. Override `--bs-dropdown-link-active-bg` and `--bs-dropdown-link-active-color` on `.bootstrap-select .dropdown-menu` to restore the primary highlight.
+- The open menu now has Bootstrap's standard drop shadow (`--bs-box-shadow`).
+
 # v1.1.2 (CrestApps fork)
 
 ### Fixes

@@ -1,6 +1,6 @@
 $color-red-error: rgb(185, 74, 72) !default;
 $color-green-success: #28a745 !default;
-$color-grey-arrow: rgba(204, 204, 204, 0.2) !default;
+$color-grey-arrow: var(--bs-border-color-translucent, rgba(204, 204, 204, 0.2)) !default;
 
 $width-default: 100% !default;
 
@@ -11,7 +11,7 @@ $zindex-select-dropdown: 1060 !default; // must be higher than a modal backgroun
 // (`.form-control`/`.form-select` placeholders resolve to `--bs-secondary-color`)
 // so the selectpicker's placeholder matches native inputs in light and dark modes.
 $input-color-placeholder: var(--bs-secondary-color, #6c757d) !default;
-$input-alt-color-placeholder: rgba(255, 255, 255, 0.5) !default;
+$input-alt-color-placeholder: rgba(var(--bs-white-rgb, 255, 255, 255), 0.5) !default;
 
 //** Bootstrap 5.3-style chevron, checkmark, and remove (×) icons.
 // Rendered through CSS masks so they inherit the current text color and share a
