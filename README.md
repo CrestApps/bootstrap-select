@@ -14,6 +14,9 @@
 	<a href="https://bootstrap-select.crestapps.com" target="_blank">
 		<img src="https://img.shields.io/badge/docs-bootstrap--select.crestapps.com-0a7bbb.svg" alt="Documentation">
 	</a>
+	<a href="https://github.com/sponsors/MikeAlhayek" target="_blank">
+		<img src="https://img.shields.io/badge/Sponsor-%E2%9D%A4-db61a2?logo=githubsponsors&logoColor=white" alt="Sponsor">
+	</a>
 </p>
 
 ## About this fork
@@ -342,3 +345,9 @@ Copyright (C) 2012-2018 [SnapAppointments, LLC](https://snapappointments.com)
 (original work). Fork modifications Copyright (C) CrestApps.
 
 Licensed under [the MIT license](LICENSE).
+
+## ❤️ Sponsor
+
+This project is free and open source, built and maintained alongside full-time work. If it saves you time or powers something you ship, please consider [sponsoring on GitHub](https://github.com/sponsors/MikeAlhayek). Sponsorship funds new features, faster fixes, documentation and long-term maintenance, and companies using it in production are especially encouraged to sponsor.
+
+[![Sponsor on GitHub](https://img.shields.io/badge/Sponsor_on_GitHub-%E2%9D%A4-db61a2?logo=githubsponsors&logoColor=white&style=for-the-badge)](https://github.com/sponsors/MikeAlhayek)
